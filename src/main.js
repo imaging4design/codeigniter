@@ -11,6 +11,7 @@ const router = new VueRouter({
 	routes: routes
 });
 
+// Global register components
 //Vue.component('list-record-type', ListRecordType);
 //Vue.component('list-age-groups', ListAgeGroups);
 
