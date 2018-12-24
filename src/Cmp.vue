@@ -1,16 +1,14 @@
 <template>
 	<div>
-		<select v-bind:value="value" v-on:input="$emit('input', $event.target.value)" class="form-control">
-			<option disabled value="">Please select one</option>
-			<!-- Loop through the ageGroup options/values pulled in from 'age_options' -->
-			<option v-for="(value, key, index) in age_options" v-bind:value="key">{{value}}</option>
-		</select>
+		<h1>Hi I am a template</h1>
+		<ul>
+			<li v-for="(value, key, index) in age_options">{{value}}</li>
+		</ul>
 	</div>
 </template>
 
 <script>
 	export default {
-		props: ['value'],
 		data: function(){
 			return {
 				age_options: {

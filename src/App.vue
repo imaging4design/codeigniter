@@ -106,9 +106,13 @@
 
 
 <script>
+
 import axios from 'axios';
+import ListRecordType from './global_helpers/ListRecordType.vue';
+import ListAgeGroups from './global_helpers/ListAgeGroups.vue';
+
 export default {
-	name: 'appd',
+	name: 'app',
 	data () {
 		return {
 			url: 'http://localhost/codeigniter/',
@@ -130,6 +134,11 @@ export default {
 	
 	created() {
 		//this.ageGroupOptions();
+	},
+
+	components: {
+		'ListAgeGroups': ListAgeGroups,
+		'ListRecordType': ListRecordType
 	},
 
 	methods: {
@@ -202,7 +211,6 @@ export default {
 
 
 <style lang="scss">
-
 #app {
 	//font-family: 'Avenir', Helvetica, Arial, sans-serif;
 	-webkit-font-smoothing: antialiased;

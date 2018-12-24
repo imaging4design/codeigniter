@@ -1,5 +1,6 @@
 <template>
 	<div>
+		<h3>Age Groups</h3>
 		<select v-bind:value="value" v-on:input="$emit('input', $event.target.value)" class="form-control">
 			<option disabled value="">Select Age Group</option>
 			<!-- Loop through the ageGroup options/values pulled in from 'age_options' -->
