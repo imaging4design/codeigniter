@@ -13,7 +13,7 @@ import TestVue from './TestVue';
 |***********************************************************************
 */
 export const routes = [
-	{ path: '', component: ListAgeGroups },
+	{ path: '/', component: ListAgeGroups },
 	{ path: '/test', component: ListRecordType },
 	{ path: '/routes', component: TestVue }
 ]

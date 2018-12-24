@@ -1,14 +1,19 @@
 <template>
 	<div id="app">
-		<h2>Router View</h2>
+		
+		<ul class="nav nav-pills">
+			<li class="nav-item">
+				<router-link to="/" exact class="nav-link">Home</router-link>
+			</li>
+			<li class="nav-item">
+				<router-link to="/test" class="nav-link">Test</router-link>
+			</li>
+			<li class="nav-item">
+				<router-link to="/routes" class="nav-link">Routes</router-link>
+			</li>
+		</ul>
 
 		<router-view></router-view>
-		
-		<router-link to="/">Home</router-link>
-		<router-link to="/test">Test</router-link>
-		<router-link to="/routes">Routes</router-link>
-
-		
 
 		<h1>Records</h1>
 		<!-- 
@@ -22,6 +27,7 @@
 		 -->
 
 		<form v-on:submit.prevent>
+
 			<select v-model="in_out" class="form-control">
 				<option disabled value="">Please select one</option>
 				<!-- Loop through the record option/values pulled in from 'record_options' -->
@@ -32,37 +38,42 @@
 			<list-age-groups v-model="ageGroup" ></list-age-groups>	
 
 			<button type="submit" @click="records" class="btn btn-info">Submit</button>
+		
 		</form>
 
 		<br>
 
 		<strong>Token: </strong>{{token}} <br>
+
 		<transition name="fade">
-			<table class="table table-dark" v-show="recordsNew">
-				<tr>
-					<th>Event</th>
-					<th>Athlete</th>
-					<th>Performance</th>
-					<th>Country</th>
-				</tr>
-				<tr v-for="(record, index) in recordsNew">
-					<td>
-						<strong>{{record.eventName}}</strong>
-					</td>
-					<td>
-						{{record.nameFirst}} {{record.nameLast}}
-					</td>
-					<td>
-						{{record.result | removeLeadZeros}}
-					</td>
-					<td>
-						{{record.country}}
-					</td>
-				</tr>
+			<h3 v-show="! recordsNew">No records to display</h3>
+		</transition>
+
+		<transition name="fade">
+			<table class="table table-responsive table-sm table-dark table-hover" v-show="recordsNew">
+				<thead>
+					<tr>
+						<th>Event</th>
+						<th>Athlete</th>
+						<th>Performance</th>
+						<th>Country</th>
+						<th>Date</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr v-for="(record, index) in recordsNew">
+						<td><strong>{{record.eventName}}</strong></td>
+						<td>{{record.nameFirst}} {{record.nameLast}}</td>
+						<td>{{record.result | removeLeadZeros}}</td>
+						<td>{{record.country}}</td>
+						<td>{{record.date}}</td>
+					</tr>
+				</tbody>
 			</table>
 		</transition>
 
-		<h3 v-show="! recordsNew">No records to display</h3>
+		
+			
 
 		<!-- 
 		| WHAT: Top Performances listing
@@ -70,23 +81,21 @@
 		| POINTS TO NOTE: Loops through the 'athletes' array (of objects) and display data  
 		 -->
 		<button class="btn btn-info" @click="showTopPerformers">Results</button>
-		<table class="table table-dark" v-show="athletes[0]">
-			<tr>
-				<th>Event</th>
-				<th>Athlete</th>
-				<th>Performance</th>
-			</tr>
-			<tr v-for="(athlete, index) in athletes">
-				<td>
-					<strong>{{athlete.eventName}}</strong>
-				</td>
-				<td>
-					{{athlete.nameFirst}} {{athlete.nameLast}}
-				</td>
-				<td>
-					{{athlete.distHeight | removeLeadZeros}} {{athlete.time | removeLeadZeros}}
-				</td>
-			</tr>
+		<table class="table table-responsive table-sm table-dark table-hover" v-show="athletes[0]">
+			<thead>
+				<tr>
+					<th>Event</th>
+					<th>Athlete</th>
+					<th>Performance</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr v-for="(athlete, index) in athletes">
+					<td><strong>{{athlete.eventName}}</strong></td>
+					<td>{{athlete.nameFirst}} {{athlete.nameLast}}</td>
+					<td>{{athlete.distHeight | removeLeadZeros}} {{athlete.time | removeLeadZeros}}</td>
+				</tr>
+			</tbody>
 		</table>
 
 		<hr>
@@ -237,15 +246,18 @@ export default {
 		margin: 0 10px;
 	}
 
-	a {
-		color: #42b983;
+	li a.router-link-active,
+	li a.router-link-exact-active {
+		color: #fff;
+		background-color: #17a2b8;
+		cursor: pointer;
 	}
 
 	.fade-enter-active, .fade-leave-active {
-	  transition: opacity .9s;
+		transition: opacity .9s;
 	}
 	.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
-	  opacity: 0;
+		opacity: 0;
 	}
 }
 
