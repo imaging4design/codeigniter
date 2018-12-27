@@ -15,7 +15,7 @@
 
 		<router-view></router-view>
 
-		<h1>Records</h1>
+		
 		<!-- 
 		| WHAT: Form to select records
 		| DESCRIPTION: Displays a form on page to allow the user to select records based on 'age group' and 'record type'
@@ -34,8 +34,8 @@
 				<option v-for="(value, key, index) in inOutOptions" :value="key">{{value}}</option>
 			</select>
 
-			<list-record-type v-model="recordType" ></list-record-type>
-			<list-age-groups v-model="ageGroup" ></list-age-groups>	
+			<list-record-type v-model="recordType"></list-record-type>
+			<list-age-groups v-model="ageGroup"></list-age-groups>	
 
 			<button type="submit" @click="records" class="btn btn-info">Submit</button>
 		
