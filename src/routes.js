@@ -3,9 +3,11 @@
 | Import components
 |***********************************************************************
 */
-import ListAgeGroups from './global_helpers/ListAgeGroups';
-import ListRecordType from './global_helpers/ListRecordType';
-import TestVue from './TestVue';
+//import ListAgeGroups from './global_helpers/ListAgeGroups';
+//import ListRecordType from './global_helpers/ListRecordType';
+import App from './App';
+import TopPerfs from './TopPerfs';
+import Records from './Records';
 
 /*
 |***********************************************************************
@@ -13,7 +15,7 @@ import TestVue from './TestVue';
 |***********************************************************************
 */
 export const routes = [
-	{ path: '/', component: ListAgeGroups },
-	{ path: '/test', component: ListRecordType },
-	{ path: '/routes', component: TestVue }
+	{ path: '/', component: App },
+	{ path: '/records', component: Records },
+	{ path: '/top-perfs', component: TopPerfs }
 ]
