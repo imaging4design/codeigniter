@@ -49,7 +49,7 @@
 export default {
 	data() {
 		return {
-			url: 'http://localhost/codeigniter/',
+			//url: 'http://localhost/codeigniter/',
 			//url: 'http://www.dev-anzrankings.org.nz/',
 			athletes: [],
 			multi: [],
@@ -81,7 +81,6 @@ export default {
 			})
 			.then((response) => {
 				this.multi = response.data.topPerformers_Multis;
-				//console.log(response.data);
 			})
 		},
 		showTopRelays() {
@@ -92,7 +91,6 @@ export default {
 			})
 			.then((response) => {
 				this.relays = response.data.topPerformers_Relays;
-				//console.log(response.data);
 			})
 		}
 	},

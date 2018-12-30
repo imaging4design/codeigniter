@@ -1,6 +1,13 @@
 <template>
-	<div id="app">	
+	<div id="app">
+		<header>
+			<p>This is my header</p>
+		</header>
 		<navigation></navigation>
+		<router-view></router-view>
+		<footer>
+			<p>this is my footer</p>
+		</footer>
 	</div>
 </template>
 

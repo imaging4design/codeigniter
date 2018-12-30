@@ -50,7 +50,7 @@
 						
 						<!-- Rank No. do not show number if previous performances is same (e.g. 10.38 / 10.38) -->
 						<template v-if="recordsNew[index-1]">
-							<td v-if="record.date == recordsNew[index-1].date"><!-- i.e. the previous perf -->
+							<td v-if="record.country == recordsNew[index-1].country"><!-- i.e. the previous perf -->
 								&nbsp;
 							</td>
 							<td v-else>
