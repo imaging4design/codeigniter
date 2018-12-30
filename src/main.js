@@ -24,6 +24,7 @@ axios.defaults.baseURL = 'http://localhost/codeigniter/';
 // Initialise router
 Vue.use(VueRouter);
 const router = new VueRouter({
+	mode: 'history',
 	routes: routes
 });
 

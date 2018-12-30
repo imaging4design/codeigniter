@@ -15,7 +15,18 @@ import Records from './Records';
 |***********************************************************************
 */
 export const routes = [
-	{ path: '/', component: App },
+	{ path: '/', component: Records },
 	{ path: '/records', component: Records },
-	{ path: '/top-perfs', component: TopPerfs }
+	{ path: '/top-perfs', component: TopPerfs },
+	{ path: '*', redirect: '/' },
+
+	{ 
+		path: '/records/:recordType', 
+		name: 'records', 
+		component: Records, 
+		props: true  
+	}
+
 ]
+
+

@@ -10,6 +10,7 @@
 		| On submit: call the records() function
 		 -->
 
+
 		<form v-on:submit.prevent>
 
 			<select v-model="in_out" class="form-control">
@@ -81,6 +82,7 @@ import ListRecordType from './global_helpers/ListRecordType.vue';
 import ListAgeGroups from './global_helpers/ListAgeGroups.vue';
 
 export default {
+
 	data() {
 		return {
 			//url: 'http://localhost/codeigniter/',
@@ -89,16 +91,12 @@ export default {
 			token: null,
 			recordType: 'NN',
 			ageGroup: 'MS',
+			in_out: 'out',
 			inOutOptions: { 
 				'out': 'Outdoors',
 				'in': 'Indoors'
-			},
-			in_out: 'out'
+			}
 		}
-	},
-	
-	created() {
-		//this.ageGroupOptions();
 	},
 
 	components: {
@@ -123,6 +121,10 @@ export default {
 				console.error('GAVINS ERROR: ' + error);
 			})
 		}
+	},
+
+	created() {
+		//this.records();
 	},
 
 	filters: {
