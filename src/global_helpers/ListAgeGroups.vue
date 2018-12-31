@@ -16,9 +16,15 @@
 			return {
 				age_options: {
 					'MS': 'Mens Open',
+					'M19': 'Men under 20',
+					'M18': 'Men under 19',
+					'M17': 'Men under 18',
+					'M16': 'Men under 17',
 					'WS': 'Womens Open',
-					'M19': 'Junior Men',
-					'W19': 'Junior Women'
+					'W19': 'Women under 20',
+					'W18': 'Women under 19',
+					'W17': 'Women under 18',
+					'W16': 'Women under 17'
 				}
 			}
 		}

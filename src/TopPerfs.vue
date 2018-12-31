@@ -4,7 +4,8 @@
 		| WHAT: Top Performances listing
 		| DESCRIPTION: A listing of the top performances of teh current year
 		| POINTS TO NOTE: Loops through the 'athletes' array (of objects) and display data  
-		 -->
+		-->
+
 		<button class="btn btn-info" @click="showTopPerformers">Results</button>
 		<table class="table table-responsive-sm table-dark table-hover" v-show="athletes[0]">
 			<thead>

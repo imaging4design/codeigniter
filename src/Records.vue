@@ -8,7 +8,12 @@
 		| Loop through the 'record_options' data object as key/values in the 'Record' type dropdown
 		| Loop through the 'age_options' data object as key/values in the 'Age Group' type dropdown
 		| On submit: call the records() function
-		 -->
+		-->
+
+		<!-- <button @click="test">click</button> -->
+
+		<hr>
+
 
 		<p>{{this.$route.query.recordType}}</p>
 		<p>{{this.$route.query.ageGroup}}</p>
@@ -16,16 +21,16 @@
 
 		<form v-on:submit.prevent>
 
-			<select v-model="in_out" class="form-control">
+			<select v-model="queryParams.in_out" class="form-control">
 				<option disabled value="">Please select one</option>
 				<!-- Loop through the record option/values pulled in from 'record_options' -->
 				<option v-for="(value, key, index) in inOutOptions" :value="key">{{value}}</option>
 			</select>
 
-			<list-record-type v-model="recordType"></list-record-type>
-			<list-age-groups v-model="ageGroup"></list-age-groups>	
+			<list-record-type v-model="queryParams.recordType"></list-record-type>
+			<list-age-groups v-model="queryParams.ageGroup"></list-age-groups>	
 
-			<button type="submit" @click="records" class="btn btn-info">Submit</button>
+			<button type="submit" @click="fetchFormParams" class="btn btn-info">Submit</button>
 		
 		</form>
 
@@ -46,6 +51,7 @@
 						<th>Athlete</th>
 						<th>Performance</th>
 						<th>Country</th>
+						<th>Venue</th>
 						<th>Date</th>
 					</tr>
 				</thead>
@@ -69,6 +75,7 @@
 						<td>{{record.nameFirst}} {{record.nameLast}}</td>
 						<td>{{record.result | removeLeadZeros}}</td>
 						<td>{{record.country}}</td>
+						<td>{{record.venue}}</td>
 						<td>{{record.date}}</td>
 
 					</tr>
@@ -90,9 +97,11 @@ export default {
 		return {
 			recordsNew: [],
 			token: null,
-			recordType: 'NN',
-			ageGroup: 'MS',
-			in_out: 'out',
+			queryParams: {
+				recordType: 'NN',
+				ageGroup: 'MS',
+				in_out: 'out',
+			},
 			inOutOptions: { 
 				'out': 'Outdoors',
 				'in': 'Indoors'
@@ -106,13 +115,24 @@ export default {
 	},
 
 	methods: {
-		records() {
+
+		fetchQueryStringParams() {
+			this.queryParams = {
+				recordType: this.$route.query.recordType ? this.$route.query.recordType : this.queryParams.recordType,
+				ageGroup: this.$route.query.ageGroup ? this.$route.query.ageGroup : this.queryParams.ageGroup,
+				in_out: this.$route.query.in_out ? this.$route.query.in_out : this.queryParams.in_out
+			}
+			this.fetchFormParams()
+		},
+
+		fetchFormParams() {
+			this.$router.push({
+				path: '/records', 
+				query: this.queryParams
+			});
+
 			this.$http.get('site/Records_con/index', {
-				params: {
-					recordType: this.$route.query.recordType ? this.$route.query.recordType : this.recordType,
-					ageGroup: this.$route.query.ageGroup ? this.$route.query.ageGroup : this.ageGroup,
-					in_out: this.$route.query.in_out ? this.$route.query.in_out : this.in_out
-				}
+				params: this.queryParams
 			})
 			.then((response) => {
 				this.token = response.data.token;
@@ -126,8 +146,8 @@ export default {
 	},
 
 	created() {
-		this.records();
-	},
+		this.fetchQueryStringParams();
+	},	
 
 	filters: {
 		removeLeadZeros(value) {
