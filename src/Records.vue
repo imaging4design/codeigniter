@@ -10,14 +10,7 @@
 		| On submit: call the records() function
 		-->
 
-		<!-- <button @click="test">click</button> -->
-
 		<hr>
-
-
-		<p>{{this.$route.query.recordType}}</p>
-		<p>{{this.$route.query.ageGroup}}</p>
-		<p>{{this.$route.query.in_out}}</p>
 
 		<form v-on:submit.prevent>
 
@@ -99,7 +92,7 @@ export default {
 			token: null,
 			queryParams: {
 				recordType: 'NN',
-				ageGroup: 'MS',
+				ageGroup: 'WS',
 				in_out: 'out',
 			},
 			inOutOptions: { 
