@@ -6,7 +6,7 @@
 		| POINTS TO NOTE: Loops through the 'athletes' array (of objects) and display data  
 		 -->
 		<button class="btn btn-info" @click="showTopPerformers">Results</button>
-		<table class="table table-responsive table-sm table-dark table-hover" v-show="athletes[0]">
+		<table class="table table-responsive-sm table-dark table-hover" v-show="athletes[0]">
 			<thead>
 				<tr>
 					<th>Event</th>

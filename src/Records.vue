@@ -10,6 +10,9 @@
 		| On submit: call the records() function
 		 -->
 
+		<p>{{this.$route.query.recordType}}</p>
+		<p>{{this.$route.query.ageGroup}}</p>
+		<p>{{this.$route.query.in_out}}</p>
 
 		<form v-on:submit.prevent>
 
@@ -35,7 +38,7 @@
 		</transition>
 
 		<transition name="fade">
-			<table class="table table-responsive table-sm table-dark table-hover" v-show="recordsNew">
+			<table class="table table-responsive-sm table-dark table-hover" v-show="recordsNew">
 				<thead>
 					<tr>
 						<th>Rank</th>
@@ -85,8 +88,6 @@ export default {
 
 	data() {
 		return {
-			//url: 'http://localhost/codeigniter/',
-			//url: 'http://www.dev-anzrankings.org.nz/',
 			recordsNew: [],
 			token: null,
 			recordType: 'NN',
@@ -108,11 +109,12 @@ export default {
 		records() {
 			this.$http.get('site/Records_con/index', {
 				params: {
-					recordType: this.recordType,
-					ageGroup: this.ageGroup,
-					in_out: this.in_out
+					recordType: this.$route.query.recordType ? this.$route.query.recordType : this.recordType,
+					ageGroup: this.$route.query.ageGroup ? this.$route.query.ageGroup : this.ageGroup,
+					in_out: this.$route.query.in_out ? this.$route.query.in_out : this.in_out
 				}
-			}).then((response) => {
+			})
+			.then((response) => {
 				this.token = response.data.token;
 				this.recordsNew = response.data.get_records;
 				//console.log(response.data);
@@ -124,7 +126,7 @@ export default {
 	},
 
 	created() {
-		//this.records();
+		this.records();
 	},
 
 	filters: {

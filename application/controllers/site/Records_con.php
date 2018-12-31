@@ -54,7 +54,6 @@ class Records_con extends CI_Controller {
 			{
 				$data['get_records'] = $query;
 			}
-			
 		}
 		else
 		{
@@ -62,7 +61,6 @@ class Records_con extends CI_Controller {
 		}
 		
 		$data['token'] = $this->auth->token();
-		
 		$data['main_content'] = 'site/records';
 		$this->load->view('site/includes/template', $data);
 	

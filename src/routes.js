@@ -18,14 +18,7 @@ export const routes = [
 	{ path: '/', component: Records },
 	{ path: '/records', component: Records },
 	{ path: '/top-perfs', component: TopPerfs },
-	{ path: '*', redirect: '/' },
-
-	{ 
-		path: '/records/:recordType', 
-		name: 'records', 
-		component: Records, 
-		props: true  
-	}
+	{ path: '*', redirect: '/' }
 
 ]
 
