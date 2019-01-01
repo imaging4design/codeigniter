@@ -24,7 +24,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |
 */
 $config['base_url']	= 'http://localhost/codeigniter';
-//$config['base_url']	= 'http://www.dev-anzrankings.org.nz/';
+//$config['base_url']	= 'http://www.dev-anzrankings.org.nz';
 $config['server_root'] = $_SERVER['DOCUMENT_ROOT'];
 $config['fonts_path']= "system/fonts/";
 
@@ -327,7 +327,7 @@ $config['cache_query_string'] = FALSE;
 | https://codeigniter.com/user_guide/libraries/encryption.html
 |
 */
-$config['encryption_key'] = '';
+$config['encryption_key'] = '3904d962025f20f11c8796780902953d';
 
 /*
 |--------------------------------------------------------------------------

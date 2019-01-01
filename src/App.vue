@@ -29,6 +29,7 @@ export default {
 	text-align: left;
 	color: #2c3e50;
 	margin-top: 60px;
+	-webkit-appearance: none;
 
 	ul {
 		list-style-type: none;

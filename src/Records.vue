@@ -8,7 +8,7 @@
 		| Loop through the 'record_options' data object as key/values in the 'Record' type dropdown
 		| Loop through the 'age_options' data object as key/values in the 'Age Group' type dropdown
 		| On submit: call the records() function
-		-->
+		-->		
 
 		<hr>
 
@@ -130,15 +130,16 @@ export default {
 			.then((response) => {
 				this.token = response.data.token;
 				this.recordsNew = response.data.get_records;
-				//console.log(response.data);
 			})
 			.catch((error) => {
 				console.error('GAVINS ERROR: ' + error);
 			})
+
+			console.log(this.queryParams.recordType)
 		}
 	},
 
-	created() {
+	mounted() {
 		this.fetchQueryStringParams();
 	},	
 

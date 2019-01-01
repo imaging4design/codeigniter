@@ -12,19 +12,21 @@ import Navigation from './Navigation.vue'
 */
 // Make axios globally accessible
 Vue.prototype.$http = axios;
-// Set default URL
-axios.defaults.baseURL = 'http://localhost/codeigniter/';
-//axios.defaults.baseURL = 'http://www.dev-anzrankings.org.nz/';
+// Set default URL 
+//axios.defaults.baseURL = 'http://localhost/codeigniter/';
+axios.defaults.baseURL = 'http://www.dev-anzrankings.org.nz/';
 
 /*
 |***********************************************************************
 | VUE ROUTER
 |***********************************************************************
 */
+Vue.config.devtools = true;
 // Initialise router
 Vue.use(VueRouter);
 const router = new VueRouter({
-	mode: 'history',
+	// hashbang:false,
+	// mode: 'history',
 	routes: routes
 });
 
