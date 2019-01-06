@@ -1,11 +1,18 @@
 <template>
 	<div>
 		<h3>Age Groups</h3>
-		<select v-bind:value="value" v-on:input="$emit('input', $event.target.value)" class="form-control">
+		<!-- <select v-bind:value="value" v-on:input="$emit('input', $event.target.value)" class="form-control">
 			<option disabled value="">Select Age Group</option>
-			<!-- Loop through the ageGroup options/values pulled in from 'age_options' -->
+			Loop through the ageGroup options/values pulled in from 'age_options'
 			<option v-for="(value, key, index) in age_options" v-bind:value="key">{{value}}</option>
-		</select>
+		</select> -->
+
+		<div v-for="(value, key, index) in age_options">
+			<label>
+				<input type="radio" :checked="key === $route.query.ageGroup" v-bind:value="key" name="ageGroup" @change="$emit('input', $event.target.value)" > {{value}}
+			</label>
+		</div>
+
 	</div>
 </template>
 

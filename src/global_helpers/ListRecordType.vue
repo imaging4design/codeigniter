@@ -6,12 +6,11 @@
 			Loop through the ageGroup options/values pulled in from 'recordType'
 			<option v-for="(value, key, index) in recordType" v-bind:value="key">{{value}}</option>
 		</select> -->
-		<div v-for="(value, key, index) in recordTypee">
+		<div v-for="(value, key, index) in recordType">
 			<label>
-				<input type="radio" :checked="key === $route.query.recordType" v-bind:value="key" name="recordType" v-on:change="$emit('input', $event.target.value)" > {{value}}
+				<input type="radio" :checked="key === $route.query.recordType" v-bind:value="key" name="recordType" @change="$emit('input', $event.target.value)"> {{value}}
 			</label>
 		</div>
-		
 	</div>
 </template>
 
@@ -23,7 +22,7 @@
 		props: ['value'],
 		data: function(){
 			return {
-				recordTypee: {
+				recordType: {
 					'AC': 'Allcomers',
 					'NN': 'NZ National',
 					'RR': 'NZ Resident'

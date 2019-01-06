@@ -92,7 +92,7 @@ export default {
 			token: null,
 			queryParams: {
 				recordType: 'NN',
-				ageGroup: 'WS',
+				ageGroup: 'MS',
 				in_out: 'out',
 			},
 			inOutOptions: { 
@@ -108,6 +108,10 @@ export default {
 	},
 
 	methods: {
+
+		test(){
+			alert('hellp')
+		},
 
 		fetchQueryStringParams() {
 			this.queryParams = {
