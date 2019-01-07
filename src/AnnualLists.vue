@@ -95,7 +95,7 @@ export default {
 			token: null,
 			queryParams: {
 				ageGroup: 'MS',
-				list_depth: '50',
+				list_depth: '10',
 				list_type: '0',
 				eventID: '1',
 				year: '2017'
