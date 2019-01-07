@@ -9,7 +9,11 @@
 
 		<div v-for="(value, key, index) in age_options">
 			<label>
-				<input type="radio" :checked="key === $route.query.ageGroup" v-bind:value="key" name="ageGroup" @change="$emit('input', $event.target.value)" > {{value}}
+				<input type="radio" 
+				v-bind:checked="key === $route.query.ageGroup" 
+				v-bind:value="key" 
+				name="ageGroup" 
+				v-on:change="$emit('input', $event.target.value)" > {{value}}
 			</label>
 		</div>
 

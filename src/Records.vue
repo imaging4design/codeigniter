@@ -21,7 +21,7 @@
 			</select>
 
 			<list-record-type v-model="queryParams.recordType"></list-record-type>
-			<list-age-groups v-model="queryParams.ageGroup"></list-age-groups>	
+			<list-age-groups v-model="queryParams.ageGroup"></list-age-groups>
 
 			<button type="submit" @click="fetchFormParams" class="btn btn-info">Submit</button>
 		
@@ -109,10 +109,6 @@ export default {
 
 	methods: {
 
-		test(){
-			alert('hellp')
-		},
-
 		fetchQueryStringParams() {
 			this.queryParams = {
 				recordType: this.$route.query.recordType ? this.$route.query.recordType : this.queryParams.recordType,
@@ -124,7 +120,7 @@ export default {
 
 		fetchFormParams() {
 			this.$router.push({
-				path: '/records', 
+				path: '/nz-records', 
 				query: this.queryParams
 			});
 

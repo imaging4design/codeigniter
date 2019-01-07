@@ -10,8 +10,9 @@ import Navigation from './Navigation.vue'
 | AXIOS http
 |***********************************************************************
 */
-// Make axios globally accessible
+// Make axios globally accessible via $http
 Vue.prototype.$http = axios;
+
 // Set default URL 
 //axios.defaults.baseURL = 'http://localhost/codeigniter/';
 axios.defaults.baseURL = 'http://www.dev-anzrankings.org.nz/';

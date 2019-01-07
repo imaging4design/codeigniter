@@ -1,12 +1,20 @@
 <template>
-	<div>
+	<div id="top-perfs">
 	  	<!-- 
 		| WHAT: Top Performances listing
 		| DESCRIPTION: A listing of the top performances of teh current year
 		| POINTS TO NOTE: Loops through the 'athletes' array (of objects) and display data  
 		-->
 
-		<button class="btn btn-info" @click="showTopPerformers">Results</button>
+		<button class="btn btn-info" @click="showTopPerformers('MS')">Men Senior</button>
+		<button class="btn btn-info" @click="showTopPerformers('WS')">Women Senior</button>
+		<button class="btn btn-info" @click="showTopPerformers('M19')">Men Under 20</button>
+		<button class="btn btn-info" @click="showTopPerformers('W19')">Women Under 20</button>
+		<button class="btn btn-info" @click="showTopPerformers('M17')">Men Under 17</button>
+		<button class="btn btn-info" @click="showTopPerformers('W17')">Women Under 17</button>
+
+		<div class="loadingIcon" v-show="!loadingIcon"><i class="fas fa-cog fa-5x fa-spin"></i></div>
+
 		<table class="table table-responsive-sm table-dark table-hover" v-show="athletes[0]">
 			<thead>
 				<tr>
@@ -50,8 +58,10 @@
 export default {
 	data() {
 		return {
-			//url: 'http://localhost/codeigniter/',
-			//url: 'http://www.dev-anzrankings.org.nz/',
+			loadingIcon: false,
+			queryParams: {
+				ageGroup: 'WS'
+			},
 			athletes: [],
 			multi: [],
 			relays: []
@@ -63,15 +73,17 @@ export default {
 	},
 
 	methods: {
-		showTopPerformers() {
+		showTopPerformers(ageGroup) {
+			this.loadingIcon = true;
 			this.$http.get('site/Home_con/showTopPerformers', {
 				params: {
-					ageGroup: this.ageGroup,
+					ageGroup: ageGroup,
 				}
 			})
 			.then((response) => {
 				this.athletes = response.data.topPerformers;
 				//console.log(response.data);
+				this.loadingIcon = false;
 			})
 		},
 		showTopMultis() {
@@ -105,3 +117,21 @@ export default {
 	} // ENDS filters
 };
 </script>
+
+<style lang="scss">
+
+	#top-perfs {
+		.loadingIcon {
+			position: relative;
+			i.fas {
+				position: absolute;
+				color: #fff;
+				left: 50%;
+				transform: translate(-50%);
+			} 
+		}
+			
+	}
+	
+
+</style>

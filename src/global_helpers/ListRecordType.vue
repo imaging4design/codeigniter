@@ -8,7 +8,11 @@
 		</select> -->
 		<div v-for="(value, key, index) in recordType">
 			<label>
-				<input type="radio" :checked="key === $route.query.recordType" v-bind:value="key" name="recordType" @change="$emit('input', $event.target.value)"> {{value}}
+				<input type="radio" 
+				v-bind:checked="key === $route.query.recordType" 
+				v-bind:value="key" 
+				name="recordType" 
+				v-on:change="$emit('input', $event.target.value)"> {{value}}
 			</label>
 		</div>
 	</div>
