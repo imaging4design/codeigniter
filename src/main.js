@@ -14,8 +14,8 @@ import Navigation from './Navigation.vue'
 Vue.prototype.$http = axios;
 
 // Set default URL 
-//axios.defaults.baseURL = 'http://localhost/codeigniter/';
-axios.defaults.baseURL = 'http://www.dev-anzrankings.org.nz/';
+axios.defaults.baseURL = 'http://localhost/codeigniter/';
+//axios.defaults.baseURL = 'http://www.dev-anzrankings.org.nz/';
 
 /*
 |***********************************************************************
@@ -38,6 +38,17 @@ const router = new VueRouter({
 */
 // Register global components
 Vue.component('navigation', Navigation);
+
+/*
+|***********************************************************************
+| VUE GLOBAL FILTERS
+|***********************************************************************
+*/
+Vue.filter('removeLeadZeros', function (value) {
+  if (!value) return ''
+  value = value.toString()
+  return value.replace(/^0+(?!\.|$)/, '');
+});
 
 /*
 |***********************************************************************

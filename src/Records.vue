@@ -1,5 +1,7 @@
 <template>
-	<div>
+	<div id="records">
+
+		<h1>NZ Records</h1>
 		<!-- 
 		| WHAT: Form to select records
 		| DESCRIPTION: Displays a form on page to allow the user to select records based on 'age group' and 'record type'
@@ -130,6 +132,7 @@ export default {
 			.then((response) => {
 				this.token = response.data.token;
 				this.recordsNew = response.data.get_records;
+				//console.log('FULL RESPONSE: ', response.data.get_records)
 			})
 			.catch((error) => {
 				console.error('GAVINS ERROR: ' + error);
@@ -143,12 +146,12 @@ export default {
 		this.fetchQueryStringParams();
 	},	
 
-	filters: {
-		removeLeadZeros(value) {
-			if (!value) { return ''; }
-			value = value.toString();
-			return value.replace(/^0+(?!\.|$)/, '');
-		}
-	} // ENDS filters
+	// filters: {
+	// 	removeLeadZeros(value) {
+	// 		if (!value) { return ''; }
+	// 		value = value.toString();
+	// 		return value.replace(/^0+(?!\.|$)/, '');
+	// 	}
+	// } // ENDS filters
 };
 </script>

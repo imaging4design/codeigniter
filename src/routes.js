@@ -6,6 +6,7 @@
 //import ListAgeGroups from './global_helpers/ListAgeGroups';
 //import ListRecordType from './global_helpers/ListRecordType';
 import App from './App';
+import AnnualLists from './AnnualLists';
 import TopPerfs from './TopPerfs';
 import Records from './Records';
 
@@ -16,6 +17,7 @@ import Records from './Records';
 */
 export const routes = [
 	{ path: '/', name: 'RecordsHome', component: Records },
+	{ path: '/annual-lists', name: 'AnnualLists', component: AnnualLists },
 	{ path: '/nz-records', name: 'Records', component: Records },
 	{ path: '/top-perfs', name: 'TopPerfs', component: TopPerfs },
 	{ path: '*', redirect: '/' }

@@ -1,5 +1,9 @@
 <template>
 	<div id="top-perfs">
+
+		<h1>Top Performers</h1>
+		
+		<hr>
 	  	<!-- 
 		| WHAT: Top Performances listing
 		| DESCRIPTION: A listing of the top performances of teh current year
@@ -13,7 +17,7 @@
 		<button class="btn btn-info" @click="showTopPerformers('M17')">Men Under 17</button>
 		<button class="btn btn-info" @click="showTopPerformers('W17')">Women Under 17</button>
 
-		<div class="loadingIcon" v-show="!loadingIcon"><i class="fas fa-cog fa-5x fa-spin"></i></div>
+		<div class="loadingIcon" v-show="loadingIcon"><i class="fas fa-cog fa-5x fa-spin"></i></div>
 
 		<table class="table table-responsive-sm table-dark table-hover" v-show="athletes[0]">
 			<thead>
@@ -21,13 +25,17 @@
 					<th>Event</th>
 					<th>Athlete</th>
 					<th>Performance</th>
+					<th>Competition</th>
+					<th>Date</th>
 				</tr>
 			</thead>
-			<tbody>
+			<tbody v-if="athletes">
 				<tr v-for="(athlete, index) in athletes">
 					<td><strong>{{athlete.eventName}}</strong></td>
 					<td>{{athlete.nameFirst}} {{athlete.nameLast}}</td>
 					<td>{{athlete.distHeight | removeLeadZeros}} {{athlete.time | removeLeadZeros}}</td>
+					<td>{{athlete.competition}}</td>
+					<td>{{athlete.date}}</td>
 				</tr>
 			</tbody>
 		</table>
@@ -36,19 +44,24 @@
 
 		<button class="btn btn-info" @click="showTopMultis">Show Multis</button>
 		<ul>
-			<li>
+			<li v-if="multi">
 				<strong>{{multi.eventName}}</strong> {{multi.nameFirst}} {{multi.nameLast}} {{multi.points}}
 			</li>
 		</ul>
+
+		<p v-if="!multi">No multis listings at this time</p>
 
 		<hr>
 
 		<button class="btn btn-info" @click="showTopRelays">Show Relays</button>
 		<ul>
-			<li v-for="relay in relays">
+			<li v-if="relays" v-for="relay in relays">
 				<strong>{{relay.eventName}}</strong> {{relay.nameFirst}} {{relay.nameLast}} {{relay.distHeight}} {{relay.time}} {{relay.athlete01}}, {{relay.athlete02}}, {{relay.athlete03}}, {{relay.athlete04}}
 			</li>
 		</ul>
+
+		<p v-if="!relays">No relays listings at this time</p>
+
 	</div>
 </template>
 
@@ -82,8 +95,8 @@ export default {
 			})
 			.then((response) => {
 				this.athletes = response.data.topPerformers;
-				//console.log(response.data);
 				this.loadingIcon = false;
+				//console.log(response.data);
 			})
 		},
 		showTopMultis() {
@@ -121,16 +134,17 @@ export default {
 <style lang="scss">
 
 	#top-perfs {
+		position: relative;
 		.loadingIcon {
-			position: relative;
+			width: 100%;
+			position: absolute;
+			// background: green;
+			text-align: center;
 			i.fas {
-				position: absolute;
 				color: #fff;
-				left: 50%;
-				transform: translate(-50%);
+				margin: 40px auto;
 			} 
 		}
-			
 	}
 	
 

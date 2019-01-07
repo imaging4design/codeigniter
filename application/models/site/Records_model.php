@@ -22,7 +22,7 @@ class Records_Model extends CI_Model
 	{
 
 		// Need this to grab both records from M19/M18 for juniors / youths etc
-		switch ($this->input->post('ageGroup')){
+		switch ($this->input->get('ageGroup')){
 			case 'MS':
 				$this->ageGroup = 'MS';
 			break;
@@ -49,7 +49,7 @@ class Records_Model extends CI_Model
 		$this->db->where('recordType', 'NN');
 		$this->db->where('in_out', 'out');
 		$this->db->where_in('ageGroup', $this->ageGroup);
-		$this->db->where('records.eventID', $this->input->post('eventID'));
+		$this->db->where('records.eventID', $this->input->get('eventID'));
 		$this->db->join('events', 'events.eventID = records.eventID');
 		$this->db->order_by('ageGroup', 'DESC');
 		$this->db->order_by('date', 'DESC');
@@ -147,9 +147,9 @@ class Records_Model extends CI_Model
 	{
 		$this->db->select('*');
 		$this->db->select("DATE_FORMAT(records.date, '%d %b %Y') AS date", FALSE);
-		$this->db->where('recordType', $this->input->post('recordType'));
+		$this->db->where('recordType', $this->input->get('recordType'));
 		$this->db->where('in_out', 'in');
-		$this->db->where('ageGroup', $this->input->post('ageGroup'));
+		$this->db->where('ageGroup', $this->input->get('ageGroup'));
 		$this->db->join('events_indoors', 'events_indoors.eventID = records.eventID');
 		$this->db->order_by('records.eventID', 'ASC');
 		$query = $this->db->get('records');

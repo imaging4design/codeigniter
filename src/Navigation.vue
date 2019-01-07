@@ -5,6 +5,9 @@
 				<router-link to="/" class="nav-link" exact>Home</router-link>
 			</li> -->
 			<li class="nav-item">
+				<router-link to="/annual-lists" class="nav-link">Annual Lists</router-link>
+			</li>
+			<li class="nav-item">
 				<router-link to="/nz-records" class="nav-link">Records</router-link>
 			</li>
 			<li class="nav-item">
