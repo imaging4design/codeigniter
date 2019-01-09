@@ -19,8 +19,8 @@
 		<p>Current NZ Record</p>
 		<ul>
 			<li v-for="record in current_nz_record">
-				{{record.nameFirst}}
-				{{record.nameLast}} / 
+				<strong>{{record.nameFirst}}</strong>
+				<strong>{{record.nameLast}}</strong> / 
 				{{record.ageGroup}} / 
 				{{record.result}} / 
 				{{record.venue}} / 
@@ -47,8 +47,6 @@
 			<tbody>
 				<tr v-for="(result, index) in resultsList" :key="index">
 					
-					
-
 					<!-- Rank No. do not show number if previous performances is same (e.g. 10.38 / 10.38) -->
 					<template v-if="resultsList[index-1]">
 						<td v-if="result.time == resultsList[index-1].time 
@@ -97,8 +95,8 @@ export default {
 				ageGroup: 'MS',
 				list_depth: '10',
 				list_type: '0',
-				eventID: '1',
-				year: '2017'
+				eventID: '33',
+				year: '2019'
 			},
 			resultsList: [],
 			current_nz_record: []
@@ -170,6 +168,11 @@ export default {
 				color: #fff;
 				margin: 40px auto;
 			} 
+		}
+		ul {
+			li {
+				margin: 0;
+			}
 		}
 	}
 	
