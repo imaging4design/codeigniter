@@ -6,7 +6,9 @@
 		<hr>
 
 		<form v-on:submit.prevent>
-
+			<list-years v-model="queryParams.year"></list-years>
+			<list-depth v-model="queryParams.list_depth"></list-depth>
+			<list-type v-model="queryParams.list_type"></list-type>
 			<list-events v-model="queryParams.eventID"></list-events>
 			<list-age-groups v-model="queryParams.ageGroup"></list-age-groups>
 
@@ -83,8 +85,10 @@
 <script>
 //import axios from 'axios';
 import ListEvents from './global_helpers/ListEvents.vue';
-import ListRecordType from './global_helpers/ListRecordType.vue';
 import ListAgeGroups from './global_helpers/ListAgeGroups.vue';
+import ListYears from './global_helpers/ListYears.vue';
+import ListDepth from './global_helpers/ListDepth.vue';
+import ListType from './global_helpers/ListType.vue';
 
 export default {
 	data() {
@@ -93,8 +97,8 @@ export default {
 			token: null,
 			queryParams: {
 				ageGroup: 'MS',
-				list_depth: '10',
-				list_type: '0',
+				list_depth: '250',
+				list_type: '1',
 				eventID: '33',
 				year: '2019'
 			},
@@ -106,7 +110,9 @@ export default {
 	components: {
 		'ListEvents': ListEvents,
 		'ListAgeGroups': ListAgeGroups,
-		'ListRecordType': ListRecordType
+		'ListYears': ListYears,
+		'ListDepth': ListDepth,
+		'ListType': ListType
 	},
 
 	methods: {
