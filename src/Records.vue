@@ -23,7 +23,7 @@
 			</select>
 
 			<list-record-types v-model="queryParams.recordType"></list-record-types>
-			<list-age-groups v-model="queryParams.ageGroup"></list-age-groups>
+			<list-age-groups-recs v-model="queryParams.ageGroup"></list-age-groups-recs>
 
 			<button type="submit" @click="fetchFormParams" class="btn btn-info">Submit</button>
 		
@@ -84,7 +84,7 @@
 <script>
 //import axios from 'axios';
 import ListRecordTypes from './global_helpers/ListRecordTypes.vue';
-import ListAgeGroups from './global_helpers/ListAgeGroups.vue';
+import ListAgeGroupsRecs from './global_helpers/ListAgeGroupsRecs.vue';
 
 export default {
 
@@ -105,7 +105,7 @@ export default {
 	},
 
 	components: {
-		'ListAgeGroups': ListAgeGroups,
+		'ListAgeGroupsRecs': ListAgeGroupsRecs,
 		'ListRecordTypes': ListRecordTypes
 	},
 

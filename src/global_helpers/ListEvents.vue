@@ -1,13 +1,13 @@
 <template>
 	<div>
 		<h3>Events</h3>
-		<!-- <select v-bind:value="value" v-on:input="$emit('input', $event.target.value)" class="form-control">
+		<select v-bind:value="value" v-on:input="$emit('input', $event.target.value)" class="form-control">
 			<option disabled value="">Select Age Group</option>
 			Loop through the ageGroup options/values pulled in from 'events'
-			<option v-for="(value, key, index) in events" v-bind:value="key">{{value}}</option>
-		</select> -->
+			<option v-for="(value, key, index) in events" v-bind:value="key">{{value.eventName}}</option>
+		</select>
 
-		<div v-for="(value, key, index) in events">
+		<!-- <div v-for="(value, key, index) in events">
 			<label>
 
 				<input type="radio" 
@@ -16,14 +16,14 @@
 				name="eventID" 
 				v-on:change="$emit('input', $event.target.value)" > {{value.eventName}}
 			</label>
-		</div>
+		</div> -->
 
 	</div>
 </template>
 
 <script>
 	export default {
-		props: ['value.eventID'],
+		props: ['value'],
 
 		data: function(){
 			return {
@@ -34,9 +34,7 @@
 		methods: {
 
 			fetchEvents() {
-				this.$http.get('site/Results_con/getEvents', {
-					params: this.queryParams
-				})
+				this.$http.get('site/Results_con/getEvents')
 				.then((response) => {
 					this.token = response.data.token;
 					this.events = response.data.getEvents;

@@ -10,7 +10,7 @@
 			<list-depth v-model="queryParams.list_depth"></list-depth>
 			<list-type v-model="queryParams.list_type"></list-type>
 			<list-events v-model="queryParams.eventID"></list-events>
-			<list-age-groups v-model="queryParams.ageGroup"></list-age-groups>
+			<list-age-groups-default v-model="queryParams.ageGroup"></list-age-groups-default>
 
 			<button type="submit" @click="fetchFormParams" class="btn btn-info">Submit</button>
 
@@ -85,7 +85,7 @@
 <script>
 //import axios from 'axios';
 import ListEvents from './global_helpers/ListEvents.vue';
-import ListAgeGroups from './global_helpers/ListAgeGroups.vue';
+import ListAgeGroupsDefault from './global_helpers/ListAgeGroupsDefault.vue';
 import ListYears from './global_helpers/ListYears.vue';
 import ListDepth from './global_helpers/ListDepth.vue';
 import ListType from './global_helpers/ListType.vue';
@@ -99,7 +99,7 @@ export default {
 				ageGroup: 'MS',
 				list_depth: '250',
 				list_type: '1',
-				eventID: '33',
+				eventID: '1',
 				year: '2019'
 			},
 			resultsList: [],
@@ -109,7 +109,7 @@ export default {
 
 	components: {
 		'ListEvents': ListEvents,
-		'ListAgeGroups': ListAgeGroups,
+		'ListAgeGroupsDefault': ListAgeGroupsDefault,
 		'ListYears': ListYears,
 		'ListDepth': ListDepth,
 		'ListType': ListType
@@ -125,7 +125,7 @@ export default {
 				eventID: this.$route.query.eventID ? this.$route.query.eventID : this.queryParams.eventID,
 				year: this.$route.query.year ? this.$route.query.year : this.queryParams.year
 			}
-			this.fetchFormParams()
+			this.fetchFormParams();
 		},
 
 		fetchFormParams() {

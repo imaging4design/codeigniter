@@ -83,9 +83,11 @@ class Results_con extends CI_Controller {
 		
 		
 		// If form post data validates and CSRF $token == session $token show lists
-		//if($this->form_validation->run() == TRUE && $this->input->post('token') == $this->session->userdata('token')) 
-		if(!$this->form_validation->run()) 
-		{
+		//if($this->form_validation->run() == TRUE && $this->input->post('token') == $this->session->userdata('token'))
+		if($this->form_validation->run() == TRUE && $this->input->get('csrf_token') == $this->session->userdata('csrf_token')) 
+		{ 
+		// if( ! $this->form_validation->run()) 
+		// {
 			// $result['eventID'] = $searchData;
 			// echo json_encode($result);
 			/*********************************************************************
@@ -102,18 +104,21 @@ class Results_con extends CI_Controller {
 				// Select ALL non-wind affected track events
 				if($query = $this->results_model->results_legal_wind())
 				{
+					$result['token'] = $this->security->get_csrf_hash();
 					$result['lists'] = $query;
 				}
 				
 				// Select ALL wind affected track events
 				if($query = $this->results_model->results_illegal_wind())
 				{
+					$result['token'] = $this->security->get_csrf_hash();
 					$result['illegal_wind'] = $query;
 				}
 
 				// Get the current NZ Record of this event
 				if($query = $this->records_model->current_nz_record())
 				{
+					$result['token'] = $this->security->get_csrf_hash();
 					$result['current_nz_record'] = $query;
 				}
 				
