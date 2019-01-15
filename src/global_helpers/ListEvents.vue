@@ -4,7 +4,7 @@
 		<select v-bind:value="value" v-on:input="$emit('input', $event.target.value)" class="form-control">
 			<option disabled value="">Select Age Group</option>
 			Loop through the ageGroup options/values pulled in from 'events'
-			<option v-for="(value, key, index) in events" v-bind:value="key">{{value.eventName}}</option>
+			<option v-for="(value, key, index) in events" v-bind:value="value.eventID">{{value.eventName}}</option>
 		</select>
 
 		<!-- <div v-for="(value, key, index) in events">
