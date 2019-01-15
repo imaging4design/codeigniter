@@ -84,10 +84,10 @@ class Results_con extends CI_Controller {
 		
 		// If form post data validates and CSRF $token == session $token show lists
 		//if($this->form_validation->run() == TRUE && $this->input->post('token') == $this->session->userdata('token'))
-		if($this->form_validation->run() == TRUE && $this->input->get('csrf_token') == $this->session->userdata('csrf_token')) 
-		{ 
-		// if( ! $this->form_validation->run()) 
-		// {
+		// if($this->form_validation->run() == TRUE && $this->input->get('csrf_token') == $this->session->userdata('csrf_token')) 
+		// { 
+		if( ! $this->form_validation->run()) 
+		{
 			// $result['eventID'] = $searchData;
 			// echo json_encode($result);
 			/*********************************************************************
