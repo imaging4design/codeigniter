@@ -1,21 +1,28 @@
 <template>
 	<div>
-		<ul class="nav nav-pills">
-			<!-- <li class="nav-item">
-				<router-link to="/" class="nav-link" exact>Home</router-link>
-			</li> -->
-			<li class="nav-item">
-				<router-link to="/annual-lists" class="nav-link">Annual Lists</router-link>
-			</li>
-			<li class="nav-item">
-				<router-link to="/nz-records" class="nav-link">Records</router-link>
-			</li>
-			<li class="nav-item">
-				<router-link to="/top-perfs" class="nav-link">Top Performances</router-link>
-			</li>
-		</ul>
 
-		<hr>
+		<nav class="navbar" role="navigation" aria-label="main navigation">
+			<div class="navbar-brand">
+				<a class="navbar-item" href="https://bulma.io">
+					<img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">
+				</a>
+
+				<a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+					<span aria-hidden="true"></span>
+					<span aria-hidden="true"></span>
+					<span aria-hidden="true"></span>
+				</a>
+			</div>
+
+			<div id="navbarBasicExample" class="navbar-menu">
+				<div class="navbar-start">
+					<router-link to="/annual-lists" class="navbar-item">Annual Lists</router-link>
+					<router-link to="/nz-records" class="navbar-item">Records</router-link>
+					<router-link to="/top-perfs" class="navbar-item">Top Performances</router-link>
+				</div>
+			</div>
+		</nav>
+
 	</div>
 </template>
 

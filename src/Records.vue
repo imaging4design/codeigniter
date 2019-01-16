@@ -16,16 +16,33 @@
 
 		<form v-on:submit.prevent>
 
-			<select v-model="queryParams.in_out" class="form-control">
-				<option disabled value="">Please select one</option>
-				<!-- Loop through the record option/values pulled in from 'record_options' -->
-				<option v-for="(value, key, index) in inOutOptions" :value="key">{{value}}</option>
-			</select>
+			<div class="columns">
+				<div class="column">
 
-			<list-record-types v-model="queryParams.recordType"></list-record-types>
-			<list-age-groups-recs v-model="queryParams.ageGroup"></list-age-groups-recs>
+					<div class="field">
+						<label class="label">Season</label>
+						<div class="control">
+							<div class="select">
+								<select v-model="queryParams.in_out" class="form-control">
+									<option disabled value="">Please select one</option>
+									<!-- Loop through the record option/values pulled in from 'record_options' -->
+									<option v-for="(value, key, index) in inOutOptions" :value="key">{{value}}</option>
+								</select>
+							</div>
+						</div>
+					</div>
+						
 
-			<button type="submit" @click="fetchFormParams" class="btn btn-info">Submit</button>
+				</div>
+				<div class="column">
+					<list-record-types v-model="queryParams.recordType"></list-record-types>
+				</div>
+				<div class="column">
+					<list-age-groups-recs v-model="queryParams.ageGroup"></list-age-groups-recs>
+				</div>
+			</div>				
+
+			<button type="submit" @click="fetchFormParams" class="button is-danger">Submit</button>
 		
 		</form>
 
@@ -38,7 +55,7 @@
 		</transition>
 
 		<transition name="fade">
-			<table class="table table-responsive-sm table-dark table-hover" v-show="recordsNew">
+			<table class="table is-striped is-fullwidth is-hoverable is-bordered" v-show="recordsNew">
 				<thead>
 					<tr>
 						<th>Rank</th>

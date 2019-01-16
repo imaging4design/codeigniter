@@ -1,8 +1,8 @@
 <template>
-	<div>
-		<h3>List Depth</h3>
 
-		<div v-for="(value, key, index) in list_depth">
+	<div class="field">
+		<label class="label">List Depth</label>
+		<div class="control" v-for="(value, key, index) in list_depth">
 			<label>
 				<input type="radio" 
 				v-bind:checked="key === $route.query.list_depth" 
@@ -11,8 +11,8 @@
 				v-on:change="$emit('input', $event.target.value)"> {{value}}
 			</label>
 		</div>
-		
 	</div>
+
 </template>
 
 

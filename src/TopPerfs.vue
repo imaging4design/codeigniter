@@ -10,16 +10,16 @@
 		| POINTS TO NOTE: Loops through the 'athletes' array (of objects) and display data  
 		-->
 
-		<button class="btn btn-info" @click="showTopPerformers('MS')">Men Senior</button>
-		<button class="btn btn-info" @click="showTopPerformers('WS')">Women Senior</button>
-		<button class="btn btn-info" @click="showTopPerformers('M19')">Men Under 20</button>
-		<button class="btn btn-info" @click="showTopPerformers('W19')">Women Under 20</button>
-		<button class="btn btn-info" @click="showTopPerformers('M17')">Men Under 17</button>
-		<button class="btn btn-info" @click="showTopPerformers('W17')">Women Under 17</button>
+		<button class="button is-danger" @click="showTopPerformers('MS')">Men Senior</button>
+		<button class="button is-danger" @click="showTopPerformers('WS')">Women Senior</button>
+		<button class="button is-danger" @click="showTopPerformers('M19')">Men Under 20</button>
+		<button class="button is-danger" @click="showTopPerformers('W19')">Women Under 20</button>
+		<button class="button is-danger" @click="showTopPerformers('M17')">Men Under 17</button>
+		<button class="button is-danger" @click="showTopPerformers('W17')">Women Under 17</button>
 
 		<div class="loadingIcon" v-show="loadingIcon"><i class="fas fa-cog fa-5x fa-spin"></i></div>
 
-		<table class="table table-responsive-sm table-dark table-hover" v-show="athletes[0]">
+		<table class="table is-striped is-fullwidth is-hoverable is-bordered" v-show="athletes[0]">
 			<thead>
 				<tr>
 					<th>Event</th>
@@ -42,7 +42,7 @@
 
 		<hr>
 
-		<button class="btn btn-info" @click="showTopMultis">Show Multis</button>
+		<button class="button is-danger" @click="showTopMultis">Show Multis</button>
 		<ul>
 			<li v-if="multi">
 				<strong>{{multi.eventName}}</strong> {{multi.nameFirst}} {{multi.nameLast}} {{multi.points}}
@@ -53,7 +53,7 @@
 
 		<hr>
 
-		<button class="btn btn-info" @click="showTopRelays">Show Relays</button>
+		<button class="button is-danger" @click="showTopRelays">Show Relays</button>
 		<ul>
 			<li v-if="relays" v-for="relay in relays">
 				<strong>{{relay.eventName}}</strong> {{relay.nameFirst}} {{relay.nameLast}} {{relay.distHeight}} {{relay.time}} {{relay.athlete01}}, {{relay.athlete02}}, {{relay.athlete03}}, {{relay.athlete04}}

@@ -1,8 +1,8 @@
 <template>
-	<div>
-		<h3>Years</h3>
 
-		<div v-for="(value, key, index) in year">
+	<div class="field">
+		<label class="label">Select Year</label>
+		<div class="control" v-for="(value, key, index) in year">
 			<label>
 				<input type="radio" 
 				v-bind:checked="key === $route.query.year" 
@@ -11,8 +11,8 @@
 				v-on:change="$emit('input', $event.target.value)"> {{value}}
 			</label>
 		</div>
-		
 	</div>
+		
 </template>
 
 

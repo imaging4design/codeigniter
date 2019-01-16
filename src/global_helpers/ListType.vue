@@ -1,8 +1,8 @@
 <template>
-	<div>
-		<h3>List Type</h3>
-
-		<div v-for="(value, key, index) in list_type">
+	
+	<div class="field">
+		<label class="label">List Type</label>
+		<div class="control" v-for="(value, key, index) in list_type">
 			<label>
 				<input type="radio" 
 				v-bind:checked="key === $route.query.list_type" 
@@ -11,8 +11,8 @@
 				v-on:change="$emit('input', $event.target.value)"> {{value}}
 			</label>
 		</div>
-		
 	</div>
+		
 </template>
 
 
