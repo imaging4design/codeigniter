@@ -17,28 +17,32 @@
 		<button class="button is-danger" @click="showTopPerformers('M17')">Men Under 17</button>
 		<button class="button is-danger" @click="showTopPerformers('W17')">Women Under 17</button>
 
+		<br><br>
+
 		<div class="loadingIcon" v-show="loadingIcon"><i class="fas fa-cog fa-5x fa-spin"></i></div>
 
-		<table class="table is-striped is-fullwidth is-hoverable is-bordered" v-show="athletes[0]">
-			<thead>
-				<tr>
-					<th>Event</th>
-					<th>Athlete</th>
-					<th>Performance</th>
-					<th>Competition</th>
-					<th>Date</th>
-				</tr>
-			</thead>
-			<tbody v-if="athletes">
-				<tr v-for="(athlete, index) in athletes">
-					<td><strong>{{athlete.eventName}}</strong></td>
-					<td>{{athlete.nameFirst}} {{athlete.nameLast}}</td>
-					<td>{{athlete.distHeight | removeLeadZeros}} {{athlete.time | removeLeadZeros}}</td>
-					<td>{{athlete.competition}}</td>
-					<td>{{athlete.date}}</td>
-				</tr>
-			</tbody>
-		</table>
+		<div class="table-container">
+			<table class="table is-striped is-fullwidth is-hoverable is-bordered" v-show="athletes[0]">
+				<thead>
+					<tr>
+						<th width="20%">Event</th>
+						<th width="20%">Athlete</th>
+						<th width="20%">Performance</th>
+						<th width="20%">Competition</th>
+						<th width="20%">Date</th>
+					</tr>
+				</thead>
+				<tbody v-if="athletes">
+					<tr v-for="(athlete, index) in athletes">
+						<td><strong>{{athlete.eventName}}</strong></td>
+						<td>{{athlete.nameFirst}} {{athlete.nameLast}}</td>
+						<td>{{athlete.distHeight | removeLeadZeros}} {{athlete.time | removeLeadZeros}}</td>
+						<td>{{athlete.competition}}</td>
+						<td>{{athlete.date}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 
 		<hr>
 

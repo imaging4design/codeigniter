@@ -4,20 +4,32 @@
 		<h1>Annual Lists</h1>
 		
 		<hr>
+		<form v-on:submit.prevent>
+			<div class="columns">
+				<div class="column">
+					<list-years v-model="queryParams.year"></list-years>
+				</div>
+				<div class="column">
+					<list-depth v-model="queryParams.list_depth"></list-depth>
+				</div>
+				<div class="column">
+					<list-type v-model="queryParams.list_type"></list-type>
+				</div>
+				<div class="column">
+					<list-events v-model="queryParams.eventID"></list-events>
+				</div>
+				<div class="column">
+					<list-age-groups-default v-model="queryParams.ageGroup"></list-age-groups-default>
+				</div>
+			</div><!-- ENDS columns -->
+
+			<button type="submit" @click="fetchFormParams" class="button is-danger">Submit</button>
+
+		</form>
+
+		<hr>
 
 		<div class="columns">
-
-			<div class="column is-one-fifth">
-				<form v-on:submit.prevent>
-					<list-years v-model="queryParams.year"></list-years>
-					<list-depth v-model="queryParams.list_depth"></list-depth>
-					<list-type v-model="queryParams.list_type"></list-type>
-					<list-events v-model="queryParams.eventID"></list-events>
-					<list-age-groups-default v-model="queryParams.ageGroup"></list-age-groups-default>
-					
-					<button type="submit" @click="fetchFormParams" class="button is-danger">Submit</button>
-				</form>
-			</div><!-- ENDS column -->
 
 			<div class="column">
 				<strong>Token: </strong>{{token}} <br>
@@ -36,50 +48,55 @@
 
 				<div class="loadingIcon" v-show="loadingIcon"><i class="fas fa-cog fa-5x fa-spin"></i></div>
 
-				<table class="table is-striped is-fullwidth is-hoverable is-bordered">
-					<thead>
-						<tr>
-							<th>Rank</th>
-							<th>Performance</th>
-							<th>Wind</th>
-							<th>Athlete</th>
-							<th>Centre</th>
-							<th>DOB</th>
-							<th>Competition</th>
-							<th>Venue</th>
-							<th>Date</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr v-for="(result, index) in resultsList" :key="index">
-							
-							<!-- Rank No. do not show number if previous performances is same (e.g. 10.38 / 10.38) -->
-							<template v-if="resultsList[index-1]">
-								<td v-if="result.time == resultsList[index-1].time 
-									&& result.distHeight == resultsList[index-1].distHeight
-									&& result.points == resultsList[index-1].points"><!-- i.e. the previous perf -->
-									&nbsp;
-								</td>
-								<td v-else>
-									{{index + 1}}
-								</td>
-							</template>
-							<template v-else>
-								<td>{{index + 1}}</td>
-							</template>
+				<div class="table-container">
+					<table class="table is-striped is-fullwidth is-hoverable is-bordered" data-toggle-column="last">
+						<thead>
+							<tr>
+								<th data-type="html">Rank</th>
+								<th data-type="html">Performance</th>
+								<th data-type="html">Wind</th>
+								<th data-type="html">Athlete</th>
+								<th data-type="html">Centre</th>
+								<th data-type="html">DOB</th>
+								<th data-type="html">Place</th>
+								<th data-type="html">Competition</th>
+								<th data-type="html">Venue</th>
+								<th data-type="html">Date</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr v-for="(result, index) in resultsList" :key="index">
+								
+								<!-- Rank No. do not show number if previous performances is same (e.g. 10.38 / 10.38) -->
+								<template v-if="resultsList[index-1]">
+									<td v-if="result.time == resultsList[index-1].time 
+										&& result.distHeight == resultsList[index-1].distHeight
+										&& result.points == resultsList[index-1].points"><!-- i.e. the previous perf -->
+										&nbsp;
+									</td>
+									<td v-else>
+										{{index + 1}}
+									</td>
+								</template>
+								<template v-else>
+									<td>{{index + 1}}</td>
+								</template>
 
-							<td>{{result.time | removeLeadZeros}} {{result.distHeight | removeLeadZeros}} {{result.points | removeLeadZeros}}</td>
-							<td>{{result.wind}}</td>
-							<td>{{result.nameFirst}} {{result.nameLast}}</td>
-							<td>{{result.centreID}}</td>
-							<td>{{result.DOB}}</td>
-							<td>{{result.competition}}</td>
-							<td>{{result.venue}}</td>
-							<td>{{result.date}}</td>
+								<td>{{result.time | removeLeadZeros}} {{result.distHeight | removeLeadZeros}} {{result.points | removeLeadZeros}}</td>
+								<td>{{result.wind}}</td>
+								<td>{{result.nameFirst}} {{result.nameLast}}</td>
+								<td>{{result.centreID}}</td>
+								<td>{{result.DOB}}</td>
+								<td>{{result.placing}}</td>
+								<td>{{result.competition}}</td>
+								<td>{{result.venue}}</td>
+								<td>{{result.date}}</td>
 
-						</tr>
-					</tbody>
-				</table>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
 			</div><!-- ENDS column -->
 
 		</div><!-- ENDS columns -->
@@ -105,7 +122,7 @@ export default {
 			queryParams: {
 				ageGroup: 'MS',
 				list_depth: '250',
-				list_type: '1',
+				list_type: '0',
 				eventID: '1',
 				year: '2019'
 			},
