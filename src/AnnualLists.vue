@@ -1,7 +1,8 @@
 <template>
 	<div id="annual-lists">
 
-		<h1>Annual Lists</h1>
+		<h1>Annual List</h1>
+
 		
 		<hr>
 		<form v-on:submit.prevent>
