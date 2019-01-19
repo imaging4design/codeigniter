@@ -1,18 +1,7 @@
 <template>
 	<div id="annual-lists">
 
-		<section class="hero is-medium is-danger is-bold">
-			<div class="hero-body">
-				<div class="container">
-					<p class="title">
-						Annual Lists
-					</p>
-					<p class="subtitle">
-						{{queryParams.year}} / {{queryParams.list_type}} / {{queryParams.list_depth}}
-					</p>
-				</div>
-			</div>
-		</section>
+		<h1>Annual Lists</h1>
 		
 		<hr>
 		<form v-on:submit.prevent>
