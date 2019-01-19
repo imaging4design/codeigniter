@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import axios from 'axios'
+//import Typeahead from 'vue2-typeahead'
 import VueRouter from 'vue-router'
 import {routes} from './routes'
 import App from './App.vue'

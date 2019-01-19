@@ -121,7 +121,7 @@ class Global_Model extends CI_Model
 	function get_auto_athletes()
 	{
 		// Search term 'athletes' from jQuery
-		$athletes = $this->input->post('athletes');
+		$athletes = $this->input->get('athletes');
 		
 		// Search from table called clients
 		$this->db->select('nameLast, nameFirst, athleteID, DOB, centreID');
@@ -195,7 +195,7 @@ class Global_Model extends CI_Model
 	{
 		$this->db->select('eventName');
 		$this->db->where('eventID', $this->session->userdata('eventID'));
-		$this->db->or_where('eventID', $this->input->post('eventID'));
+		$this->db->or_where('eventID', $this->input->get('eventID'));
 		//$this->db->or_where('eventID', $data);
 		$query = $this->db->get('events');
 		

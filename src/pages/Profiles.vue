@@ -2,6 +2,35 @@
 	
 	<div id="profile">
 
+		{{loadingIcon}}
+
+		<list-athletes></list-athletes>
+
+		<!-- 
+		|*********************************************************
+		| GET ATHLETE EVENTS 
+		|*********************************************************
+		-->
+		<form v-on:submit.prevent>
+			<div class="field">
+				<label class="label">Events</label>
+				<div class="control">
+					<div class="select">
+						<select v-bind:value="value" v-model="queryParams.eventID">
+							<option disabled value="">Select Events</option>
+							<!-- Loop through the ageGroup options/values pulled in from 'events' -->
+							<option v-for="(value, key, index) in athleteEvents" v-bind:value="value.eventID">{{value.eventName}}</option>
+						</select>
+					</div>
+				</div>
+			</div>
+
+			<button type="submit" @click="athletePerformances" class="button is-danger">Submit</button>
+
+		</form>
+
+		<!-- <button class="button is-danger" @click="athletePerformances">Go</button> -->
+
 		<ul>
 			<li><strong>Athlete: </strong>{{athleteData.nameFirst}} {{athleteData.nameLast}}</li>
 			<li><strong>Date of Birth: </strong>{{athleteData.DOB}} ({{athleteData.birthDate}})</li>
@@ -10,6 +39,8 @@
 			<li><strong>Coach: </strong>{{athleteData.coach}}</li>
 			<li><strong>Former Coach/s: </strong>{{athleteData.coach_former}}</li>
 		</ul>
+
+		
 
 		<!-- 
 		|*********************************************************
@@ -68,18 +99,20 @@
 
 
 <script>
-	
+import ListAthletes from '../global_helpers/ListAthletes.vue';
 export default {
 	data() {
 		return {
 			loadingIcon: false,
 			token: null,
+			value: [],
 			queryParams: {
-				athleteID: '529349',
-				eventID: '33',
+				athleteID: '521419',
+				eventID: '',
 				year: '0',
 				order_by: '0'
 			},
+			athleteEvents: [],
 			athleteData: [],
 			bestPerformances: []
 		}
@@ -87,7 +120,30 @@ export default {
 
 	methods: {
 
-		fetchAthleteData() {
+		athleteHelpers() {
+			this.loadingIcon = true;
+			// this.$router.push({
+			// 	path: '/profiles', 
+			// 	query: this.queryParams
+			// });
+
+			this.$http.get('site/Profiles_con/athlete', {
+				params: this.queryParams
+			})
+			.then((response) => {
+				//this.token = response.data.token;
+				this.athleteData = response.data.athlete_data;
+				this.athleteEvents = response.data.get_athlete_events;
+				this.loadingIcon = false;
+			})
+			.catch((error) => {
+				console.error('GAVINS ERROR: ' + error);
+			})
+
+			//console.log(this.queryParams.recordType)
+		},
+
+		athletePerformances() {
 			this.loadingIcon = true;
 			this.$router.push({
 				path: '/profiles', 
@@ -99,7 +155,7 @@ export default {
 			})
 			.then((response) => {
 				this.token = response.data.token;
-				this.athleteData = response.data.athlete_data;
+				//this.athleteData = response.data.athlete_data;
 				this.bestPerformances = response.data.athlete;
 				this.loadingIcon = false;
 			})
@@ -111,8 +167,13 @@ export default {
 		}
 	},
 
+	components: {
+		'ListAthletes': ListAthletes
+	},
+
 	mounted() {
-		this.fetchAthleteData();
+		this.athleteHelpers();
+		//this.athletePerformances();
 	}
 }
 

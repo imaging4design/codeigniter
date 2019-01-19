@@ -35,13 +35,13 @@ class Profiles_con extends CI_Controller {
 	// WHAT IS THIS?
 	// This function calls the athlete() function directly below it
 	// WHY?
-	// So we can capture the $this->input->post('athleteID') from the form and append it to the url
+	// So we can capture the $this->input->get('athleteID') from the form and append it to the url
 	// This will allow people to copy this link as a reference to the athlete profile
 	/*************************************************************************************/
 
 	public function search_proxy()
 	{
-		$athleteID = substr($this->input->post('athleteID'), -6);
+		$athleteID = substr($this->input->get('athleteID'), -6);
 
 		if( strlen($athleteID) == 6 ) {
 			// if needed urlencode or other search query manipulation
@@ -49,7 +49,7 @@ class Profiles_con extends CI_Controller {
 		}
 		else {
 			show_my_404();
-			echo 'we know an athlete by the name of <strong>' . $this->input->post('athleteID') . '</strong> but we didn\'t get their athlete ID<br>';
+			echo 'we know an athlete by the name of <strong>' . $this->input->get('athleteID') . '</strong> but we didn\'t get their athlete ID<br>';
 			echo 'Click here and try entering their name again ...';
 		}
 		
@@ -130,7 +130,7 @@ class Profiles_con extends CI_Controller {
 
 
 			// New Zealand Representation ...
-			$rep = get_representations($this->input->post('athleteID'));
+			$rep = get_representations($this->input->get('athleteID'));
 			if( $rep ) {
 				echo '<h4><strong>NZ Representation:</strong></h4>';
 			}
@@ -145,7 +145,7 @@ class Profiles_con extends CI_Controller {
 			echo '</ul>';
 
 			//echo anchor('#', 'Full Profile', array('class'=>'btn btn-red center-block'));
-			echo anchor('site/profiles_con/athlete/' . $this->input->post('athleteID'), 'View Full Profile', array('class'=>'btn btn-default'));
+			echo anchor('site/profiles_con/athlete/' . $this->input->get('athleteID'), 'View Full Profile', array('class'=>'btn btn-default'));
 
 		echo '</div>';
 		
@@ -167,36 +167,38 @@ class Profiles_con extends CI_Controller {
 			// If user does NOT include the FULL 'auto populate' value (i.e., GILL, Jacko 527325) -> throw an error!
 			// It STOPS searches like 'GILL' without passing the athleteID number
 			// But ALLOWS clicking the 'athlete name' ( $this->uri->segment(4) ) link in the lists to get to their profile page
-			if( ! $this->uri->segment(4) )
-			{
-				if( $this->input->post('athleteID') && ! is_numeric( substr($this->input->post('athleteID'), -6) ) || $this->input->post('athleteID') =='' )
-				{
-					$this->session->set_flashdata('bad_search', 'Search must include athleteID');
-					redirect('');
-				}
-			}
+			
+			// if( ! $this->uri->segment(4) )
+			// {
+			// 	if( $this->input->get('athleteID') && ! is_numeric( substr($this->input->get('athleteID'), -6) ) || $this->input->get('athleteID') =='' )
+			// 	{
+			// 		$this->session->set_flashdata('bad_search', 'Search must include athleteID');
+			// 		redirect('');
+			// 	}
+			// }
 			
 
-		$data['athlete'] = athlete(); // see profiles_helper
+		$result['athlete_data'] = athlete(); // see profiles_helper
 		
 		// 1) Get ALL events athlete has results against
 		// Required to populate dropdown menu of their events
-		$data['get_athlete_events'] = get_athlete_events(); // see profiles_helper
+		$result['get_athlete_events'] = get_athlete_events(); // see profiles_helper
 		
 		// 2) Get the athletes Personal Best Perfomances (Individual) events
 		if($query = $this->profiles_model->personal_bests())
 		{
-			$data['personal_bests'] = $query;
+			$result['personal_bests'] = $query;
 		}
 		
 		// 3) Get the athletes Personal Best Perfomances (Multi) events
 		if($query = $this->profiles_model->personal_bests_multis())
 		{
-			$data['personal_bests_multis'] = $query;
+			$result['personal_bests_multis'] = $query;
 		}
 		
-		$data['main_content'] = 'site/profiles';
-		$this->load->view('site/includes/template', $data);
+		echo json_encode($result);
+		//$data['main_content'] = 'site/profiles';
+		//$this->load->view('site/includes/template', $data);
 		
 	} // ENDS athlete()
 	
@@ -222,7 +224,7 @@ class Profiles_con extends CI_Controller {
 			'order_by' => $this->input->get('order_by')
 		);
 				
-		// If form post data validates and CSRF $token == session $token show lists
+		// If form get data validates and CSRF $token == session $token show lists
 		// if($this->form_validation->run() == TRUE && $this->input->get('csrf_token') == $this->session->userdata('csrf_token')) 
 		// {
 
