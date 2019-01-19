@@ -1,7 +1,18 @@
 <template>
 	<div id="annual-lists">
 
-		<h1>Annual Lists</h1>
+		<section class="hero is-medium is-danger is-bold">
+			<div class="hero-body">
+				<div class="container">
+					<p class="title">
+						Annual Lists
+					</p>
+					<p class="subtitle">
+						{{queryParams.year}} / {{queryParams.list_type}} / {{queryParams.list_depth}}
+					</p>
+				</div>
+			</div>
+		</section>
 		
 		<hr>
 		<form v-on:submit.prevent>
@@ -11,14 +22,10 @@
 				</div>
 				<div class="column">
 					<list-depth v-model="queryParams.list_depth"></list-depth>
-				</div>
-				<div class="column">
 					<list-type v-model="queryParams.list_type"></list-type>
 				</div>
 				<div class="column">
 					<list-events v-model="queryParams.eventID"></list-events>
-				</div>
-				<div class="column">
 					<list-age-groups-default v-model="queryParams.ageGroup"></list-age-groups-default>
 				</div>
 			</div><!-- ENDS columns -->
@@ -48,20 +55,26 @@
 
 				<div class="loadingIcon" v-show="loadingIcon"><i class="fas fa-cog fa-5x fa-spin"></i></div>
 
+
+				<!-- 
+				|*********************************************************
+				| LEGAL PERFORMANCES 
+				|*********************************************************
+				-->
 				<div class="table-container">
-					<table class="table is-striped is-fullwidth is-hoverable is-bordered" data-toggle-column="last">
+					<table class="table is-striped is-fullwidth is-hoverable is-bordered" v-if="resultsList">
 						<thead>
 							<tr>
-								<th data-type="html">Rank</th>
-								<th data-type="html">Performance</th>
-								<th data-type="html">Wind</th>
-								<th data-type="html">Athlete</th>
-								<th data-type="html">Centre</th>
-								<th data-type="html">DOB</th>
-								<th data-type="html">Place</th>
-								<th data-type="html">Competition</th>
-								<th data-type="html">Venue</th>
-								<th data-type="html">Date</th>
+								<th>Rank</th>
+								<th>Performance</th>
+								<th>Wind</th>
+								<th>Athlete</th>
+								<th>Centre</th>
+								<th>DOB</th>
+								<th>Place</th>
+								<th>Competition</th>
+								<th>Venue</th>
+								<th>Date</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -72,6 +85,66 @@
 									<td v-if="result.time == resultsList[index-1].time 
 										&& result.distHeight == resultsList[index-1].distHeight
 										&& result.points == resultsList[index-1].points"><!-- i.e. the previous perf -->
+										&nbsp;
+									</td>
+									<td v-else>
+										{{index + 1}}
+									</td>
+								</template>
+								<template v-else>
+									<td>{{index + 1}}</td>
+								</template>
+
+								<td>{{result.time | removeLeadZeros}} {{result.distHeight | removeLeadZeros}} {{result.points | removeLeadZeros}}</td>
+								<td>{{result.wind}}</td>
+								<td>{{result.nameFirst}} {{result.nameLast}}</td>
+								<td>{{result.centreID}}</td>
+								<td>{{result.DOB}}</td>
+								<td>{{result.placing}}</td>
+								<td>{{result.competition}}</td>
+								<td>{{result.venue}}</td>
+								<td>{{result.date}}</td>
+
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+
+
+
+
+
+				<!-- 
+				|*********************************************************
+				| ILLEGAL WIND PERFORMANCES 
+				|*********************************************************
+				-->
+				<h1>Illegal Wind</h1>
+				<div class="table-container">
+					<table class="table is-striped is-fullwidth is-hoverable is-bordered" v-if="illegal_wind">
+						<thead>
+							<tr>
+								<th>Rank</th>
+								<th>Performance</th>
+								<th>Wind</th>
+								<th>Athlete</th>
+								<th>Centre</th>
+								<th>DOB</th>
+								<th>Place</th>
+								<th>Competition</th>
+								<th>Venue</th>
+								<th>Date</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr v-for="(result, index) in illegal_wind" :key="index">
+								
+								<!-- Rank No. do not show number if previous performances is same (e.g. 10.38 / 10.38) -->
+								<template v-if="illegal_wind[index-1]">
+									<td v-if="result.time == illegal_wind[index-1].time 
+										&& result.distHeight == illegal_wind[index-1].distHeight
+										&& result.points == illegal_wind[index-1].points"><!-- i.e. the previous perf -->
 										&nbsp;
 									</td>
 									<td v-else>
@@ -127,6 +200,7 @@ export default {
 				year: '2019'
 			},
 			resultsList: [],
+			illegal_wind: [],
 			current_nz_record: []
 		}
 	},
@@ -166,6 +240,7 @@ export default {
 				this.token = response.data.token;
 				this.resultsList = response.data.lists;
 				this.current_nz_record = response.data.current_nz_record;
+				this.illegal_wind = response.data.illegal_wind;
 				//console.log('RESULTS: ' + response.data.lists)
 				this.loadingIcon = false;
 			})
