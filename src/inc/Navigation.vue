@@ -19,6 +19,7 @@
 					<router-link to="/annual-lists" class="navbar-item">Annual Lists</router-link>
 					<router-link to="/nz-records" class="navbar-item">Records</router-link>
 					<router-link to="/top-perfs" class="navbar-item">Top Performances</router-link>
+					<router-link to="/profiles" class="navbar-item">Profiles</router-link>
 				</div>
 			</div>
 		</nav>

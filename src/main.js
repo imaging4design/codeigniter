@@ -3,7 +3,7 @@ import axios from 'axios'
 import VueRouter from 'vue-router'
 import {routes} from './routes'
 import App from './App.vue'
-import Navigation from './Navigation.vue'
+import Navigation from './inc/Navigation.vue'
 
 /*
 |***********************************************************************

@@ -170,11 +170,11 @@
 
 <script>
 //import axios from 'axios';
-import ListEvents from './global_helpers/ListEvents.vue';
-import ListAgeGroupsDefault from './global_helpers/ListAgeGroupsDefault.vue';
-import ListYears from './global_helpers/ListYears.vue';
-import ListDepth from './global_helpers/ListDepth.vue';
-import ListType from './global_helpers/ListType.vue';
+import ListEvents from '../global_helpers/ListEvents.vue';
+import ListAgeGroupsDefault from '../global_helpers/ListAgeGroupsDefault.vue';
+import ListYears from '../global_helpers/ListYears.vue';
+import ListDepth from '../global_helpers/ListDepth.vue';
+import ListType from '../global_helpers/ListType.vue';
 
 export default {
 	data() {

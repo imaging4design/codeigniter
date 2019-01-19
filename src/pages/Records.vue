@@ -104,8 +104,8 @@
 
 <script>
 //import axios from 'axios';
-import ListRecordTypes from './global_helpers/ListRecordTypes.vue';
-import ListAgeGroupsRecs from './global_helpers/ListAgeGroupsRecs.vue';
+import ListRecordTypes from '../global_helpers/ListRecordTypes.vue';
+import ListAgeGroupsRecs from '../global_helpers/ListAgeGroupsRecs.vue';
 
 export default {
 

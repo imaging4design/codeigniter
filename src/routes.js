@@ -6,9 +6,10 @@
 //import ListAgeGroups from './global_helpers/ListAgeGroups';
 //import ListRecordType from './global_helpers/ListRecordType';
 import App from './App';
-import AnnualLists from './AnnualLists';
-import TopPerfs from './TopPerfs';
-import Records from './Records';
+import AnnualLists from './pages/AnnualLists';
+import TopPerfs from './pages/TopPerfs';
+import Records from './pages/Records';
+import Profiles from './pages/Profiles';
 
 /*
 |***********************************************************************
@@ -16,10 +17,11 @@ import Records from './Records';
 |***********************************************************************
 */
 export const routes = [
-	{ path: '/', name: 'RecordsHome', component: Records },
+	{ path: '/', name: 'Default', component: Records },
 	{ path: '/annual-lists', name: 'AnnualLists', component: AnnualLists },
 	{ path: '/nz-records', name: 'Records', component: Records },
 	{ path: '/top-perfs', name: 'TopPerfs', component: TopPerfs },
+	{ path: '/profiles', name: 'Profiles', component: Profiles },
 	{ path: '*', redirect: '/' }
 
 ]
