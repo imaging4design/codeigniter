@@ -33,7 +33,7 @@
 
 		<ul>
 			<li><strong>Athlete: </strong>{{athleteData.nameFirst}} {{athleteData.nameLast}}</li>
-			<li><strong>Date of Birth: </strong>{{athleteData.DOB}} ({{athleteData.birthDate}})</li>
+			<li><strong>Date of Birth: </strong>{{athleteData.DOB}} ({{athleteData.birthDate}}) {{getHumanAge}}</li>
 			<li><strong>Centre: </strong>{{athleteData.centreName}}</li>
 			<li><strong>Club: </strong>{{athleteData.clubName}}</li>
 			<li><strong>Coach: </strong>{{athleteData.coach}}</li>
@@ -114,7 +114,18 @@ export default {
 			},
 			athleteEvents: [],
 			athleteData: [],
-			bestPerformances: []
+			bestPerformances: [],
+			age: {
+				birthDay: '',
+				DOB: '',
+				today: '',
+				age: '',
+				elapsed: '',
+				year: '',
+				month: '',
+				day: '',
+				ageTotal: '',
+			}
 		}
 	},
 
@@ -172,6 +183,26 @@ export default {
 
 	components: {
 		'ListAthletes': ListAthletes
+	},
+
+	computed: {
+		getHumanAge(){
+			this.age.birthDay = this.athleteData.DOB;
+			this.age.DOB = new Date(this.age.birthDay);
+			this.age.today = new Date();
+			this.age.age = this.age.today.getTime() - this.age.DOB.getTime();
+			this.age.elapsed = new Date(this.age.age);
+			this.age.year = this.age.elapsed.getYear()-70;
+			this.age.month = this.age.elapsed.getMonth();
+			this.age.day = this.age.elapsed.getDay();
+			this.age.ageTotal = this.age.year + " Years, " + this.age.month + " Months, " + this.age.day + " Days";
+			
+			if(this.age.birthDay) {
+				return ' - ' + this.age.ageTotal;
+			} else {
+				return null;
+			}
+		}
 	},
 
 	mounted() {

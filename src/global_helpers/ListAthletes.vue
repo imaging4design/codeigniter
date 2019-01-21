@@ -20,7 +20,6 @@
 			@input="update"/>
 
 		<ul v-show="hasItems">
-			<!-- for vue@1.0 use: ($item, item) -->
 			<li v-for="(item, $item) in items" :class="activeClass($item)" @mousedown="hit" @mousemove="setActive($item)">
 				<!-- <span v-text="item.nameLast"></span>, <span v-text="item.nameFirst"></span> -->
 				<span>{{item.nameLast | toUpperCase}}, {{item.nameFirst}} {{item.athleteID}}</span>
