@@ -2,7 +2,7 @@
 	
 	<div id="profile">
 
-		{{loadingIcon}}
+		{{queryParams.athleteID}}
 
 		<list-athletes></list-athletes>
 
@@ -16,8 +16,8 @@
 				<label class="label">Events</label>
 				<div class="control">
 					<div class="select">
-						<select v-bind:value="value" v-model="queryParams.eventID">
-							<option disabled value="">Select Events</option>
+						<select v-bind:value="value" v-model="queryParams.eventID" @change="athletePerformances">
+							<option disabled value="0">Select Events</option>
 							<!-- Loop through the ageGroup options/values pulled in from 'events' -->
 							<option v-for="(value, key, index) in athleteEvents" v-bind:value="value.eventID">{{value.eventName}}</option>
 						</select>
@@ -25,7 +25,7 @@
 				</div>
 			</div>
 
-			<button type="submit" @click="athletePerformances" class="button is-danger">Submit</button>
+			<!-- <button type="submit" @click="athletePerformances" class="button is-danger">Submit</button> -->
 
 		</form>
 
@@ -107,8 +107,8 @@ export default {
 			token: null,
 			value: [],
 			queryParams: {
-				athleteID: '521419',
-				eventID: '',
+				athleteID: '',
+				eventID: '0',
 				year: '0',
 				order_by: '0'
 			},
@@ -120,8 +120,10 @@ export default {
 
 	methods: {
 
-		athleteHelpers() {
+		athleteHelpers(athleteID) {
 			this.loadingIcon = true;
+			this.queryParams.athleteID = athleteID;
+			this.queryParams.eventID = '0';
 			// this.$router.push({
 			// 	path: '/profiles', 
 			// 	query: this.queryParams
@@ -158,6 +160,7 @@ export default {
 				//this.athleteData = response.data.athlete_data;
 				this.bestPerformances = response.data.athlete;
 				this.loadingIcon = false;
+				//this.queryParams.eventID = '0';
 			})
 			.catch((error) => {
 				console.error('GAVINS ERROR: ' + error);
@@ -172,7 +175,7 @@ export default {
 	},
 
 	mounted() {
-		this.athleteHelpers();
+		//this.athleteHelpers();
 		//this.athletePerformances();
 	}
 }

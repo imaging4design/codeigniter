@@ -4,12 +4,12 @@
 		<i class="fa fa-spinner fa-spin" v-if="loading"></i>
 		<template v-else>
 			<i class="fa fa-search" v-show="isEmpty"></i>
-			<i class="fa fa-times" v-show="isDirty" @click="reset"></i>
+			<!-- <i class="fa fa-times" v-show="isDirty" @click="reset"></i> -->
 		</template>
 
 		<input type="text"
-			class="Typeahead__input"
-			placeholder="Search twitter user"
+			class="input"
+			placeholder="Search athletes"
 			autocomplete="off"
 			v-model="query"
 			@keydown.down="down"
@@ -22,7 +22,8 @@
 		<ul v-show="hasItems">
 			<!-- for vue@1.0 use: ($item, item) -->
 			<li v-for="(item, $item) in items" :class="activeClass($item)" @mousedown="hit" @mousemove="setActive($item)">
-				<span v-text="item.nameLast"></span> <span v-text="item.nameFirst"></span>
+				<!-- <span v-text="item.nameLast"></span>, <span v-text="item.nameFirst"></span> -->
+				<span>{{item.nameLast | toUpperCase}}, {{item.nameFirst}} {{item.athleteID}}</span>
 			</li>
 		</ul>
 	</div>
@@ -38,6 +39,8 @@ import Typeahead from 'vue-typeahead'
 export default {
 	extends: Typeahead, // vue@1.0.22+
 	// mixins: [VueTypeahead], // vue@1.0.21-
+
+	//props: ['athleteID'],
 
 	data () {
 		return {
@@ -65,6 +68,7 @@ export default {
 			// Use a falsy value for RESTful query
 			// (optional)
 			queryParamName: 'athletes'
+
 		}
 	},
 
@@ -72,7 +76,8 @@ export default {
 		// The callback function which is triggered when the user hits on an item
 		// (required)
 		onHit (item) {
-			alert(item.athleteID)
+			//alert(item.athleteID)
+			this.$parent.athleteHelpers(item.athleteID);
 		},
 
 		// The callback function which is triggered when the response data are received
@@ -87,8 +92,15 @@ export default {
 
 
 
-<style scoped>
-li.active {
-    /* ... */
-  }
+<style lang="scss">
+.Typeahead {
+	ul {
+		background: green;
+		li {
+			color: white;
+			cursor: pointer;
+		}
+	}
+}
 </style>
+

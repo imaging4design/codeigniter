@@ -46,9 +46,15 @@ Vue.component('navigation', Navigation);
 |***********************************************************************
 */
 Vue.filter('removeLeadZeros', function (value) {
-  if (!value) return ''
-  value = value.toString()
-  return value.replace(/^0+(?!\.|$)/, '');
+	if (!value) return ''
+	value = value.toString()
+	return value.replace(/^0+(?!\.|$)/, '');
+});
+
+Vue.filter('toUpperCase', function (value) {
+	if (!value) return ''
+	value = value.toString()
+	return value.toUpperCase();
 });
 
 /*
@@ -57,7 +63,7 @@ Vue.filter('removeLeadZeros', function (value) {
 |***********************************************************************
 */
 new Vue({
-  el: '#app',
-  router: router,
-  render: h => h(App)
+	el: '#app',
+	router: router,
+	render: h => h(App)
 })
