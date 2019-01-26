@@ -20,7 +20,7 @@
 
 <script>
 	export default {
-		props: ['value'],
+		//props: ['value'],
 		data: function(){
 			return {
 				list_depth: {

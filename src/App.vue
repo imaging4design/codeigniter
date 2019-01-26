@@ -7,16 +7,23 @@
 		<navigation></navigation>
 		<router-view></router-view>
 		
-		<footer>
-			<p>this is my footer</p>
+		<footer class="footer">
+			<div class="content has-text-centered">
+				<p>
+					<strong>Bulma</strong> by <a href="https://jgthms.com">Jeremy Thomas</a>. The source code is licensed
+					<a href="http://opensource.org/licenses/mit-license.php">MIT</a>. The website content
+					is licensed <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY NC SA 4.0</a>.
+				</p>
+			</div>
 		</footer>
+
 	</div>
 </template>
 
 <script>
 
-export default {
-};
+	export default {
+	};
 </script>
 
 
@@ -24,37 +31,5 @@ export default {
 
 
 <style lang="scss">
-#app {
-	//font-family: 'Avenir', Helvetica, Arial, sans-serif;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-	text-align: left;
-	color: #2c3e50;
-	margin-top: 60px;
-	-webkit-appearance: none;
-
-	ul {
-		list-style-type: none;
-		padding: 0;
-	}
-
-	li {
-		margin: 0 10px;
-	}
-
-	li a.router-link-active,
-	li a.router-link-exact-active {
-		color: #fff;
-		background-color: #17a2b8;
-		cursor: pointer;
-	}
-
-	.fade-enter-active, .fade-leave-active {
-		transition: opacity .9s;
-	}
-	.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
-		opacity: 0;
-	}
-}
 
 </style>

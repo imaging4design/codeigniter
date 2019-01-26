@@ -2,8 +2,6 @@
 	
 	<div id="profile">
 
-		{{queryParams.athleteID}}
-
 		<list-athletes></list-athletes>
 
 		<!-- 
@@ -32,7 +30,7 @@
 		<!-- <button class="button is-danger" @click="athletePerformances">Go</button> -->
 
 		<ul>
-			<li><strong>Athlete: </strong>{{athleteData.nameFirst}} {{athleteData.nameLast}}</li>
+			<li><strong>Athlete: </strong>{{athleteData.nameFirst}} {{athleteData.nameLast}} {{athleteData.athleteID}}</li>
 			<li><strong>Date of Birth: </strong>{{athleteData.DOB}} ({{athleteData.birthDate}}) {{getHumanAge}}</li>
 			<li><strong>Centre: </strong>{{athleteData.centreName}}</li>
 			<li><strong>Club: </strong>{{athleteData.clubName}}</li>

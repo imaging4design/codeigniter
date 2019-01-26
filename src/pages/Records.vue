@@ -50,11 +50,8 @@
 
 		<strong>Token: </strong>{{token}} <br>
 
-		<transition name="fade">
-			<h3 v-show="! recordsNew">No records to display</h3>
-		</transition>
+		<h3 v-show="! recordsNew">No records to display</h3>
 
-		<transition name="fade">
 
 			<div class="table-container">
 				<table class="table is-striped is-fullwidth is-hoverable is-bordered" v-show="recordsNew">
@@ -97,7 +94,6 @@
 				</table>
 			</div>
 
-		</transition>
 	</div>
 
 </template>

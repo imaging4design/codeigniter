@@ -3,6 +3,7 @@
 
 		<h1>Annual Lists</h1>
 		
+
 		<hr>
 		<form v-on:submit.prevent>
 			<div class="columns">
@@ -256,7 +257,6 @@ export default {
 		.loadingIcon {
 			width: 100%;
 			position: absolute;
-			// background: green;
 			text-align: center;
 			i.fas {
 				color: #fff;

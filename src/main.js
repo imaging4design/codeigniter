@@ -1,10 +1,19 @@
 import Vue from 'vue'
 import axios from 'axios'
-//import Typeahead from 'vue2-typeahead'
 import VueRouter from 'vue-router'
 import {routes} from './routes'
+//import Typeahead from 'vue-typeahead'
+import Buefy from 'buefy'
+import 'buefy/dist/buefy.css'
 import App from './App.vue'
 import Navigation from './inc/Navigation.vue'
+
+/*
+|*********************************************************
+| VUE BUEFY CSS & JS
+|*********************************************************
+*/
+Vue.use(Buefy);
 
 /*
 |***********************************************************************
