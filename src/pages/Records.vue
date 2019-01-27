@@ -57,7 +57,6 @@
 				<table class="table is-striped is-fullwidth is-hoverable is-bordered" v-show="recordsNew">
 					<thead>
 						<tr>
-							<th>Rank</th>
 							<th>Event</th>
 							<th>Athlete</th>
 							<th>Performance</th>
@@ -68,27 +67,12 @@
 					</thead>
 					<tbody>
 						<tr v-for="(record, index) in recordsNew" :key="index">
-							
-							<!-- Rank No. do not show number if previous performances is same (e.g. 10.38 / 10.38) -->
-							<template v-if="recordsNew[index-1]">
-								<td v-if="record.country == recordsNew[index-1].country"><!-- i.e. the previous perf -->
-									&nbsp;
-								</td>
-								<td v-else>
-									{{index + 1}}
-								</td>
-							</template>
-							<template v-else>
-								<td>{{index + 1}}</td>
-							</template>
-
 							<td><strong>{{record.eventName}}</strong></td>
 							<td>{{record.nameFirst}} {{record.nameLast}}</td>
 							<td>{{record.result | removeLeadZeros}}</td>
 							<td>{{record.country}}</td>
 							<td>{{record.venue}}</td>
 							<td>{{record.date}}</td>
-
 						</tr>
 					</tbody>
 				</table>
