@@ -3,6 +3,7 @@ import axios from 'axios'
 import VueRouter from 'vue-router'
 import {routes} from './routes'
 //import Typeahead from 'vue-typeahead'
+import VueMoment from 'vue-moment'
 import Buefy from 'buefy'
 import 'buefy/dist/buefy.css'
 import App from './App.vue'
@@ -14,6 +15,13 @@ import Navigation from './inc/Navigation.vue'
 |*********************************************************
 */
 Vue.use(Buefy);
+
+/*
+|*********************************************************
+| VUE MOMENT js
+|*********************************************************
+*/
+Vue.use(VueMoment);
 
 /*
 |***********************************************************************
