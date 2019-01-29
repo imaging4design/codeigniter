@@ -1,25 +1,20 @@
 <template>
 
-	<section>
+	<section v-on:change="$emit('input', $event.target.value)">
 
-		<div class="field" v-for="(value, key, index) in list_type" v-on:change="$emit('input', $event.target.value)">
-
-			<b-radio 
+		<b-field >
+			<b-radio-button 
+				v-for="(value, key, index) in list_type"
 				v-model="radio"				 
 				v-bind:native-value="key"
-				v-bind:value="key"
+				v-bind:key="key"
 				v-bind:checked="key === $route.query.list_type"
-				type="is-sucess"
 				name="list_type">
 				{{value}}
-			</b-radio>
+			</b-radio-button>
+		</b-field>
 
-		</div>
-
-		
-			<b>Selection:</b>
-			{{ radio }}
-		
+			<b>Selection:</b> {{ radio }}
 
 	</section>
 		
