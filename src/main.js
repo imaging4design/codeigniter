@@ -4,17 +4,30 @@ import VueRouter from 'vue-router'
 import {routes} from './routes'
 //import Typeahead from 'vue-typeahead'
 import VueMoment from 'vue-moment'
-import Buefy from 'buefy'
-import 'buefy/dist/buefy.css'
+//import Buefy from 'buefy'
+//import 'buefy/dist/buefy.css'
+import Vuetify from 'vuetify'
+import 'vuetify/dist/vuetify.min.css' // Ensure you are using css-loader
 import App from './App.vue'
 import Navigation from './inc/Navigation.vue'
+import GlobalFooter from './inc/GlobalFooter.vue'
 
 /*
 |*********************************************************
 | VUE BUEFY CSS & JS
 |*********************************************************
 */
-Vue.use(Buefy);
+//Vue.use(Buefy);
+// Helpers
+import colors from 'vuetify/es5/util/colors'
+
+Vue.use(Vuetify, {
+  theme: {
+    primary: colors.red.darken1, // #E53935
+    secondary: colors.red.lighten4, // #FFCDD2
+    accent: colors.indigo.base // #3F51B5
+  }
+})
 
 /*
 |*********************************************************
@@ -56,6 +69,7 @@ const router = new VueRouter({
 */
 // Register global components
 Vue.component('navigation', Navigation);
+Vue.component('global-footer', GlobalFooter);
 
 /*
 |***********************************************************************

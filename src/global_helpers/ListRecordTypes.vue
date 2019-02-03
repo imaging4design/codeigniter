@@ -1,6 +1,18 @@
 <template>
+	<div>
+	<!-- <v-container fluid > -->
+		<v-radio-group v-model="radios" v-on:change="$emit('input', radios)">
+			<v-radio
+				v-for="(value, key, index) in recordType"
+				v-bind:key="key" 
+				v-bind:value="key"
+				v-bind:label="value"
+				name="recordType"></v-radio>
+		</v-radio-group>
+	<!-- </v-container> -->
+	</div>
 
-	<div class="field">
+	<!-- <div class="field">
 		<label class="label">Record Type</label>
 		<div class="control" v-for="(value, key, index) in recordType">
 			<label>
@@ -11,7 +23,7 @@
 				v-on:change="$emit('input', $event.target.value)"> {{value}}
 			</label>
 		</div>
-	</div>
+	</div> -->
 
 </template>
 
@@ -23,6 +35,7 @@
 		props: ['value'],
 		data: function(){
 			return {
+				radios: 'NN',
 				recordType: {
 					'AC': 'Allcomers',
 					'NN': 'NZ National',

@@ -1,37 +1,26 @@
 <template>
 
-	<section v-on:change="$emit('input', $event.target.value)">
+	<div>
 
-		<b-field >
-			<b-radio-button 
-				v-for="(value, key, index) in list_type"
-				v-model="radio"				 
-				v-bind:native-value="key"
-				v-bind:key="key"
-				v-bind:checked="key === $route.query.list_type"
-				name="list_type">
-				{{value}}
-			</b-radio-button>
-		</b-field>
+		<v-subheader class="pa-0">Select List Type</v-subheader>
 
-			<b>Selection:</b> {{ radio }}
+		<v-select
+			v-on:input="$emit('input', select.key)"
+			v-model="select"
+			:hint="`${select.key}, ${select.value}`"
+			:items="items"
+			name="list_type"
+			item-text="value"
+			item-value="key"
+			label="Select List Type"
+			persistent-hint
+			return-object
+			single-line
+			solo
+			color="blue">
+		</v-select>
 
-	</section>
-		
-
-	
-	<!-- <div class="field">
-		<label class="label">List Type</label>
-		<div class="control" v-for="(value, key, index) in list_type">
-			<label>
-				<input type="radio" 
-				v-bind:checked="key === $route.query.list_type" 
-				v-bind:value="key" 
-				name="list_type" 
-				v-on:change="$emit('input', $event.target.value)"> {{value}}
-			</label>
-		</div>
-	</div> -->
+	</div>
 		
 </template>
 
@@ -43,11 +32,11 @@
 		//props: ['value'],
 		data: function(){
 			return {
-				radio: '0',
-				list_type: {
-					'0': 'Athlete',
-					'1': 'Performances'
-				}
+				select: { key: '0', value: 'Athlete' },
+		        items: [
+		          { key: '0', value: 'Athlete' },
+		          { key: '1', value: 'Performance' }
+		        ]
 			}
 		}
 	};

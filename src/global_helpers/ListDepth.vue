@@ -1,35 +1,26 @@
 <template>
 
-	<section v-on:change="$emit('input', $event.target.value)">
+	<div>
 
-		<b-field >
-			<b-radio-button 
-				v-for="(value, key, index) in list_depth"
-				v-model="radio"				 
-				v-bind:native-value="key"
-				v-bind:key="key"
-				v-bind:checked="key === $route.query.list_depth"
-				name="list_depth">
-				{{value}}
-			</b-radio-button>
-		</b-field>
+		<v-subheader class="pa-0">Select List Depth</v-subheader>
 
-			<b>Selection:</b> {{ radio }}
+		<v-select
+			v-on:input="$emit('input', select.key)"
+			v-model="select"
+			:hint="`${select.key}, ${select.value}`"
+			:items="items"
+			name="list_depth"
+			item-text="value"
+			item-value="key"
+			label="Select List Depth"
+			persistent-hint
+			return-object
+			single-line
+			solo
+			color="primary">
+		</v-select>
 
-	</section>
-
-	<!-- <div class="field">
-		<label class="label">List Depth</label>
-		<div class="control" v-for="(value, key, index) in list_depth">
-			<label>
-				<input type="radio" 
-				v-bind:checked="key === $route.query.list_depth" 
-				v-bind:value="key" 
-				name="list_depth" 
-				v-on:change="$emit('input', $event.target.value)"> {{value}}
-			</label>
-		</div>
-	</div> -->
+	</div>
 
 </template>
 
@@ -41,12 +32,12 @@
 		//props: ['value'],
 		data: function(){
 			return {
-				radio: '50',
-				list_depth: {
-					'10': '10',
-					'50': '50',
-					'250': 'ALL'
-				}
+				select: { key: '50', value: '50' },
+		        items: [
+		          { key: '10', value: '10' },
+		          { key: '50', value: '50' },
+		          { key: '250', value: 'ALL' }
+		        ]
 			}
 		}
 	};

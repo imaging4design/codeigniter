@@ -1,33 +1,38 @@
 <template>
-	<div id="app">
-		<header>
-			<p>This is my header</p>
-		</header>
+	<v-app>
 
+		<!-- Include navigation component -->
 		<navigation></navigation>
-		<router-view></router-view>
-		
-		<footer class="footer">
-			<div class="content has-text-centered">
-				<p>
-					<strong>Bulma</strong> by <a href="https://jgthms.com">Jeremy Thomas</a>. The source code is licensed
-					<a href="http://opensource.org/licenses/mit-license.php">MIT</a>. The website content
-					is licensed <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY NC SA 4.0</a>.
-				</p>
-			</div>
-		</footer>
 
-	</div>
+		<v-container grid-list-md class="mt-5 mb-5">
+			<v-layout>
+				<v-flex>
+					<v-card class="elevation-1">
+						
+						<!-- Include page contents -->
+						<router-view></router-view>
+
+					</v-card>
+				</v-flex>
+			</v-layout>
+		</v-container>
+
+		<!-- Include global footer -->
+		<!-- <global-footer></global-footer> -->
+
+	</v-app>
 </template>
 
-<script>
 
+<script>
 	export default {
+		data(){
+			return {
+				binding: false
+			}
+		}
 	};
 </script>
-
-
-
 
 
 <style lang="scss">

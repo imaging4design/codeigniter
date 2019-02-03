@@ -2,6 +2,8 @@
 	
 	<div id="profile">
 
+		<h1>Athlete Profiles</h1>
+
 		<list-athletes></list-athletes>
 
 		<!-- 

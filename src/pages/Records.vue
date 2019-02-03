@@ -1,7 +1,6 @@
 <template>
 	<div id="records">
 
-		<h1>NZ Records</h1>
 		<!-- 
 		| WHAT: Form to select records
 		| DESCRIPTION: Displays a form on page to allow the user to select records based on 'age group' and 'record type'
@@ -12,37 +11,59 @@
 		| On submit: call the records() function
 		-->		
 
-		<hr>
-
 		<form v-on:submit.prevent>
 
-			<div class="columns">
-				<div class="column">
+			<v-container grid-list-xl>
+				<v-layout row wrap>
+					<v-flex>
+						<h1>NZ Records</h1>
+					</v-flex>
+				</v-layout>
 
+				<v-layout row wrap>
+					<v-flex xs12 md4>
+						<list-age-groups-recs v-model="queryParams.ageGroup"></list-age-groups-recs>
+					</v-flex>
+					<v-flex xs12 md4>
+						<list-season v-model="queryParams.in_out"></list-season>
+					</v-flex>
+					<v-flex xs12 md4>
+						<list-record-types v-model="queryParams.recordType"></list-record-types>
+					</v-flex>
+				</v-layout>
+			</v-container>
+
+			<!-- <div class="columns">
+
+				<div class="column">
 					<div class="field">
 						<label class="label">Season</label>
 						<div class="control">
 							<div class="select">
 								<select v-model="queryParams.in_out" class="form-control">
 									<option disabled value="">Please select one</option>
-									<!-- Loop through the record option/values pulled in from 'record_options' -->
+									Loop through the record option/values pulled in from 'record_options'
 									<option v-for="(value, key, index) in inOutOptions" :value="key">{{value}}</option>
 								</select>
 							</div>
 						</div>
 					</div>
-						
+				</div>
 
+				<div class="column">
+					
+				</div>
+
+				<div class="column">
+					
 				</div>
 				<div class="column">
-					<list-record-types v-model="queryParams.recordType"></list-record-types>
+					
 				</div>
-				<div class="column">
-					<list-age-groups-recs v-model="queryParams.ageGroup"></list-age-groups-recs>
-				</div>
-			</div>				
+			</div> -->
 
-			<button type="submit" @click="fetchFormParams" class="button is-danger">Submit</button>
+			<v-btn type="submit" @click="fetchFormParams" color="success">Submit</v-btn>		
+
 		
 		</form>
 
@@ -84,6 +105,7 @@
 
 <script>
 //import axios from 'axios';
+import ListSeason from '../global_helpers/ListSeason.vue';
 import ListRecordTypes from '../global_helpers/ListRecordTypes.vue';
 import ListAgeGroupsRecs from '../global_helpers/ListAgeGroupsRecs.vue';
 
@@ -106,6 +128,7 @@ export default {
 	},
 
 	components: {
+		'ListSeason': ListSeason,
 		'ListAgeGroupsRecs': ListAgeGroupsRecs,
 		'ListRecordTypes': ListRecordTypes
 	},
@@ -139,7 +162,7 @@ export default {
 				console.error('GAVINS ERROR: ' + error);
 			})
 
-			console.log(this.queryParams.recordType)
+			console.log(this.queryParams.in_out)
 		}
 	},
 

@@ -23,7 +23,6 @@ export const routes = [
 	{ path: '/top-perfs', name: 'TopPerfs', component: TopPerfs },
 	{ path: '/profiles', name: 'Profiles', component: Profiles },
 	{ path: '*', redirect: '/' }
-
 ]
 
 

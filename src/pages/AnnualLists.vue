@@ -1,24 +1,35 @@
 <template>
 	<div id="annual-lists">
 
-		<h1>Annual Lists</h1>
 		
-
-		<hr>
 		<form v-on:submit.prevent>
-			<div class="columns">
-				<div class="column">
-					<list-years v-model="queryParams.year"></list-years>
-				</div>
-				<div class="column">
-					<list-depth v-model="queryParams.list_depth"></list-depth>
-					<list-type v-model="queryParams.list_type"></list-type>
-				</div>
-				<div class="column">
-					<list-events v-model="queryParams.eventID"></list-events>
-					<list-age-groups-default v-model="queryParams.ageGroup"></list-age-groups-default>
-				</div>
-			</div><!-- ENDS columns -->
+
+			<v-container grid-list-xl>
+				<v-layout row wrap>
+					<v-flex>
+						<h1>Annual Lists</h1>
+					</v-flex>
+				</v-layout>
+			
+
+				<v-layout row wrap>
+					<v-flex xs12 md3>
+						<list-age-groups-default v-model="queryParams.ageGroup"></list-age-groups-default>
+					</v-flex>
+					<v-flex xs12 md2>
+						<list-years v-model="queryParams.year"></list-years>
+					</v-flex>
+					<v-flex xs12 md2>
+						<list-depth v-model="queryParams.list_depth"></list-depth>
+					</v-flex>
+					<v-flex xs12 md2>
+						<list-type v-model="queryParams.list_type"></list-type>
+					</v-flex>
+					<v-flex xs12 md3>
+						<list-events v-model="queryParams.eventID"></list-events>
+					</v-flex>
+				</v-layout>
+			</v-container>
 
 			<button type="submit" @click="fetchFormParams" class="button is-danger">Submit</button>
 

@@ -1,5 +1,36 @@
 <template>
+
 	<div>
+
+		<v-navigation-drawer 
+			v-model="drawer" 
+			temporary 
+			absolute 
+			width = "200" 
+			id = "drawer">
+		</v-navigation-drawer>
+		
+		<v-toolbar fixed scroll-off-screen>
+			<v-toolbar-side-icon  @click.stop="drawer = !drawer" class="hidden-md-and-up"></v-toolbar-side-icon>
+			<!-- <v-toolbar-side-icon></v-toolbar-side-icon> -->
+			<v-toolbar-title>Athletics NZ Rankings</v-toolbar-title>
+			<v-spacer></v-spacer>
+			<v-toolbar-items class="hidden-sm-and-down">
+
+				<v-btn flat to="/annual-lists" exact>Annual Lists</v-btn>
+				<v-btn flat to="/nz-records" exact>Records</v-btn>
+				<v-btn flat to="/top-perfs" exact>Top Performances</v-btn>
+				<v-btn flat to="/profiles" exact>Profiles</v-btn>
+
+			</v-toolbar-items>
+		</v-toolbar>
+
+		
+
+	</div>
+
+
+	<!-- <div>
 
 		<nav class="navbar" role="navigation" aria-label="main navigation">
 			<div class="navbar-brand">
@@ -24,10 +55,17 @@
 			</div>
 		</nav>
 
-	</div>
+	</div> -->
+
+
 </template>
 
 <script>
 	export default {
+		data() {
+			return {
+				drawer: null
+			}
+		}
 	};
 </script>

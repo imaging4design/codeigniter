@@ -1,17 +1,27 @@
 <template>
 
-	<div class="field">
-		<label class="label">Select Year</label>
-		<div class="control" v-for="(value, key, index) in age_options">
-			<label>
-				<input type="radio" 
-				v-bind:checked="key === $route.query.ageGroup" 
-				v-bind:value="key" 
-				name="ageGroup" 
-				v-on:change="$emit('input', $event.target.value)" > {{value}}
-			</label>
-		</div>
+	<div>
+		<v-subheader class="pa-0">Select Age Group</v-subheader>
+
+		<v-select
+			v-on:input="$emit('input', select.key)"
+			v-model="select"
+			:hint="`${select.key}, ${select.value}`"
+			:items="items"
+			name="ageGroup"
+			item-text="value"
+			item-value="key"
+			label="Select Age Group"
+			persistent-hint
+			return-object
+			single-line
+			color="blue">
+		</v-select>
 	</div>
+
+
+
+
 	
 </template>
 
@@ -20,18 +30,19 @@
 		props: ['value'],
 		data: function(){
 			return {
-				age_options: {
-					'MS': 'Mens Open',
-					'M19': 'Men under 20',
-					'M18': 'Men under 19',
-					'M17': 'Men under 18',
-					'M16': 'Men under 17',
-					'WS': 'Womens Open',
-					'W19': 'Women under 20',
-					'W18': 'Women under 19',
-					'W17': 'Women under 18',
-					'W16': 'Women under 17'
-				}
+        		select: { key: 'MS', value: 'Mens Open' },
+				items: [
+					{ key: 'MS', value: 'Mens Open' },
+					{ key: 'M19', value: 'Men under 20' },
+					{ key: 'M18', value: 'Men under 19' },
+					{ key: 'M17', value: 'Men under 18' },
+					{ key: 'M16', value: 'Men under 17' },
+					{ key: 'WS', value: 'Womens Open' },
+					{ key: 'W19', value: 'Women under 20' },
+					{ key: 'W18', value: 'Women under 19' },
+					{ key: 'W17', value: 'Women under 18' },
+					{ key: 'W16', value: 'Women under 17' }
+				]
 			}
 		}
 	};

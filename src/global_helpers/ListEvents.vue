@@ -1,45 +1,38 @@
 <template>
 
-	<!-- <div class="field">
-		<label class="label">Events</label>
-		<div class="control">
-			<div class="select">
-				<select v-on:input="$emit('input', $event.target.value)">
-					<option disabled value="">Select Age Group</option>
-					Loop through the ageGroup options/values pulled in from 'events'
-					<option v-for="(value, key, index) in events" v-bind:value="value.eventID">{{value.eventName}}</option>
-				</select>
-			</div>
-		</div>
-	</div> -->
+	<div>
 
-	<section>
-		<b-field label="Select Event">
-            <b-select placeholder="Select an event" v-model="event.eventID" v-on:input="$emit('input', event.eventID)">
-                <option
-                    v-for="event in events"
-					v-bind:key="event.eventID"
-					v-bind:value="event.eventID">
-                    {{ event.eventName }}
-                </option>
-            </b-select>
-        </b-field>
-	</section>
-		
+		<v-subheader class="pa-0">Select Event</v-subheader>
 
+		<v-select
+			v-on:input="$emit('input', event.eventID)"
+			v-model="event"
+			:hint="`${event.eventID}, ${event.eventName}`"
+			:items="events"
+			name="event"			
+			item-text="eventName"
+			item-value="eventID"
+			label="Select an Event"
+			persistent-hint
+			return-object
+			single-line
+			solo
+			color="blue">
+		</v-select>
+
+	</div>
 
 </template>
 
 <script>
 	export default {
 		//props: ['value'],
-
 		data: function(){
 			return {
 				events: [],
 				event: {
 					eventID: '1',
-					eventName: null
+					eventName: '100m'
 				}
 			}
 		},
