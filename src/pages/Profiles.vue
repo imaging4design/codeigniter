@@ -2,7 +2,7 @@
 	
 	<div id="profile">
 
-		<h1>Athlete Profiles</h1>
+		
 
 		<list-athletes></list-athletes>
 
@@ -12,20 +12,40 @@
 		|*********************************************************
 		-->
 		<form v-on:submit.prevent>
-			<div class="field">
-				<label class="label">Events</label>
-				<div class="control">
-					<div class="select">
-						<select v-bind:value="value" v-model="queryParams.eventID" @change="athletePerformances">
-							<option disabled value="0">Select Events</option>
-							<!-- Loop through the ageGroup options/values pulled in from 'events' -->
-							<option v-for="(value, key, index) in athleteEvents" v-bind:value="value.eventID">{{value.eventName}}</option>
-						</select>
-					</div>
-				</div>
-			</div>
 
-			<!-- <button type="submit" @click="athletePerformances" class="button is-danger">Submit</button> -->
+			<v-container grid-list-xl>
+				<v-layout row wrap>
+					<v-flex>
+						<h1>Athlete Profiles</h1>
+					</v-flex>
+				</v-layout>
+
+				<v-layout row>
+					
+					<v-flex xs12 md4>
+						
+						<v-subheader class="pa-0">Select Event</v-subheader>
+
+						<v-select
+							v-model="queryParams.eventID"
+							v-on:change="athletePerformances"
+							:hint="`${event.eventID}, ${event.eventName}`"
+							:items="athleteEvents"
+							name="event"			
+							item-text="eventName"
+							item-value="eventID"
+							label="Select an Event"
+							persistent-hint
+							single-line
+							solo
+							color="blue">
+						</v-select>
+						
+					</v-flex>
+						
+
+				</v-layout>
+			</v-container>
 
 		</form>
 
@@ -47,50 +67,36 @@
 		| BEST PERFORMANCES 
 		|*********************************************************
 		-->
-		<div class="table-container">
-			<table class="table is-striped is-fullwidth is-hoverable is-bordered" v-if="bestPerformances">
-				<thead>
-					<tr>
-						<th>Rank</th>
-						<th>Performance</th>
-						<th>Wind</th>
-						<th>Note</th>
-						<th>Place</th>
-						<th>Competition</th>
-						<th>Venue</th>
-						<th>Date</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr v-for="(result, index) in bestPerformances" :key="index">
-						
-						<!-- Rank No. do not show number if previous performances is same (e.g. 10.38 / 10.38) -->
-						<template v-if="bestPerformances[index-1]">
-							<td v-if="result.time == bestPerformances[index-1].time 
-								&& result.distHeight == bestPerformances[index-1].distHeight
-								&& result.points == bestPerformances[index-1].points"><!-- i.e. the previous perf -->
-								&nbsp;
-							</td>
-							<td v-else>
-								{{index + 1}}
-							</td>
-						</template>
-						<template v-else>
-							<td>{{index + 1}}</td>
-						</template>
+		<v-data-table
+			:headers="headers"
+			:items="rankedItems"
+			:loading="loading"
+			:expand="expand"
+			item-key="resultID"
+		>
 
-						<td>{{result.time | removeLeadZeros}} {{result.distHeight | removeLeadZeros}} {{result.points | removeLeadZeros}}</td>
-						<td>{{result.wind}} {{result.implement}}</td>
-						<td>{{result.record}}</td>
-						<td>{{result.placing}}</td>
-						<td>{{result.competition}}</td>
-						<td>{{result.venue}}</td>
-						<td>{{result.date}}</td>
+			<v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>
 
-					</tr>
-				</tbody>
-			</table><!-- ENDS table -->
-		</div><!-- ENDS table-container -->
+			<template slot="items" slot-scope="props">
+				<tr @click="props.expanded = !props.expanded">
+					<td>{{ props.item.rank }}</td>
+					<td class="text-xs-left">{{ props.item.time | removeLeadZeros }} {{ props.item.distHeight | removeLeadZeros }} {{ props.item.points | removeLeadZeros }} </td>
+					<td class="text-xs-left">{{ props.item.wind }} {{ props.item.implement }}</td>
+					<td class="text-xs-left">{{ props.item.record }}</td>
+					<td class="text-xs-left">{{ props.item.placing }}</td>
+					<td class="text-xs-left">{{ props.item.competition }}</td>
+					<td class="text-xs-left">{{ props.item.venue }}</td>
+					<td class="text-xs-left">{{ props.item.date }}</td>
+				</tr>
+
+			</template>
+			<template slot="expand" slot-scope="props">
+				<v-card flat>
+					<v-card-text>IAAF Standard 10.12 | IAAF Standard 10.12</v-card-text>
+				</v-card>
+			</template>
+
+		</v-data-table>
 	
 	</div><!-- ENDS profile -->
 
@@ -105,7 +111,6 @@ import moment from 'moment';
 export default {
 	data() {
 		return {
-			loadingIcon: false,
 			token: null,
 			value: [],
 			queryParams: {
@@ -116,12 +121,54 @@ export default {
 			},
 			athleteEvents: [],
 			athleteData: [],
-			bestPerformances: []
+			bestPerformances: [],
+
+			events: [],
+			event: {
+				eventID: '1',
+				eventName: '100m'
+			},
+
+			loading: false,
+			expand: false,
+			headers: [
+				{ text: 'Rank', value: 'rank', sortable: false},
+				{ text: 'Perf', align: 'left', sortable: false, value: 'time'},
+				{ text: 'Wind', value: 'wind', sortable: false},
+				{ text: 'Record', value: 'record', sortable: false},
+				{ text: 'Placing', value: 'placing', sortable: false},
+				{ text: 'Competition', value: 'competition', sortable: false},
+				{ text: 'Venue', value: 'venue', sortable: false},
+				{ text: 'Date', value: 'date', sortable: false}
+			]
 		}
 	},
 
 	components: {
 		'ListAthletes': ListAthletes
+	},
+
+	computed: {
+
+		rankedItems() {
+        	const items = [];
+	        if (this.bestPerformances.length > 0) {
+	            items[0] = this.bestPerformances[0];
+	            items[0].rank = 1;
+	            for (let index = 1; index < this.bestPerformances.length; index++) {
+	                items[index] = this.bestPerformances[index];
+	                if (items[index].time === items[index - 1].time 
+	                	&& items[index].distHeight === items[index - 1].distHeight
+	                	&& items[index].points === items[index - 1].points ) {
+	                    items[index].rank = "";
+	                } else {
+	                    items[index].rank = index + 1;
+	                }
+	            }
+	        }
+	        return items;
+	    }
+
 	},
 
 	methods: {
@@ -184,10 +231,6 @@ export default {
 
 			//console.log(this.queryParams.recordType)
 		}
-	},
-
-	computed: {
-		
 	},
 
 	mounted() {

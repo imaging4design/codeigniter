@@ -1,105 +1,126 @@
 <template>
-
-	<div class="Typeahead">
-		<i class="fa fa-spinner fa-spin" v-if="loading"></i>
-		<template v-else>
-			<i class="fa fa-search" v-show="isEmpty"></i>
-			<!-- <i class="fa fa-times" v-show="isDirty" @click="reset"></i> -->
-		</template>
-
-		<input type="text"
-			class="input"
-			placeholder="Search athletes"
-			autocomplete="off"
-			v-model="query"
-			@keydown.down="down"
-			@keydown.up="up"
-			@keydown.enter="hit"
-			@keydown.esc="reset"
-			@blur="reset"
-			@input="update"/>
-
-		<ul v-show="hasItems">
-			<li v-for="(item, $item) in items" :class="activeClass($item)" @mousedown="hit" @mousemove="setActive($item)">
-				<!-- <span v-text="item.nameLast"></span>, <span v-text="item.nameFirst"></span> -->
-				<span>{{item.nameLast | toUpperCase}}, {{item.nameFirst}} {{item.athleteID}}</span>
-			</li>
-		</ul>
-	</div>
-
+  <v-card
+    class="hide-overflow"
+    color="purple lighten-1"
+    dark
+  >
+    <v-toolbar
+      card
+      color="purple"
+    >
+      <v-icon>mdi-account</v-icon>
+      <v-toolbar-title class="font-weight-light">User Profile</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-btn
+        color="purple darken-3"
+        fab
+        small
+        @click="isEditing = !isEditing"
+      >
+        <v-icon v-if="isEditing">mdi-close</v-icon>
+        <v-icon v-else>mdi-pencil</v-icon>
+      </v-btn>
+    </v-toolbar>
+    <v-card-text>
+      <v-text-field
+        :disabled="!isEditing"
+        color="white"
+        label="Name"
+      ></v-text-field>
+      <v-autocomplete
+      	@change="pushOrRemoveStates"
+      	v-model="selected"
+        :disabled="!isEditing"
+        :items="states"
+        :filter="customFilter"
+        color="white"
+        item-text="name"
+        item-value="key"
+        label="State"
+        return-object
+      ></v-autocomplete>
+    </v-card-text>
+    <v-divider></v-divider>
+    <v-card-actions>
+      <v-spacer></v-spacer>
+      <v-btn
+        :disabled="!isEditing"
+        color="success"
+        @click="save"
+      >
+        Save
+      </v-btn>
+    </v-card-actions>
+    <v-snackbar
+      v-model="hasSaved"
+      :timeout="2000"
+      absolute
+      bottom
+      left
+    >
+      Your profile has been updated
+    </v-snackbar>
+  </v-card>
 </template>
 
 
 
+
 <script>
-//import VueTypeahead from '../src/main'
-import Typeahead from 'vue-typeahead'
-
 export default {
-	extends: Typeahead, // vue@1.0.22+
-	// mixins: [VueTypeahead], // vue@1.0.21-
-
-	//props: ['athleteID'],
-
 	data () {
 		return {
-			// The source url
-			// (required)
-			src: 'site/Home_con/get_auto_athletes',
-
-			// The data that would be sent by request
-			// (optional)
-			data: {},
-
-			// Limit the number of items which is shown at the list
-			// (optional)
-			limit: 50,
-
-			// The minimum character length needed before triggering
-			// (optional)
-			minChars: 3,
-
-			// Highlight the first item in the list
-			// (optional)
-			selectFirst: false,
-
-			// Override the default value (`q`) of query parameter name
-			// Use a falsy value for RESTful query
-			// (optional)
-			queryParamName: 'athletes'
-
+			selected:['goo'],
+			hasSaved: false,
+			isEditing: null,
+			model: null,
+			//states: []
+			states: [
+	          { name: 'Florida', abbr: 'FL', id: 1 },
+	          { name: 'Georgia', abbr: 'GA', id: 2 },
+	          { name: 'Nebraska', abbr: 'NE', id: 3 },
+	          { name: 'California', abbr: 'CA', id: 4 },
+	          { name: 'New York', abbr: 'NY', id: 5 }
+	        ]
 		}
 	},
 
 	methods: {
-		// The callback function which is triggered when the user hits on an item
-		// (required)
-		onHit (item) {
-			//alert(item.athleteID)
-			this.$parent.athleteHelpers(item.athleteID);
+
+		pushOrRemoveStates(){
+	      alert(this.selected);
+	    },
+
+		fetchAthletes() {
+			console.log('hello')
+			this.$http.get('site/Home_con/get_auto_athletes')
+			.then((response) => {
+				this.states = response.data;
+				console.log(this.states);
+
+			})
+			.catch((error) => {
+				console.error('GAVINS ERROR: ' + error);
+			})
 		},
 
-		// The callback function which is triggered when the response data are received
-		// (optional)
-		prepareResponseData (data) {
-			// data = ...
-			return data
+		customFilter (item, queryText, itemText) {
+			 const textOne = item.name.toLowerCase()
+	        const textTwo = item.abbr.toLowerCase()
+	        const searchText = queryText.toLowerCase()
+
+			return textOne.indexOf(searchText) > -1 || textTwo.indexOf(searchText) > -1
+		},
+
+		save () {
+			this.isEditing = !this.isEditing
+			this.hasSaved = true
 		}
+	},
+
+	mounted(){
+		//this.fetchAthletes();
 	}
 }
+
 </script>
-
-
-
-<style lang="scss">
-.Typeahead {
-	ul {
-		background: green;
-		li {
-			color: white;
-			cursor: pointer;
-		}
-	}
-}
-</style>
-

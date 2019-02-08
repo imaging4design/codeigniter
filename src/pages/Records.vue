@@ -31,73 +31,48 @@
 						<list-record-types v-model="queryParams.recordType"></list-record-types>
 					</v-flex>
 				</v-layout>
+
+				<v-layout row>
+					<v-btn type="submit" @click="fetchFormParams" color="primary">Submit</v-btn>
+				</v-layout>
 			</v-container>
 
-			<!-- <div class="columns">
-
-				<div class="column">
-					<div class="field">
-						<label class="label">Season</label>
-						<div class="control">
-							<div class="select">
-								<select v-model="queryParams.in_out" class="form-control">
-									<option disabled value="">Please select one</option>
-									Loop through the record option/values pulled in from 'record_options'
-									<option v-for="(value, key, index) in inOutOptions" :value="key">{{value}}</option>
-								</select>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<div class="column">
-					
-				</div>
-
-				<div class="column">
-					
-				</div>
-				<div class="column">
-					
-				</div>
-			</div> -->
-
-			<v-btn type="submit" @click="fetchFormParams" color="success">Submit</v-btn>		
-
-		
 		</form>
 
 		<br>
 
-		<strong>Token: </strong>{{token}} <br>
+		<!-- <strong>Token: </strong>{{token}} <br> -->
 
 		<h3 v-show="! recordsNew">No records to display</h3>
 
 
-			<div class="table-container">
-				<table class="table is-striped is-fullwidth is-hoverable is-bordered" v-show="recordsNew">
-					<thead>
-						<tr>
-							<th>Event</th>
-							<th>Athlete</th>
-							<th>Performance</th>
-							<th>Country</th>
-							<th>Venue</th>
-							<th>Date</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr v-for="(record, index) in recordsNew" :key="index">
-							<td><strong>{{record.eventName}}</strong></td>
-							<td>{{record.nameFirst}} {{record.nameLast}}</td>
-							<td>{{record.result | removeLeadZeros}}</td>
-							<td>{{record.country}}</td>
-							<td>{{record.venue}}</td>
-							<td>{{record.date}}</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
+		<v-data-table
+			:headers="headers"
+			:items="recordsNew"
+			:loading="loading"
+			:expand="expand"
+			item-key="recordID"
+		>
+
+			<v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>
+
+			<template slot="items" slot-scope="props">
+				<tr @click="props.expanded = !props.expanded">
+				<td>{{ props.item.eventName }}</td>
+				<td class="text-xs-left">{{ props.item.nameFirst }} {{ props.item.nameLast }}</td>
+				<td class="text-xs-left">{{ props.item.result}}</td>
+				<td class="text-xs-left">{{ props.item.country }}</td>
+				<td class="text-xs-left">{{ props.item.venue }}</td>
+				<td class="text-xs-left">{{ props.item.date }}</td>
+				</tr>
+			</template>
+			<template slot="expand" slot-scope="props">
+				<v-card flat>
+					<v-card-text>IAAF Standard 10.12 | IAAF Standard 10.12</v-card-text>
+				</v-card>
+			</template>
+
+		</v-data-table>
 
 	</div>
 
@@ -123,7 +98,18 @@ export default {
 			inOutOptions: { 
 				'out': 'Outdoors',
 				'in': 'Indoors'
-			}
+			},
+
+			loading: false,
+			expand: false,
+			headers: [
+				{ text: 'Event', align: 'left', sortable: false, value: 'eventName'},
+				{ text: 'Athlete', value: 'nameFirst', sortable: false},
+				{ text: 'Performance', value: 'result', sortable: false},
+				{ text: 'Country', value: 'country', sortable: false},
+				{ text: 'Venue', value: 'venue', sortable: false},
+				{ text: 'Date', value: 'date', sortable: false}
+			]
 		}
 	},
 

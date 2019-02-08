@@ -38,10 +38,10 @@ class Home_con extends CI_Controller {
 				// Pushes the passed variables onto the end of array ($nameLast)
 				//array_push($nameLast, strtoupper($row->nameLast) . ', ' . $row->nameFirst . ' ' . $row->athleteID);
 
-			//$result = $query;
+			$result = $query;
 			
 			// Return data (json_encode)
-			echo json_encode( $query );
+			echo json_encode( $result );
 		}
 		
 		

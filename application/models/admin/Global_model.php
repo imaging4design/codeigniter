@@ -128,7 +128,7 @@ class Global_Model extends CI_Model
 		$this->db->select("DATE_FORMAT(DOB, '%d %b %Y') AS DOB", FALSE);
 		$this->db->where('athleteID >', 200000); // Don't allow for searching of 'Historic Athletes'
 		//$this->db->like('nameLast', $athletes, 'after');
-		$this->db->like('nameLast', $athletes, 'both');
+		//$this->db->like('nameLast', $athletes, 'both');
 		$this->db->order_by('nameLast', 'ASC');
 		$this->db->order_by('nameFirst', 'ASC');
 		$query = $this->db->get('athletes');

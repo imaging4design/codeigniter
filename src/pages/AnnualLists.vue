@@ -14,24 +14,31 @@
 
 				<v-layout row wrap>
 					<v-flex xs12 md3>
+						<list-events v-model="queryParams.eventID"></list-events>
+					</v-flex>
+					<v-flex xs12 md3>
 						<list-age-groups-default v-model="queryParams.ageGroup"></list-age-groups-default>
 					</v-flex>
 					<v-flex xs12 md2>
 						<list-years v-model="queryParams.year"></list-years>
 					</v-flex>
 					<v-flex xs12 md2>
-						<list-depth v-model="queryParams.list_depth"></list-depth>
-					</v-flex>
-					<v-flex xs12 md2>
 						<list-type v-model="queryParams.list_type"></list-type>
 					</v-flex>
-					<v-flex xs12 md3>
-						<list-events v-model="queryParams.eventID"></list-events>
+					<v-flex xs12 md2>
+						<list-depth v-model="queryParams.list_depth"></list-depth>
 					</v-flex>
 				</v-layout>
+
+				<v-layout row>
+					<v-btn type="submit" @click="fetchFormParams" color="primary">Submit</v-btn>
+				</v-layout>
+
 			</v-container>
 
-			<button type="submit" @click="fetchFormParams" class="button is-danger">Submit</button>
+
+			
+				
 
 		</form>
 
@@ -54,62 +61,48 @@
 					</li>
 				</ul>
 
-				<div class="loadingIcon" v-show="loadingIcon"><i class="fas fa-cog fa-5x fa-spin"></i></div>
-
-
 				<!-- 
 				|*********************************************************
 				| LEGAL PERFORMANCES 
 				|*********************************************************
 				-->
-				<div class="table-container">
-					<table class="table is-striped is-fullwidth is-hoverable is-bordered" v-if="resultsList">
-						<thead>
-							<tr>
-								<th>Rank</th>
-								<th>Performance</th>
-								<th>Wind</th>
-								<th>Athlete</th>
-								<th>Centre</th>
-								<th>DOB</th>
-								<th>Place</th>
-								<th>Competition</th>
-								<th>Venue</th>
-								<th>Date</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr v-for="(result, index) in resultsList" :key="index">
-								
-								<!-- Rank No. do not show number if previous performances is same (e.g. 10.38 / 10.38) -->
-								<template v-if="resultsList[index-1]">
-									<td v-if="result.time == resultsList[index-1].time 
-										&& result.distHeight == resultsList[index-1].distHeight
-										&& result.points == resultsList[index-1].points"><!-- i.e. the previous perf -->
-										&nbsp;
-									</td>
-									<td v-else>
-										{{index + 1}}
-									</td>
-								</template>
-								<template v-else>
-									<td>{{index + 1}}</td>
-								</template>
 
-								<td>{{result.time | removeLeadZeros}} {{result.distHeight | removeLeadZeros}} {{result.points | removeLeadZeros}}</td>
-								<td>{{result.wind}}</td>
-								<td>{{result.nameFirst}} {{result.nameLast}}</td>
-								<td>{{result.centreID}}</td>
-								<td>{{result.DOB}}</td>
-								<td>{{result.placing}}</td>
-								<td>{{result.competition}}</td>
-								<td>{{result.venue}}</td>
-								<td>{{result.date}}</td>
+				<v-data-table
+					:headers="headers"
+					:items="rankedItems"
+					:loading="loading"
+					:expand="expand"
+					item-key=resultID
+				>
 
-							</tr>
-						</tbody>
-					</table>
-				</div>
+					<v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>
+
+					<template slot="items" slot-scope="props">
+						<tr @click="props.expanded = !props.expanded" :key="props.item.id">
+
+							<td>{{props.item.rank}}</td>
+
+							<td>{{props.item.time | removeLeadZeros}} {{props.item.distHeight | removeLeadZeros}} {{props.item.points | removeLeadZeros}}</td>
+							<td class="text-xs-left">{{ props.item.wind }}</td>
+							<td class="text-xs-left">{{ props.item.nameFirst }} {{ props.item.nameLast }} </td>
+							<td class="text-xs-left">{{ props.item.centreID }}</td>
+							<td class="text-xs-left">{{ props.item.DOB }}</td>
+							<td class="text-xs-left">{{ props.item.placing }}</td>
+							<td class="text-xs-left">{{ props.item.competition }}</td>
+							<td class="text-xs-left">{{ props.item.venue }}</td>
+							<td class="text-xs-left">{{ props.item.date }}</td>
+						</tr>
+					</template>
+					<template slot="expand" slot-scope="props">
+						<v-card flat>
+							<v-card-text>IAAF Standard 10.12 | {{ props.item.competition }}</v-card-text>
+						</v-card>
+					</template>
+
+				</v-data-table>
+
+
+
 
 
 
@@ -191,8 +184,8 @@ import ListType from '../global_helpers/ListType.vue';
 export default {
 	data() {
 		return {
-			loadingIcon: false,
 			token: null,
+
 			queryParams: {
 				ageGroup: 'MS',
 				list_depth: '250',
@@ -200,9 +193,25 @@ export default {
 				eventID: '1',
 				year: '2019'
 			},
+			
 			resultsList: [],
 			illegal_wind: [],
-			current_nz_record: []
+			current_nz_record: [],
+
+			loading: false,
+			expand: false,
+			headers: [
+				{ text: 'Rank', value: 'resultID', sortable: false},
+				{ text: 'Performance', value: 'performance', sortable: false},
+				{ text: 'Wind', value: 'wind', sortable: false},
+				{ text: 'Athlete', value: 'athlete', sortable: false},
+				{ text: 'Centre', value: 'center', sortable: false},
+				{ text: 'DOB', value: 'center', sortable: false},
+				{ text: 'Place', value: 'placing', sortable: false},
+				{ text: 'Competition', value: 'competition', sortable: false},
+				{ text: 'Venue', value: 'venue', sortable: false},
+				{ text: 'Date', value: 'date', sortable: false}
+			]
 		}
 	},
 
@@ -212,6 +221,28 @@ export default {
 		'ListYears': ListYears,
 		'ListDepth': ListDepth,
 		'ListType': ListType
+	},
+
+	computed: {
+
+		rankedItems() {
+        	const items = [];
+	        if (this.resultsList.length > 0) {
+	            items[0] = this.resultsList[0];
+	            items[0].rank = 1;
+	            for (let index = 1; index < this.resultsList.length; index++) {
+	                items[index] = this.resultsList[index];
+	                if (items[index].time === items[index - 1].time 
+	                	&& items[index].distHeight === items[index - 1].distHeight
+	                	&& items[index].points === items[index - 1].points ) {
+	                    items[index].rank = "";
+	                } else {
+	                    items[index].rank = index + 1;
+	                }
+	            }
+	        }
+	        return items;
+	    }
 	},
 
 	methods: {
@@ -228,7 +259,7 @@ export default {
 		},
 
 		fetchFormParams() {
-			this.loadingIcon = true;
+			this.loading = true;
 			this.$router.push({
 				path: '/annual-lists', 
 				query: this.queryParams
@@ -243,7 +274,7 @@ export default {
 				this.current_nz_record = response.data.current_nz_record;
 				this.illegal_wind = response.data.illegal_wind;
 				//console.log('RESULTS: ' + response.data.lists)
-				this.loadingIcon = false;
+				this.loading = false;
 			})
 			.catch((error) => {
 				console.error('GAVINS ERROR: ' + error);
@@ -262,24 +293,5 @@ export default {
 
 
 <style lang="scss">
-
-	#annual-lists {
-		position: relative;
-		.loadingIcon {
-			width: 100%;
-			position: absolute;
-			text-align: center;
-			i.fas {
-				color: #fff;
-				margin: 40px auto;
-			} 
-		}
-		ul {
-			li {
-				margin: 0;
-			}
-		}
-	}
-	
 
 </style>

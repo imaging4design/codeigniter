@@ -17,22 +17,22 @@
 
 			<v-layout row wrap>
 				<v-flex xs12 md2>
-					<v-btn flat outline block color="blue" @click="showTopPerformers('MS')"><v-icon left>check_circle</v-icon> Men Senior</v-btn>
+					<v-btn flat outline block color="primary" @click="showTopPerformers('MS')">Men Senior</v-btn>
 				</v-flex>
 				<v-flex xs12 md2>
-					<v-btn flat outline block color="blue" @click="showTopPerformers('WS')">Women Senior</v-btn>
+					<v-btn flat outline block color="primary" @click="showTopPerformers('WS')">Women Senior</v-btn>
 				</v-flex>
 				<v-flex xs12 md2>
-					<v-btn flat outline block color="blue" @click="showTopPerformers('M19')">Men U20</v-btn>
+					<v-btn flat outline block color="primary" @click="showTopPerformers('M19')">Men U20</v-btn>
 				</v-flex>
 				<v-flex xs12 md2>
-					<v-btn flat outline block color="blue" @click="showTopPerformers('W19')">Women U20</v-btn>
+					<v-btn flat outline block color="primary" @click="showTopPerformers('W19')">Women U20</v-btn>
 				</v-flex>
 				<v-flex xs12 md2>
-					<v-btn flat outline block color="blue" @click="showTopPerformers('M17')">Men U17</v-btn>
+					<v-btn flat outline block color="primary" @click="showTopPerformers('M17')">Men U17</v-btn>
 				</v-flex>
 				<v-flex xs12 md2>
-					<v-btn flat outline block color="blue" @click="showTopPerformers('W17')">Women U17</v-btn>
+					<v-btn flat outline block color="primary" @click="showTopPerformers('W17')">Women U17</v-btn>
 				</v-flex>
 			</v-layout>
 		</v-container>
