@@ -4,7 +4,7 @@
 
 		
 
-		<list-athletes></list-athletes>
+		<list-athletes v-model="queryParams.athleteID"></list-athletes>
 
 		<!-- 
 		|*********************************************************
@@ -17,6 +17,7 @@
 				<v-layout row wrap>
 					<v-flex>
 						<h1>Athlete Profiles</h1>
+						<h2>{{athleteData.nameFirst}} {{athleteData.nameLast}} {{athleteData.athleteID}}</h2>
 					</v-flex>
 				</v-layout>
 

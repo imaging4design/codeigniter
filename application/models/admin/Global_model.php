@@ -124,7 +124,9 @@ class Global_Model extends CI_Model
 		$athletes = $this->input->get('athletes');
 		
 		// Search from table called clients
-		$this->db->select('nameLast, nameFirst, athleteID, DOB, centreID');
+		//$this->db->select('nameLast, nameFirst, athleteID, DOB, centreID'); // Original
+		$this->db->select("CONCAT_WS(' ', nameFirst, nameLast) AS name, athleteID, DOB, centreID");
+
 		$this->db->select("DATE_FORMAT(DOB, '%d %b %Y') AS DOB", FALSE);
 		$this->db->where('athleteID >', 200000); // Don't allow for searching of 'Historic Athletes'
 		//$this->db->like('nameLast', $athletes, 'after');
