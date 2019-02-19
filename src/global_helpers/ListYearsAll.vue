@@ -35,7 +35,15 @@ export default {
 	computed : {
 		years () {
 			const currentYear = new Date().getFullYear();
-			return Array.from({length: currentYear - 2012}, (value, index) => 2013 + index).reverse();
+			const listYears = Array.from({length: currentYear - 2012}, (value, index) => 2013 + index).reverse();
+
+			const year=[];
+			year.push({key: 0, value: "All Years"});
+			for(var i=0; i<listYears.length; i++)  {
+				year.push({key: listYears[i], value: listYears[i]});
+			}
+
+			return year;
 		}
 	}
 };

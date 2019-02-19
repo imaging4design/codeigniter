@@ -159,14 +159,14 @@ class Profiles_Model extends CI_Model
 	public function get_athlete_events()
 	{
 		$query = $this->db->query("
-		
-		SELECT * 
-		FROM ((SELECT results.eventID FROM results WHERE results.athleteID = ".$this->athleteID.")
-		UNION
-		(SELECT resMulti.eventID FROM resMulti WHERE resMulti.athleteID = ".$this->athleteID.")) AS list_of_events
-		INNER JOIN events ON list_of_events.eventID = events.eventID
-		ORDER BY events.eventID ASC
-		
+			
+			SELECT * 
+			FROM ((SELECT results.eventID FROM results WHERE results.athleteID = ".$this->athleteID.")
+			UNION
+			(SELECT resMulti.eventID FROM resMulti WHERE resMulti.athleteID = ".$this->athleteID.")) AS list_of_events
+			INNER JOIN events ON list_of_events.eventID = events.eventID
+			ORDER BY events.eventID 
+			
 		");
 		
 		if($query->num_rows() >0) 

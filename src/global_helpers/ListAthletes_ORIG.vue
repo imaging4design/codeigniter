@@ -76,7 +76,7 @@ export default {
 		// (required)
 		onHit (item) {
 			//alert(item.athleteID)
-			this.$parent.athleteHelpers(item.athleteID);
+			this.$parent.getAthleteData(item.athleteID);
 		},
 
 		// The callback function which is triggered when the response data are received

@@ -4,7 +4,11 @@
 
 		
 
-		<list-athletes v-model="queryParams.athleteID"></list-athletes>
+		<list-athletes></list-athletes>
+
+
+
+
 
 		<!-- 
 		|*********************************************************
@@ -13,34 +17,44 @@
 		-->
 		<form v-on:submit.prevent>
 
-			<v-container grid-list-xl>
+			<v-container grid-list-xl v-show="athleteData.athleteID">
 				<v-layout row wrap>
-					<v-flex>
-						<h1>Athlete Profiles</h1>
-						<h2>{{athleteData.nameFirst}} {{athleteData.nameLast}} {{athleteData.athleteID}}</h2>
+					<v-flex xs12 md6>
+						<h1>{{athleteData.nameFirst}} {{athleteData.nameLast}}: {{athleteData.athleteID}}</h1>
+						<ul >
+							<li><strong>Athlete: </strong>{{athleteData.nameFirst}} {{athleteData.nameLast}} {{athleteData.athleteID}}</li>
+							<!-- <li><strong>Date of Birth: </strong>{{athleteData.birthDate}}</li> -->
+							<li><strong>Date of Birth: </strong>{{athleteData.DOB}} ({{formatDuration(athleteData.DOB)}})</li>
+							<li><strong>Centre: </strong>{{athleteData.clubName}} ({{athleteData.centreName}})</li>
+							<li v-show="athleteData.coach"><strong>Coach: </strong>{{athleteData.coach}}</li>
+							<li v-show="athleteData.coach_former"><strong>Former Coach/s: </strong>{{athleteData.coach_former}}</li>
+						</ul>
 					</v-flex>
-				</v-layout>
-
-				<v-layout row>
+		
 					
-					<v-flex xs12 md4>
+					<v-flex xs12 md6>
 						
 						<v-subheader class="pa-0">Select Event</v-subheader>
 
 						<v-select
 							v-model="queryParams.eventID"
-							v-on:change="athletePerformances"
-							:hint="`${event.eventID}, ${event.eventName}`"
+							v-on:change="getAthletePerformances"
 							:items="athleteEvents"
-							name="event"			
+							name="queryParams.event"			
 							item-text="eventName"
 							item-value="eventID"
 							label="Select an Event"
-							persistent-hint
 							single-line
 							solo
 							color="blue">
 						</v-select>
+
+						<list-years-all v-model="queryParams.year"></list-years-all>
+
+						<v-radio-group v-model="queryParams.order_by" :mandatory="false" v-on:change="getAthletePerformances">
+							<v-radio label="Performance" value="0"></v-radio>
+							<v-radio label="Latest" value="1"></v-radio>
+						</v-radio-group>
 						
 					</v-flex>
 						
@@ -50,16 +64,7 @@
 
 		</form>
 
-		<ul>
-			<li><strong>Athlete: </strong>{{athleteData.nameFirst}} {{athleteData.nameLast}} {{athleteData.athleteID}}</li>
-			<li><strong>Date of Birth: </strong>{{athleteData.birthDate}}</li>
-			<li><strong>DOB Format: </strong>{{athleteData.DOB}}</li>
-			<li><strong>Age: </strong>{{formatDuration(athleteData.DOB)}}</li>
-			<li><strong>Centre: </strong>{{athleteData.centreName}}</li>
-			<li><strong>Club: </strong>{{athleteData.clubName}}</li>
-			<li><strong>Coach: </strong>{{athleteData.coach}}</li>
-			<li><strong>Former Coach/s: </strong>{{athleteData.coach_former}}</li>
-		</ul>
+		
 
 		
 
@@ -107,28 +112,24 @@
 
 <script>
 import ListAthletes from '../global_helpers/ListAthletes.vue';
+import ListYearsAll from '../global_helpers/ListYearsAll.vue';
 //var moment = require('moment')
 import moment from 'moment';
 export default {
 	data() {
 		return {
 			token: null,
-			value: [],
+
 			queryParams: {
-				athleteID: '',
-				eventID: '0',
+				athleteID: null,
+				eventID: null,
 				year: '0',
-				order_by: '0'
+				order_by: '1'
 			},
+
 			athleteEvents: [],
 			athleteData: [],
 			bestPerformances: [],
-
-			events: [],
-			event: {
-				eventID: '1',
-				eventName: '100m'
-			},
 
 			loading: false,
 			expand: false,
@@ -146,7 +147,8 @@ export default {
 	},
 
 	components: {
-		'ListAthletes': ListAthletes
+		'ListAthletes': ListAthletes,
+		'ListYearsAll': ListYearsAll
 	},
 
 	computed: {
@@ -156,8 +158,10 @@ export default {
 	        if (this.bestPerformances.length > 0) {
 	            items[0] = this.bestPerformances[0];
 	            items[0].rank = 1;
+	            items[0].perf = 1;
 	            for (let index = 1; index < this.bestPerformances.length; index++) {
 	                items[index] = this.bestPerformances[index];
+
 	                if (items[index].time === items[index - 1].time 
 	                	&& items[index].distHeight === items[index - 1].distHeight
 	                	&& items[index].points === items[index - 1].points ) {
@@ -184,10 +188,12 @@ export default {
 	
 		},
 
-		athleteHelpers(athleteID) {
+		getAthleteData(athleteID) {
 			this.loadingIcon = true;
 			this.queryParams.athleteID = athleteID;
-			this.queryParams.eventID = '0';
+			this.queryParams.eventID = []; // reset eventID
+			this.queryParams.order_by = '0'; // reset order_by
+			this.bestPerformances = []; // remove existing data
 			// this.$router.push({
 			// 	path: '/profiles', 
 			// 	query: this.queryParams
@@ -201,20 +207,19 @@ export default {
 				this.athleteData = response.data.athlete_data;
 				this.athleteEvents = response.data.get_athlete_events;
 				this.loadingIcon = false;
+				console.log(this.athleteEvents)
 			})
 			.catch((error) => {
 				console.error('GAVINS ERROR: ' + error);
 			})
-
-			//console.log(this.queryParams.recordType)
 		},
 
-		athletePerformances() {
+		getAthletePerformances() {
 			this.loadingIcon = true;
-			this.$router.push({
-				path: '/profiles', 
-				query: this.queryParams
-			});
+			// this.$router.push({
+			// 	path: '/profiles', 
+			// 	query: this.queryParams
+			// });
 
 			this.$http.get('site/Profiles_con/athlete_data', {
 				params: this.queryParams
@@ -224,19 +229,20 @@ export default {
 				//this.athleteData = response.data.athlete_data;
 				this.bestPerformances = response.data.athlete;
 				this.loadingIcon = false;
-				//this.queryParams.eventID = '0';
+				this.$router.push({
+					path: '/profiles', 
+					query: this.queryParams
+				});
 			})
 			.catch((error) => {
 				console.error('GAVINS ERROR: ' + error);
 			})
-
-			//console.log(this.queryParams.recordType)
 		}
 	},
 
 	mounted() {
 		//this.athleteHelpers();
-		//this.athletePerformances();
+		//this.getAthletePerformances();
 	}
 }
 

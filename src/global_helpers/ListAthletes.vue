@@ -12,7 +12,7 @@
 			color="white"
 			item-value="athleteID"
 			item-text="name"
-			label="State">
+			label="Enter athlete name">
 		</v-autocomplete>
 	</v-card-text>
 
@@ -37,8 +37,8 @@ export default {
 	methods: {
 
 	    onHit (item) {
-			// Call the 'athleteHelpers' method on the parent
-			this.$parent.athleteHelpers(this.athleteID);
+			// Call the 'athleteData' method on the parent
+			this.$parent.getAthleteData(this.athleteID);
 		},
 
 		fetchAthletes() {

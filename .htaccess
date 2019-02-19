@@ -1,3 +1,26 @@
+
+# REMOVE THE FOLLOWING LINE WHEN LIVE!!!
+Header set Access-Control-Allow-Origin "*"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 php_value memory_limit "200M"
 
 # no nasty hackers in here!
