@@ -1,9 +1,11 @@
 <template>
 
 	<div>
+
 		<v-subheader class="pa-0">Select Year</v-subheader>
 
 		<v-select
+			v-on:change="onHit()"
 			v-on:input="$emit('input', year)"
 			v-model="year"
 			:hint="`${year}`"
@@ -35,16 +37,23 @@ export default {
 	computed : {
 		years () {
 			const currentYear = new Date().getFullYear();
-			const listYears = Array.from({length: currentYear - 2012}, (value, index) => 2013 + index).reverse();
-
+			const listYears = Array.from({length: currentYear - 2007}, (value, index) => 2008 + index).reverse();
+			console.log(listYears)
 			const year=[];
+			
 			year.push({key: 0, value: "All Years"});
+
 			for(var i=0; i<listYears.length; i++)  {
 				year.push({key: listYears[i], value: listYears[i]});
 			}
-
 			return year;
 		}
+	},
+	methods: {
+		onHit () {
+			// Call the 'athleteData' method on the parent
+			this.$parent.getAthletePerformances();
+		},
 	}
 };
 </script>

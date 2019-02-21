@@ -286,6 +286,7 @@ export default {
 
 	mounted() {
 		this.fetchQueryStringParams();
+		this.fetchFormParams();
 	},	
 }
 </script>

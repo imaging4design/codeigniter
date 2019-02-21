@@ -270,6 +270,18 @@ class Profiles_con extends CI_Controller {
 		
 		
 	} // ENDS athlete_data()
+
+
+	function get_nzchamps()
+	{
+		if($query = $this->profiles_model->get_nzchamps())
+		{
+			$result['nz_champs_data'] = $query;
+		}
+
+		echo json_encode($result);
+
+	} // ENDS get_nzchamps()
 	
 	
 	

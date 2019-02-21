@@ -508,10 +508,10 @@ class Profiles_Model extends CI_Model
 	// FUNCTION get_nzchamps()
 	// Gets ALL the NZ Championships Medals of an athlete
 	/*************************************************************************************/
-	function get_nzchamps($data)
+	function get_nzchamps()
 	{
 		$this->db->select('nzchamps.id, nzchamps.year, nzchamps.ageGroup, events.eventName, nzchamps.performance, nzchamps.position');
-		$this->db->where('nzchamps.athleteID', $data);
+		$this->db->where('nzchamps.athleteID', $this->input->get('athleteID'));
 		$this->db->join('athletes', 'athletes.athleteID = nzchamps.athleteID');
 		$this->db->join('events', 'events.eventID = nzchamps.eventID');
 		$this->db->order_by('nzchamps.year', 'ASC');

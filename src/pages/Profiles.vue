@@ -64,16 +64,26 @@
 
 		</form>
 
-		
+
+
+		<!-- 
+		|*********************************************************
+		| NZ CHAMPS DATA
+		|*********************************************************
+		-->
+		<v-btn flat outline color="primary" @click="getNZChamps">NZ Champs Data</v-btn>
+		<ul>
+			<li v-for="data in nzChampsData">{{data.year}} {{data.ageGroup}} {{data.eventName}} {{data.performance}} {{data.position | medal}}</li>
+		</ul>
 
 		
-
+		
 		<!-- 
 		|*********************************************************
 		| BEST PERFORMANCES 
 		|*********************************************************
 		-->
-		<v-data-table
+		<v-data-table v-if="bestPerformances && bestPerformances.length"
 			:headers="headers"
 			:items="rankedItems"
 			:loading="loading"
@@ -103,6 +113,28 @@
 			</template>
 
 		</v-data-table>
+
+		<v-snackbar
+		      v-model="snackbar"
+		      :bottom="y === 'bottom'"
+		      :left="x === 'left'"
+		      :multi-line="mode === 'multi-line'"
+		      :right="x === 'right'"
+		      :timeout="timeout"
+		      :top="y === 'top'"
+		      :vertical="mode === 'vertical'"
+		    >
+		      {{ text }}
+		      <v-btn
+		        color="blue"
+		        flat
+		        @click="snackbar = false"
+		      >
+		        Close
+		      </v-btn>
+		    </v-snackbar>
+
+		
 	
 	</div><!-- ENDS profile -->
 
@@ -118,8 +150,18 @@ import moment from 'moment';
 export default {
 	data() {
 		return {
+			// Snackbar
+			snackbar: false,
+			y: 'top',
+			x: null,
+			mode: 'multi-line',
+			timeout: 3000,
+			text: 'No results found',
+
+			// Token
 			token: null,
 
+			// Query Params
 			queryParams: {
 				athleteID: null,
 				eventID: null,
@@ -127,9 +169,11 @@ export default {
 				order_by: '1'
 			},
 
+			// Athlete data
 			athleteEvents: [],
 			athleteData: [],
 			bestPerformances: [],
+			nzChampsData: [],
 
 			loading: false,
 			expand: false,
@@ -170,8 +214,10 @@ export default {
 	                    items[index].rank = index + 1;
 	                }
 	            }
+
+	            return items;
 	        }
-	        return items;
+	        
 	    }
 
 	},
@@ -185,11 +231,19 @@ export default {
 			    	+ this.duration.months() + ' months, ' 
 			    	+ this.duration.days() + ' days';
 			}
-	
+		},
+
+		fetchQueryStringParams() {
+			this.queryParams = {
+				athleteID: this.$route.query.athleteID ? this.$route.query.athleteID : this.queryParams.athleteID,
+				eventID: this.$route.query.eventID ? this.$route.query.eventID : this.queryParams.eventID,
+				year: this.$route.query.year ? this.$route.query.year : this.queryParams.year,
+				order_by: this.$route.query.order_by ? this.$route.query.order_by : this.queryParams.order_by
+			}
+			this.getAthleteData(this.athleteID);
 		},
 
 		getAthleteData(athleteID) {
-			this.loadingIcon = true;
 			this.queryParams.athleteID = athleteID;
 			this.queryParams.eventID = []; // reset eventID
 			this.queryParams.order_by = '0'; // reset order_by
@@ -206,7 +260,6 @@ export default {
 				//this.token = response.data.token;
 				this.athleteData = response.data.athlete_data;
 				this.athleteEvents = response.data.get_athlete_events;
-				this.loadingIcon = false;
 				console.log(this.athleteEvents)
 			})
 			.catch((error) => {
@@ -215,7 +268,8 @@ export default {
 		},
 
 		getAthletePerformances() {
-			this.loadingIcon = true;
+			this.loading = true;
+			// this.bestPerformances = []; // remove existing data
 			// this.$router.push({
 			// 	path: '/profiles', 
 			// 	query: this.queryParams
@@ -228,11 +282,33 @@ export default {
 				this.token = response.data.token;
 				//this.athleteData = response.data.athlete_data;
 				this.bestPerformances = response.data.athlete;
-				this.loadingIcon = false;
+				this.loading = false;
 				this.$router.push({
 					path: '/profiles', 
 					query: this.queryParams
 				});
+
+				if( ! this.bestPerformances){
+					this.snackbar = true;
+				}
+			})
+			.catch((error) => {
+				console.error('GAVINS ERROR: ' + error);
+			})
+		},
+
+		getNZChamps(){
+			this.loading = true;
+			this.$http.get('site/Profiles_con/get_nzchamps', {
+				params: {
+					athleteID: this.queryParams.athleteID
+				}
+			})
+			.then((response) => {
+				//this.token = response.data.token;
+				this.nzChampsData = response.data.nz_champs_data;
+				this.loading = false;
+				console.log('Champs Data: ' + this.nzChampsData);
 			})
 			.catch((error) => {
 				console.error('GAVINS ERROR: ' + error);
@@ -240,8 +316,28 @@ export default {
 		}
 	},
 
+	filters: {
+		// Convert positions to medals
+		medal(value){
+			if (!value) return ''
+			switch(value) {
+				case '1':
+					return 'gold';
+				break;
+				case '2':
+					return 'silver'
+				break;
+				case '3':
+					return 'bronze'
+				break;
+				default:
+					return value
+			}
+		}
+	},
+
 	mounted() {
-		//this.athleteHelpers();
+		//this.fetchQueryStringParams();
 		//this.getAthletePerformances();
 	}
 }
