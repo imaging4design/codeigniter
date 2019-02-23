@@ -1,22 +1,33 @@
 <template>
-	<v-card
-		class="hide-overflow"
-		color="primary"
-		dark>
-	<v-card-text>
-		<v-autocomplete
-			v-on:input="onHit(athleteID)"
-			v-model="athleteID"
-			:items="listOfAthletes"
-			:filter="customFilter"
-			color="white"
-			item-value="athleteID"
-			item-text="name"
-			label="Enter athlete name">
-		</v-autocomplete>
-	</v-card-text>
 
-	</v-card>
+	<!-- <v-container grid-list-xl>
+		<v-layout row wrap>
+			<v-flex xs12 md6> -->
+
+				<v-card
+					class="hide-overflow"
+					
+					hide-selected="true"
+					dark>
+					<v-card-text>
+						<v-autocomplete
+							v-on:input="onHit(athleteID)"
+							v-model="athleteID"
+							:items="listOfAthletes"
+							:filter="customFilter"
+							color="white"
+							item-value="athleteID"
+							item-text="name"
+							label="Enter athlete name">
+						</v-autocomplete>
+					</v-card-text>
+
+				</v-card>
+
+			<!-- </v-flex>
+		</v-layout>
+	</v-container>	 -->
+
 </template>
 
 

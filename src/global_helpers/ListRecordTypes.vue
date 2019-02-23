@@ -7,7 +7,9 @@
 				v-bind:key="key" 
 				v-bind:value="key"
 				v-bind:label="value"
-				name="recordType"></v-radio>
+				name="recordType"
+				color="teal"
+				></v-radio>
 		</v-radio-group>
 	<!-- </v-container> -->
 	</div>

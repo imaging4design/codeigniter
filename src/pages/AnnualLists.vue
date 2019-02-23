@@ -7,7 +7,7 @@
 			<v-container grid-list-xl>
 				<v-layout row wrap>
 					<v-flex>
-						<h1>Annual Lists</h1>
+						<h1 class="display-2 font-weight-thin">Annual Lists</h1>
 					</v-flex>
 				</v-layout>
 			
@@ -273,14 +273,12 @@ export default {
 				this.resultsList = response.data.lists;
 				this.current_nz_record = response.data.current_nz_record;
 				this.illegal_wind = response.data.illegal_wind;
-				//console.log('RESULTS: ' + response.data.lists)
-				this.loading = false;
 			})
 			.catch((error) => {
 				console.error('GAVINS ERROR: ' + error);
 			})
+			.finally(() => this.loading = false);
 
-			//console.log(this.queryParams.recordType)
 		}
 	},
 

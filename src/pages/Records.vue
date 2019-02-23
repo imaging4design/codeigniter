@@ -33,7 +33,7 @@
 				</v-layout>
 
 				<v-layout row>
-					<v-btn type="submit" @click="fetchFormParams" color="primary">Submit</v-btn>
+					<v-btn type="submit" @click="fetchFormParams" color="teal">Submit</v-btn>
 				</v-layout>
 			</v-container>
 

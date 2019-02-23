@@ -2,12 +2,12 @@
 	
 	<div id="profile">
 
-		
-
+		<!-- 
+		|*********************************************************
+		| Search for athletes (Autocomplete) 
+		|*********************************************************
+		-->
 		<list-athletes></list-athletes>
-
-
-
 
 
 		<!-- 
@@ -24,7 +24,7 @@
 						<ul >
 							<li><strong>Athlete: </strong>{{athleteData.nameFirst}} {{athleteData.nameLast}} {{athleteData.athleteID}}</li>
 							<!-- <li><strong>Date of Birth: </strong>{{athleteData.birthDate}}</li> -->
-							<li><strong>Date of Birth: </strong>{{athleteData.DOB}} ({{formatDuration(athleteData.DOB)}})</li>
+							<li><strong>Date of Birth: </strong>{{athleteData.DOB}} ({{convertAge(athleteData.DOB)}})</li>
 							<li><strong>Centre: </strong>{{athleteData.clubName}} ({{athleteData.centreName}})</li>
 							<li v-show="athleteData.coach"><strong>Coach: </strong>{{athleteData.coach}}</li>
 							<li v-show="athleteData.coach_former"><strong>Former Coach/s: </strong>{{athleteData.coach_former}}</li>
@@ -71,11 +71,16 @@
 		| NZ CHAMPS DATA
 		|*********************************************************
 		-->
-		<v-btn flat outline color="primary" @click="getNZChamps">NZ Champs Data</v-btn>
-		<ul>
-			<li v-for="data in nzChampsData">{{data.year}} {{data.ageGroup}} {{data.eventName}} {{data.performance}} {{data.position | medal}}</li>
-		</ul>
-
+		<v-container grid-list-xl fluid>
+			<v-layout row wrap>
+				<v-flex xs12 md6>
+					<v-btn  flat color="grey-lighten-3" @click="getNZChamps">NZ Champs Data</v-btn>
+					<ul>
+						<li v-for="data in nzChampsData">{{data.year}} {{data.ageGroup}} {{data.eventName}} {{data.performance}} {{data.position | medal}}</li>
+					</ul>
+				</v-flex>
+			</v-layout>
+		</v-container>
 		
 		
 		<!-- 
@@ -88,8 +93,7 @@
 			:items="rankedItems"
 			:loading="loading"
 			:expand="expand"
-			item-key="resultID"
-		>
+			item-key="resultID">
 
 			<v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>
 
@@ -115,24 +119,17 @@
 		</v-data-table>
 
 		<v-snackbar
-		      v-model="snackbar"
-		      :bottom="y === 'bottom'"
-		      :left="x === 'left'"
-		      :multi-line="mode === 'multi-line'"
-		      :right="x === 'right'"
-		      :timeout="timeout"
-		      :top="y === 'top'"
-		      :vertical="mode === 'vertical'"
-		    >
-		      {{ text }}
-		      <v-btn
-		        color="blue"
-		        flat
-		        @click="snackbar = false"
-		      >
-		        Close
-		      </v-btn>
-		    </v-snackbar>
+			v-model="snackbar"
+			:bottom="y === 'bottom'"
+			:left="x === 'left'"
+			:multi-line="mode === 'multi-line'"
+			:right="x === 'right'"
+			:timeout="timeout"
+			:top="y === 'top'"
+			:vertical="mode === 'vertical'">
+			{{ text }}
+			<v-btn color="blue" flat @click="snackbar=false">Close</v-btn>
+		</v-snackbar>
 
 		
 	
@@ -197,6 +194,12 @@ export default {
 
 	computed: {
 
+		/*
+		|***********************************************************************
+		| Adds the 'rank' column to the performance data
+		| Also skips the rank number for equal = performances
+		|***********************************************************************
+		*/
 		rankedItems() {
         	const items = [];
 	        if (this.bestPerformances.length > 0) {
@@ -214,17 +217,20 @@ export default {
 	                    items[index].rank = index + 1;
 	                }
 	            }
-
 	            return items;
 	        }
-	        
 	    }
 
 	},
 
 	methods: {
 
-		formatDuration(val) {
+		/*
+		|***********************************************************************
+		| Converts athlete age (DOB 21/10/1967 to 51 years, 6 months, 3 days
+		|***********************************************************************
+		*/
+		convertAge(val) {
 			this.duration = moment.duration(moment().diff(val))
 			if(val) {
 				return this.duration.years() + ' years, ' 
@@ -233,6 +239,11 @@ export default {
 			}
 		},
 
+		/*
+		|***********************************************************************
+		| Assign queryParams from either data or url $route 
+		|***********************************************************************
+		*/
 		fetchQueryStringParams() {
 			this.queryParams = {
 				athleteID: this.$route.query.athleteID ? this.$route.query.athleteID : this.queryParams.athleteID,
@@ -243,6 +254,11 @@ export default {
 			this.getAthleteData(this.athleteID);
 		},
 
+		/*
+		|***********************************************************************
+		| Retrieves the athlete's personal data (age, club, coach etc)
+		|***********************************************************************
+		*/
 		getAthleteData(athleteID) {
 			this.queryParams.athleteID = athleteID;
 			this.queryParams.eventID = []; // reset eventID
@@ -267,6 +283,11 @@ export default {
 			})
 		},
 
+		/*
+		|***********************************************************************
+		| Retrieves athletes performance data
+		|***********************************************************************
+		*/
 		getAthletePerformances() {
 			this.loading = true;
 			// this.bestPerformances = []; // remove existing data
@@ -280,9 +301,7 @@ export default {
 			})
 			.then((response) => {
 				this.token = response.data.token;
-				//this.athleteData = response.data.athlete_data;
 				this.bestPerformances = response.data.athlete;
-				this.loading = false;
 				this.$router.push({
 					path: '/profiles', 
 					query: this.queryParams
@@ -295,9 +314,15 @@ export default {
 			.catch((error) => {
 				console.error('GAVINS ERROR: ' + error);
 			})
+			.finally(() => this.loading = false);
 		},
 
-		getNZChamps(){
+		/*
+		|***********************************************************************
+		| Retrieves athletes NZ Championship honours history
+		|***********************************************************************
+		*/
+		getNZChamps() {
 			this.loading = true;
 			this.$http.get('site/Profiles_con/get_nzchamps', {
 				params: {
@@ -307,17 +332,22 @@ export default {
 			.then((response) => {
 				//this.token = response.data.token;
 				this.nzChampsData = response.data.nz_champs_data;
-				this.loading = false;
 				console.log('Champs Data: ' + this.nzChampsData);
 			})
 			.catch((error) => {
 				console.error('GAVINS ERROR: ' + error);
 			})
+			.finally(() => this.loading = false);
 		}
+
 	},
 
 	filters: {
-		// Convert positions to medals
+		/*
+		|***********************************************************************
+		| Converts NZ Champs placings (1st - 3rd) into medals
+		|***********************************************************************
+		*/
 		medal(value){
 			if (!value) return ''
 			switch(value) {

@@ -147,9 +147,11 @@ export default {
 			})
 			.then((response) => {
 				this.athletes = response.data.topPerformers;
-				//console.log(response.data);
-				this.loading = false;
 			})
+			.catch((error) => {
+				console.error('GAVINS ERROR: ' + error);
+			})
+			.finally(() => this.loading = false);
 		},
 		showTopMultis() {
 			this.$http.get('site/Home_con/showTopMultis', {
@@ -159,6 +161,9 @@ export default {
 			})
 			.then((response) => {
 				this.multi = response.data.topPerformers_Multis;
+			})
+			.catch((error) => {
+				console.error('GAVINS ERROR: ' + error);
 			})
 		},
 		showTopRelays() {
