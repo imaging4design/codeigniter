@@ -2,21 +2,17 @@
 	<div class="text-xs-center">
 		<v-dialog
 			v-model="dialog"
-			width="500"
-			>
+			width="500">
 			<v-btn
 				slot="activator"
-				color="red"
-				dark
-				>
-				Click Me
+				color="primary">
+				Recent Results
 			</v-btn>
 
 			<v-card>
 				<v-card-title
 					class="headline grey lighten-2"
-					primary-title
-					>
+					primary-title>
 					<slot name="header"></slot>
 				</v-card-title>
 
@@ -31,8 +27,7 @@
 					<v-btn
 						color="primary"
 						flat
-						@click="dialog = false"
-						>
+						@click="dialog = false">
 						I accept
 					</v-btn>
 				</v-card-actions>

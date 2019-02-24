@@ -4,7 +4,7 @@
 		
 		<form v-on:submit.prevent>
 
-			<v-container grid-list-xl>
+			<v-container grid-list-xl fluid pa-0>
 				<v-layout row wrap>
 					<v-flex>
 						<h1 class="display-2 font-weight-thin">Annual Lists</h1>
@@ -31,7 +31,7 @@
 				</v-layout>
 
 				<v-layout row>
-					<v-btn type="submit" @click="fetchFormParams" color="primary">Submit</v-btn>
+					<v-btn type="submit" @click="fetchFormParams" color="secondary">Submit</v-btn>
 				</v-layout>
 
 			</v-container>
@@ -75,7 +75,7 @@
 					item-key=resultID
 				>
 
-					<v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>
+					<v-progress-linear slot="progress" color="secondary" indeterminate></v-progress-linear>
 
 					<template slot="items" slot-scope="props">
 						<tr @click="props.expanded = !props.expanded" :key="props.item.id">

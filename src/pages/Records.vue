@@ -13,30 +13,28 @@
 
 		<form v-on:submit.prevent>
 
-			<v-container fluid grid-list-xl >
+			<v-container fluid grid-list-xl>
 				<v-layout row wrap>
-					<v-card class="elevation-0">
-						<v-flex>
-							<h1>NZ Records</h1>
-						</v-flex>
-					</v-card>
+					<v-flex>
+						<h1>New Zealand Records</h1>
+					</v-flex>
 				</v-layout>
 
 				<v-layout row wrap>
-					<v-flex xs12 md4>
+					<v-flex xs12 md3>
 						<list-age-groups-recs v-model="queryParams.ageGroup"></list-age-groups-recs>
 					</v-flex>
-					<v-flex xs12 md4>
+					<v-flex xs12 md3>
 						<list-season v-model="queryParams.in_out"></list-season>
 					</v-flex>
-					<v-flex xs12 md4>
+					<v-flex xs12 md3>
 						<list-record-types v-model="queryParams.recordType"></list-record-types>
 					</v-flex>
 				</v-layout>
 
 				<v-layout row>
 					<v-flex xs12 md4>
-						<v-btn type="submit" @click="fetchFormParams" color="teal" dark>Submit</v-btn>
+						<v-btn type="submit" @click="fetchFormParams" color="secondary" dark class="ma-0">Show  Records</v-btn>
 					</v-flex>
 				</v-layout>
 			</v-container>

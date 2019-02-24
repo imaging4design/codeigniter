@@ -17,22 +17,22 @@
 
 			<v-layout row wrap>
 				<v-flex xs12 md2>
-					<v-btn flat outline block color="primary" @click="showTopPerformers('MS')">Men Senior</v-btn>
+					<v-btn flat outline block color="secondary" @click="showTopPerformers('MS')">Men Senior</v-btn>
 				</v-flex>
 				<v-flex xs12 md2>
-					<v-btn flat outline block color="primary" @click="showTopPerformers('WS')">Women Senior</v-btn>
+					<v-btn flat outline block color="secondary" @click="showTopPerformers('WS')">Women Senior</v-btn>
 				</v-flex>
 				<v-flex xs12 md2>
-					<v-btn flat outline block color="primary" @click="showTopPerformers('M19')">Men U20</v-btn>
+					<v-btn flat outline block color="secondary" @click="showTopPerformers('M19')">Men U20</v-btn>
 				</v-flex>
 				<v-flex xs12 md2>
-					<v-btn flat outline block color="primary" @click="showTopPerformers('W19')">Women U20</v-btn>
+					<v-btn flat outline block color="secondary" @click="showTopPerformers('W19')">Women U20</v-btn>
 				</v-flex>
 				<v-flex xs12 md2>
-					<v-btn flat outline block color="primary" @click="showTopPerformers('M17')">Men U17</v-btn>
+					<v-btn flat outline block color="secondary" @click="showTopPerformers('M17')">Men U17</v-btn>
 				</v-flex>
 				<v-flex xs12 md2>
-					<v-btn flat outline block color="primary" @click="showTopPerformers('W17')">Women U17</v-btn>
+					<v-btn flat outline block color="secondary" @click="showTopPerformers('W17')">Women U17</v-btn>
 				</v-flex>
 			</v-layout>
 		</v-container>
@@ -47,7 +47,7 @@
 			item-key="eventName"
 		>
 
-			<v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>
+			<v-progress-linear slot="progress" color="secondary" indeterminate></v-progress-linear>
 
 			<template slot="items" slot-scope="props">
 				<tr @click="props.expanded = !props.expanded">

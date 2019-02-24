@@ -17,7 +17,7 @@
 			return-object
 			single-line
 			solo
-			color="primary">
+			color="secondary">
 		</v-select>
 
 	</div>

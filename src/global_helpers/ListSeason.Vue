@@ -15,7 +15,8 @@
 			persistent-hint
 			return-object
 			single-line
-			color="teal">
+			solo
+			color="secondary">
 		</v-select>
 
 	</div>

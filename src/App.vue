@@ -1,5 +1,5 @@
 <template>
-	<v-app dark>
+	<v-app>
 
 		<!-- Include navigation component -->
 		<navigation></navigation>

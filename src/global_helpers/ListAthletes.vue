@@ -4,25 +4,26 @@
 		<v-layout row wrap>
 			<v-flex xs12 md6> -->
 
-				<v-card
+				<!-- <v-card
 					class="hide-overflow"
-					
+					color="secondary"
 					hide-selected="true"
 					dark>
-					<v-card-text>
+					<v-card-text> -->
 						<v-autocomplete
 							v-on:input="onHit(athleteID)"
 							v-model="athleteID"
 							:items="listOfAthletes"
 							:filter="customFilter"
-							color="white"
+							color="secondary"
 							item-value="athleteID"
 							item-text="name"
-							label="Enter athlete name">
+							label="Enter athlete name"
+							solo>
 						</v-autocomplete>
-					</v-card-text>
+					<!-- </v-card-text>
 
-				</v-card>
+				</v-card> -->
 
 			<!-- </v-flex>
 		</v-layout>

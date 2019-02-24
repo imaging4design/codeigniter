@@ -10,7 +10,7 @@
 			id = "drawer">
 		</v-navigation-drawer>
 		
-		<v-toolbar fixed scroll-off-screen>
+		<v-toolbar fixed scroll-off-screen color="primary" dark>
 			<v-toolbar-side-icon  @click.stop="drawer = !drawer" class="hidden-md-and-up"></v-toolbar-side-icon>
 			<!-- <v-toolbar-side-icon></v-toolbar-side-icon> -->
 			<v-toolbar-title>Athletics NZ Rankings</v-toolbar-title>

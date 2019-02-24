@@ -15,7 +15,7 @@
 			persistent-hint
 			single-line
 			solo
-			color="blue">
+			color="secondary">
 		</v-select>
 
 	</div>
@@ -29,12 +29,12 @@
 export default {
 	data: function(){
 		return {
-			year: 0
+			year: new Date().getFullYear() // Current year
 		}
 	},
 	computed : {
 		years () {
-			const currentYear = new Date().getFullYear();
+			const currentYear = new Date().getFullYear(); // Current year
 			return Array.from({length: currentYear - 2012}, (value, index) => 2013 + index).reverse();
 		}
 	}

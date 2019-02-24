@@ -7,7 +7,7 @@
 		| Search for athletes (Autocomplete) 
 		|*********************************************************
 		-->
-		<list-athletes></list-athletes>
+		
 
 
 		<!-- 
@@ -17,9 +17,10 @@
 		-->
 		<form v-on:submit.prevent>
 
-			<v-container grid-list-xl v-show="athleteData.athleteID">
+
+			<v-container grid-list-xl px-0>
 				<v-layout row wrap>
-					<v-flex xs12 md6>
+					<v-flex xs12 md6 v-show="athleteData.athleteID">
 						<h1>{{athleteData.nameFirst}} {{athleteData.nameLast}}: {{athleteData.athleteID}}</h1>
 						<ul >
 							<li><strong>Athlete: </strong>{{athleteData.nameFirst}} {{athleteData.nameLast}} {{athleteData.athleteID}}</li>
@@ -33,11 +34,13 @@
 		
 					
 					<v-flex xs12 md6>
+
+						<list-athletes></list-athletes>
 						
 						<v-subheader class="pa-0">Select Event</v-subheader>
 
 						<v-select
-							v-model="queryParams.eventID"
+							v-model="queryParams.eventID" 
 							v-on:change="getAthletePerformances"
 							:items="athleteEvents"
 							name="queryParams.event"			
@@ -46,14 +49,14 @@
 							label="Select an Event"
 							single-line
 							solo
-							color="blue">
+							color="secondary">
 						</v-select>
 
 						<list-years-all v-model="queryParams.year"></list-years-all>
 
 						<v-radio-group v-model="queryParams.order_by" :mandatory="false" v-on:change="getAthletePerformances">
-							<v-radio label="Performance" value="0"></v-radio>
-							<v-radio label="Latest" value="1"></v-radio>
+							<v-radio color="secondary" label="Performance" value="0"></v-radio>
+							<v-radio color="secondary" label="Latest" value="1"></v-radio>
 						</v-radio-group>
 						
 					</v-flex>
@@ -71,13 +74,26 @@
 		| NZ CHAMPS DATA
 		|*********************************************************
 		-->
-		<v-container grid-list-xl fluid>
+		<v-container grid-list-xl px-0>
 			<v-layout row wrap>
 				<v-flex xs12 md6>
-					<v-btn  flat color="grey-lighten-3" @click="getNZChamps">NZ Champs Data</v-btn>
+
+					<v-card>
+						<v-toolbar color="secondary" dark>
+
+						<v-toolbar-title>NZ Champs Data</v-toolbar-title>
+
+						<v-spacer></v-spacer>
+						<v-btn  flat  @click="getNZChamps">Show</v-btn>
+							
+						</v-toolbar>
+					</v-card>
+
 					<ul>
 						<li v-for="data in nzChampsData">{{data.year}} {{data.ageGroup}} {{data.eventName}} {{data.performance}} {{data.position | medal}}</li>
 					</ul>
+					
+					
 				</v-flex>
 			</v-layout>
 		</v-container>
@@ -95,7 +111,7 @@
 			:expand="expand"
 			item-key="resultID">
 
-			<v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>
+			<v-progress-linear slot="progress" color="secondary" indeterminate></v-progress-linear>
 
 			<template slot="items" slot-scope="props">
 				<tr @click="props.expanded = !props.expanded">
@@ -126,9 +142,10 @@
 			:right="x === 'right'"
 			:timeout="timeout"
 			:top="y === 'top'"
-			:vertical="mode === 'vertical'">
+			:vertical="mode === 'vertical'"
+			color="secondary">
 			{{ text }}
-			<v-btn color="blue" flat @click="snackbar=false">Close</v-btn>
+			<v-btn flat @click="snackbar=false">Close</v-btn>
 		</v-snackbar>
 
 		

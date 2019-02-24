@@ -18,7 +18,8 @@
     "vue-moment": "^4.0.0",
     "vue-router": "^3.0.2",
     "vue-typeahead": "^2.3.2",
-    "vue2-typeahead": "^1.1.0"
+    "vue2-typeahead": "^1.1.0",
+    "vuetify": "^1.5.2"
   },
   "browserslist": [
     "> 1%",

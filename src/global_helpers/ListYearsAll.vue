@@ -17,7 +17,7 @@
 			persistent-hint
 			single-line
 			solo
-			color="blue">
+			color="secondary">
 		</v-select>
 
 	</div>
