@@ -13,11 +13,13 @@
 
 		<form v-on:submit.prevent>
 
-			<v-container grid-list-xl>
+			<v-container fluid grid-list-xl >
 				<v-layout row wrap>
-					<v-flex>
-						<h1>NZ Records</h1>
-					</v-flex>
+					<v-card class="elevation-0">
+						<v-flex>
+							<h1>NZ Records</h1>
+						</v-flex>
+					</v-card>
 				</v-layout>
 
 				<v-layout row wrap>
@@ -33,7 +35,9 @@
 				</v-layout>
 
 				<v-layout row>
-					<v-btn type="submit" @click="fetchFormParams" color="teal">Submit</v-btn>
+					<v-flex xs12 md4>
+						<v-btn type="submit" @click="fetchFormParams" color="teal" dark>Submit</v-btn>
+					</v-flex>
 				</v-layout>
 			</v-container>
 

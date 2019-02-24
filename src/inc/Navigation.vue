@@ -6,7 +6,7 @@
 			v-model="drawer" 
 			temporary 
 			absolute 
-			width = "200" 
+			width = "200"
 			id = "drawer">
 		</v-navigation-drawer>
 		
