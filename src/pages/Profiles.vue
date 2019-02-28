@@ -7,8 +7,13 @@
 		| Search for athletes (Autocomplete) 
 		|*********************************************************
 		-->
-		
-
+		<v-container grid-list-xl fluid pa-0>
+			<v-layout row wrap>
+				<v-flex>
+					<h1 class="display-1 font-weight-light primary--text">Profiles</h1>
+				</v-flex> 
+			</v-layout>
+		</v-container>
 
 		<!-- 
 		|*********************************************************
@@ -35,10 +40,17 @@
 					
 					<v-flex xs12 md6>
 
+						<v-alert
+							v-model="alert"
+							dismissible
+							type="warning"
+							color="secondary">
+							This is a success alert that is closable.
+						</v-alert>
+
 						<list-athletes></list-athletes>
 						
-						<v-subheader class="pa-0">Select Event</v-subheader>
-
+						<!-- <v-subheader class="pa-0">Select Event</v-subheader> -->
 						<v-select
 							v-model="queryParams.eventID" 
 							v-on:change="getAthletePerformances"
@@ -78,20 +90,31 @@
 			<v-layout row wrap>
 				<v-flex xs12 md6>
 
-					<v-card>
-						<v-toolbar color="secondary" dark>
+					
 
-						<v-toolbar-title>NZ Champs Data</v-toolbar-title>
+					<v-expansion-panel>
+						<v-expansion-panel-content>
+							<div slot="header"><v-icon left size="18" light>schedule</v-icon> NZ Championships</div>
+							<v-card>
+								<v-card-text>
+									<ul>
+										<li v-for="data in nzChampsData">{{data.year}} {{data.ageGroup}} {{data.eventName}} {{data.performance}} {{data.position | medal}}</li>
+									</ul>
+								</v-card-text>
+							</v-card>
+						</v-expansion-panel-content>
 
-						<v-spacer></v-spacer>
-						<v-btn  flat  @click="getNZChamps">Show</v-btn>
-							
-						</v-toolbar>
-					</v-card>
-
-					<ul>
-						<li v-for="data in nzChampsData">{{data.year}} {{data.ageGroup}} {{data.eventName}} {{data.performance}} {{data.position | medal}}</li>
-					</ul>
+						<v-expansion-panel-content>
+							<div slot="header"><v-icon left size="18" light>event_note</v-icon> Progressions</div>
+							<v-card>
+								<v-card-text>
+									<ul>
+										<li v-for="data in nzChampsData">{{data.year}} {{data.ageGroup}} {{data.eventName}} {{data.performance}} {{data.position | medal}}</li>
+									</ul>
+								</v-card-text>
+							</v-card>
+						</v-expansion-panel-content>
+					</v-expansion-panel>
 					
 					
 				</v-flex>
@@ -148,6 +171,9 @@
 			<v-btn flat @click="snackbar=false">Close</v-btn>
 		</v-snackbar>
 
+
+		
+
 		
 	
 	</div><!-- ENDS profile -->
@@ -171,6 +197,8 @@ export default {
 			mode: 'multi-line',
 			timeout: 3000,
 			text: 'No results found',
+
+			alert: false,
 
 			// Token
 			token: null,
@@ -294,6 +322,8 @@ export default {
 				this.athleteData = response.data.athlete_data;
 				this.athleteEvents = response.data.get_athlete_events;
 				console.log(this.athleteEvents)
+
+				this.getNZChamps();
 			})
 			.catch((error) => {
 				console.error('GAVINS ERROR: ' + error);
@@ -325,7 +355,8 @@ export default {
 				});
 
 				if( ! this.bestPerformances){
-					this.snackbar = true;
+					//this.snackbar = true;
+					this.alert = true;
 				}
 			})
 			.catch((error) => {

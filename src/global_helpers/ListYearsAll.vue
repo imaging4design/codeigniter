@@ -2,8 +2,7 @@
 
 	<div>
 
-		<v-subheader class="pa-0">Select Year</v-subheader>
-
+		<!-- <v-subheader class="pa-0">Select Year</v-subheader> -->
 		<v-select
 			v-on:change="onHit()"
 			v-on:input="$emit('input', year)"

@@ -1,41 +1,30 @@
 <template>
 	<div>
 
+
+		<v-container grid-list-xl fluid pa-0>
+			<v-layout row wrap>
+				<v-flex>
+					<h1 class="display-1 font-weight-light primary--text">Top Performers</h1>
+				</v-flex> 
+			</v-layout>
+		</v-container>
+
 		
 	  	<!-- 
 		| WHAT: Top Performances listing
 		| DESCRIPTION: A listing of the top performances of teh current year
 		| POINTS TO NOTE: Loops through the 'athletes' array (of objects) and display data  
 		-->
-		<v-container grid-list-xl>
-
-			<v-layout row wrap>
-				<v-flex xs12>
-					<h1>Top Performers</h1>
-				</v-flex>
-			</v-layout>
-
-			<v-layout row wrap>
-				<v-flex xs12 md2>
-					<v-btn flat outline block color="secondary" @click="showTopPerformers('MS')">Men Senior</v-btn>
-				</v-flex>
-				<v-flex xs12 md2>
-					<v-btn flat outline block color="secondary" @click="showTopPerformers('WS')">Women Senior</v-btn>
-				</v-flex>
-				<v-flex xs12 md2>
-					<v-btn flat outline block color="secondary" @click="showTopPerformers('M19')">Men U20</v-btn>
-				</v-flex>
-				<v-flex xs12 md2>
-					<v-btn flat outline block color="secondary" @click="showTopPerformers('W19')">Women U20</v-btn>
-				</v-flex>
-				<v-flex xs12 md2>
-					<v-btn flat outline block color="secondary" @click="showTopPerformers('M17')">Men U17</v-btn>
-				</v-flex>
-				<v-flex xs12 md2>
-					<v-btn flat outline block color="secondary" @click="showTopPerformers('W17')">Women U17</v-btn>
-				</v-flex>
-			</v-layout>
-		</v-container>
+		<form v-on:submit.prevent>
+			<v-container grid-list-xl fluid pa-0>
+				<v-layout row wrap>
+					<v-flex xs12 md3>
+						<list-age-groups-default v-model="queryParams.ageGroup" @input="showTopPerformers"></list-age-groups-default>
+					</v-flex>
+				</v-layout>
+			</v-container>
+		</form>
 
 
 
@@ -103,6 +92,7 @@
 <script>
 
 import Modal from '../global_helpers/Modal.vue';
+import ListAgeGroupsDefault from '../global_helpers/ListAgeGroupsDefault.vue';
 
 export default {
 	data() {
@@ -131,6 +121,7 @@ export default {
 
 	components: {
 		'Modal': Modal,
+		'ListAgeGroupsDefault': ListAgeGroupsDefault,
 	},
 	
 	created() {
@@ -176,6 +167,9 @@ export default {
 				this.relays = response.data.topPerformers_Relays;
 			})
 		}
+	},
+	mounted() {
+		this.showTopPerformers(); 
 	}
 	
 };

@@ -1,6 +1,15 @@
 <template>
 	<div id="records">
 
+
+		<v-container grid-list-xl fluid pa-0>
+			<v-layout row wrap>
+				<v-flex>
+					<h1 class="display-1 font-weight-light primary--text">New Zealand Records</h1>
+				</v-flex> 
+			</v-layout>
+		</v-container>
+
 		<!-- 
 		| WHAT: Form to select records
 		| DESCRIPTION: Displays a form on page to allow the user to select records based on 'age group' and 'record type'
@@ -13,12 +22,7 @@
 
 		<form v-on:submit.prevent>
 
-			<v-container fluid grid-list-xl>
-				<v-layout row wrap>
-					<v-flex>
-						<h1>New Zealand Records</h1>
-					</v-flex>
-				</v-layout>
+			<v-container grid-list-xl fluid pa-0>
 
 				<v-layout row wrap>
 					<v-flex xs12 md3>

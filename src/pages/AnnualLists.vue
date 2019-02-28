@@ -1,17 +1,29 @@
 <template>
 	<div id="annual-lists">
 
+		<!-- 
+		|*********************************************************
+		| PAGE TITLE
+		|*********************************************************
+		-->
+		<v-container grid-list-xl fluid pa-0>
+			<v-layout row wrap>
+				<v-flex>
+					<h1 class="display-1 font-weight-light primary--text">Annual Lists</h1>
+				</v-flex> 
+			</v-layout>
+		</v-container>
+
 		
+		<!-- 
+		|*********************************************************
+		| SEARCH FORM
+		|*********************************************************
+		-->
 		<form v-on:submit.prevent>
 
 			<v-container grid-list-xl fluid pa-0>
-				<v-layout row wrap>
-					<v-flex>
-						<h1 class="display-2 font-weight-thin">Annual Lists</h1>
-					</v-flex>
-				</v-layout>
-			
-
+				
 				<v-layout row wrap>
 					<v-flex xs12 md3>
 						<list-events v-model="queryParams.eventID"></list-events>
@@ -30,20 +42,24 @@
 					</v-flex>
 				</v-layout>
 
-				<v-layout row>
-					<v-btn type="submit" @click="fetchFormParams" color="secondary">Submit</v-btn>
+				<v-layout row wrap>
+					<v-flex xs12 md3>
+						<v-btn type="submit" @click="fetchFormParams" color="secondary" class="elevation-0 mx-0">Show List</v-btn>
+					</v-flex>
 				</v-layout>
 
 			</v-container>
-
-
-			
-				
 
 		</form>
 
 		<hr>
 
+
+		<!-- 
+		|*********************************************************
+		| NZ RECORDS 
+		|*********************************************************
+		-->
 		<div class="columns">
 
 			<div class="column">
@@ -63,25 +79,23 @@
 
 				<!-- 
 				|*********************************************************
-				| LEGAL PERFORMANCES 
+				| LEGAL PERFORMANCES TABLE
 				|*********************************************************
 				-->
-
 				<v-data-table
 					:headers="headers"
 					:items="rankedItems"
 					:loading="loading"
 					:expand="expand"
-					item-key=resultID
-				>
+						:hide-headers="isMobile" 
+						:class="{mobile: isMobile}"
+					item-key=resultID>
 
 					<v-progress-linear slot="progress" color="secondary" indeterminate></v-progress-linear>
 
 					<template slot="items" slot-scope="props">
-						<tr @click="props.expanded = !props.expanded" :key="props.item.id">
-
+						<tr v-if="!isMobile" :key="props.item.id">
 							<td>{{props.item.rank}}</td>
-
 							<td>{{props.item.time | removeLeadZeros}} {{props.item.distHeight | removeLeadZeros}} {{props.item.points | removeLeadZeros}}</td>
 							<td class="text-xs-left">{{ props.item.wind }}</td>
 							<td class="text-xs-left">{{ props.item.nameFirst }} {{ props.item.nameLast }} </td>
@@ -92,12 +106,25 @@
 							<td class="text-xs-left">{{ props.item.venue }}</td>
 							<td class="text-xs-left">{{ props.item.date }}</td>
 						</tr>
+						<tr v-else>
+							<td>
+								<ul class="flex-content">
+									<li class="flex-item" data-label="Rank">{{props.item.rank}}</li>
+									<li class="flex-item" data-label="Perf">{{props.item.time | removeLeadZeros}} {{props.item.distHeight | removeLeadZeros}} {{props.item.points | removeLeadZeros}}</li>
+									<li class="flex-item" data-label="Wind">{{ props.item.wind }}</li>
+									<li class="flex-item" data-label="Name">{{ props.item.nameFirst }} {{ props.item.nameLast }} </li>
+									<li class="flex-item" data-label="Centre">{{ props.item.centreID }}</li>
+									<li class="flex-item" data-label="DOB">{{ props.item.DOB }}</li>
+									<li class="flex-item" data-label="Place">{{ props.item.placing }}</li>
+									<li class="flex-item" data-label="Comp">{{ props.item.competition }}</li>
+									<li class="flex-item" data-label="Venue">{{ props.item.venue }}</li>
+									<li class="flex-item" data-label="Date">{{ props.item.date }}</li>
+								</ul>
+							</td>
+						</tr>
 					</template>
-					<template slot="expand" slot-scope="props">
-						<v-card flat>
-							<v-card-text>IAAF Standard 10.12 | {{ props.item.competition }}</v-card-text>
-						</v-card>
-					</template>
+
+					
 
 				</v-data-table>
 
@@ -185,7 +212,7 @@ export default {
 	data() {
 		return {
 			token: null,
-
+			isMobile: false,
 			queryParams: {
 				ageGroup: 'MS',
 				list_depth: '250',
@@ -247,6 +274,13 @@ export default {
 
 	methods: {
 
+		onResize() {
+          if (window.innerWidth < 769)
+            this.isMobile = true;
+          else
+            this.isMobile = false;
+        },
+
 		fetchQueryStringParams() {
 			this.queryParams = {
 				ageGroup: this.$route.query.ageGroup ? this.$route.query.ageGroup : this.queryParams.ageGroup,
@@ -285,6 +319,7 @@ export default {
 	mounted() {
 		this.fetchQueryStringParams();
 		this.fetchFormParams();
+		this.onResize();
 	},	
 }
 </script>
@@ -292,5 +327,68 @@ export default {
 
 
 <style lang="scss">
+
+	.mobile {
+		color: #333;
+	}
+
+	.flex-content {
+		padding: 0;
+		margin: 0;
+		list-style: none;
+		display: flex;
+		flex-wrap: wrap;
+		width: 100%;
+	}
+
+	.flex-item {
+		padding: 5px;
+		width: 100%;
+		height: 20px;
+		font-weight: bold;
+	}
+
+	@media screen and (max-width: 768px) {
+
+		.mobile table.v-table tr {
+			max-width: 100%;
+			position: relative;
+			display: block;
+		}
+
+		.mobile table.v-table tr:nth-child(odd) {
+			border-left: 6px solid deeppink;
+		}
+
+		.mobile table.v-table tr:nth-child(even) {
+			border-left: 6px solid cyan;
+		}
+
+		.mobile table.v-table tr td {
+			display: flex;
+			width: 100%;
+			border-bottom: 1px solid #f5f5f5;
+			height: auto;
+			padding: 10px;
+		}
+
+		.mobile table.v-table tr td ul li:before {
+			content: attr(data-label);
+			padding-right: .5em;
+			text-align: left;
+			// display: block;
+			color: #999;
+		}
+		.v-datatable__actions__select {
+			width: 50%;
+			margin: 0px;
+			justify-content: flex-start;
+		}
+
+		.mobile .theme--light.v-table tbody tr:hover:not(.v-datatable__expand-row) {
+			background: transparent;
+		}
+
+	}
 
 </style>

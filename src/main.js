@@ -24,8 +24,8 @@ import colors from 'vuetify/es5/util/colors'
 Vue.use(Vuetify, {
   theme: {
     primary: colors.grey.darken3, // #E53935
-    secondary: colors.pink.darken1, // #FFCDD2
-    accent: colors.indigo.base // #3F51B5
+    secondary: colors.cyan, // #FFCDD2
+    accent: colors.orange // #3F51B5
   }
 })
 
