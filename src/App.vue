@@ -23,12 +23,12 @@
 
 				<v-divider></v-divider>
 
-				<v-list-tile @click="" to="/nz-records" exact>
+				<v-list-tile @click="">
 					<v-list-tile-action>
-						<v-icon class="secondary--text">timer</v-icon>
+						<v-icon class="secondary--text">event_note</v-icon>
 					</v-list-tile-action>
 					<v-list-tile-content>
-						<v-list-tile-title>RECORDS</v-list-tile-title>
+						<v-list-tile-title>ALL TIME LISTS</v-list-tile-title>
 					</v-list-tile-content>
 				</v-list-tile>
 
@@ -39,7 +39,18 @@
 						<v-icon class="secondary--text">bookmark</v-icon>
 					</v-list-tile-action>
 					<v-list-tile-content>
-						<v-list-tile-title>TOP LISTS</v-list-tile-title>
+						<v-list-tile-title>{{new Date().getFullYear()}} LEADERS</v-list-tile-title>
+					</v-list-tile-content>
+				</v-list-tile>
+
+				<v-divider></v-divider>
+
+				<v-list-tile @click="" to="/nz-records" exact>
+					<v-list-tile-action>
+						<v-icon class="secondary--text">timer</v-icon>
+					</v-list-tile-action>
+					<v-list-tile-content>
+						<v-list-tile-title>RECORDS</v-list-tile-title>
 					</v-list-tile-content>
 				</v-list-tile>
 

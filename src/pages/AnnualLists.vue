@@ -142,7 +142,7 @@
 				|*********************************************************
 				-->
 				<h1>Illegal Wind</h1>
-				<div class="table-container">
+				<div class="table-container" style="display: none;">
 					<table class="table is-striped is-fullwidth is-hoverable is-bordered" v-if="illegal_wind">
 						<thead>
 							<tr>
@@ -357,11 +357,11 @@ export default {
 		}
 
 		.mobile table.v-table tr:nth-child(odd) {
-			border-left: 6px solid deeppink;
+			border-left: 6px solid #FF9800;
 		}
 
 		.mobile table.v-table tr:nth-child(even) {
-			border-left: 6px solid cyan;
+			border-left: 6px solid #00bcd4;
 		}
 
 		.mobile table.v-table tr td {

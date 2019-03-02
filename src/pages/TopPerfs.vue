@@ -5,7 +5,7 @@
 		<v-container grid-list-xl fluid pa-0>
 			<v-layout row wrap>
 				<v-flex>
-					<h1 class="display-1 font-weight-light primary--text">Top Performers</h1>
+					<h1 class="display-1 font-weight-light primary--text">{{new Date().getFullYear()}} Leaders</h1>
 				</v-flex> 
 			</v-layout>
 		</v-container>
@@ -41,8 +41,8 @@
 			<template slot="items" slot-scope="props">
 				<tr @click="props.expanded = !props.expanded">
 				<td>{{ props.item.eventName }}</td>
-				<td class="text-xs-left">{{ props.item.nameFirst }} {{ props.item.nameLast }}</td>
 				<td class="text-xs-left">{{ props.item.distHeight | removeLeadZeros}} {{ props.item.time | removeLeadZeros}}</td>
+				<td class="text-xs-left">{{ props.item.nameFirst }} {{ props.item.nameLast }}</td>
 				<td class="text-xs-left">{{ props.item.competition }}</td>
 				<td class="text-xs-left">{{ props.item.date }}</td>
 				</tr>
@@ -111,8 +111,8 @@ export default {
 					align: 'left',
 					sortable: false,
 					value: 'eventName'},
-				{ text: 'Athlete', value: 'nameFirst', sortable: false},
 				{ text: 'Performance', value: 'performance', sortable: false},
+				{ text: 'Athlete', value: 'nameFirst', sortable: false},
 				{ text: 'Competition', value: 'competition', sortable: false},
 				{ text: 'Date', value: 'date', sortable: false}
 			]
