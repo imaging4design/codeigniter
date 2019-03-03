@@ -177,7 +177,7 @@ export default {
 	                if (items[index].time === items[index - 1].time 
 	                	&& items[index].distHeight === items[index - 1].distHeight
 	                	&& items[index].points === items[index - 1].points ) {
-	                    items[index].rank = "";
+	                    items[index].rank = '=';
 	                } else {
 	                    items[index].rank = index + 1;
 	                }
