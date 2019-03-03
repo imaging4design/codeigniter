@@ -22,21 +22,9 @@
 		-->
 		<form v-on:submit.prevent>
 
-
 			<v-container grid-list-xl px-0>
+
 				<v-layout row wrap>
-					<v-flex xs12 md6 v-show="athleteData.athleteID">
-						<h1>{{athleteData.nameFirst}} {{athleteData.nameLast}}: {{athleteData.athleteID}}</h1>
-						<ul >
-							<li><strong>Athlete: </strong>{{athleteData.nameFirst}} {{athleteData.nameLast}} {{athleteData.athleteID}}</li>
-							<!-- <li><strong>Date of Birth: </strong>{{athleteData.birthDate}}</li> -->
-							<li><strong>Date of Birth: </strong>{{athleteData.DOB}} ({{convertAge(athleteData.DOB)}})</li>
-							<li><strong>Centre: </strong>{{athleteData.clubName}} ({{athleteData.centreName}})</li>
-							<li v-show="athleteData.coach"><strong>Coach: </strong>{{athleteData.coach}}</li>
-							<li v-show="athleteData.coach_former"><strong>Former Coach/s: </strong>{{athleteData.coach_former}}</li>
-						</ul>
-					</v-flex>
-		
 					
 					<v-flex xs12 md6>
 
@@ -50,7 +38,6 @@
 
 						<list-athletes></list-athletes>
 						
-						<!-- <v-subheader class="pa-0">Select Event</v-subheader> -->
 						<v-select
 							v-model="queryParams.eventID" 
 							v-on:change="getAthletePerformances"
@@ -70,9 +57,18 @@
 							<v-radio color="secondary" label="Performance" value="0"></v-radio>
 							<v-radio color="secondary" label="Latest" value="1"></v-radio>
 						</v-radio-group>
-						
 					</v-flex>
-						
+
+					<v-flex xs12 md6 v-show="athleteData.athleteID">
+						<h1>{{athleteData.nameFirst}} {{athleteData.nameLast}}: {{athleteData.athleteID}}</h1>
+						<ul >
+							<li><strong>Athlete: </strong>{{athleteData.nameFirst}} {{athleteData.nameLast}} {{athleteData.athleteID}}</li>
+							<li><strong>Date of Birth: </strong>{{athleteData.DOB}} ({{convertAge(athleteData.DOB)}})</li>
+							<li><strong>Centre: </strong>{{athleteData.clubName}} ({{athleteData.centreName}})</li>
+							<li v-show="athleteData.coach"><strong>Coach: </strong>{{athleteData.coach}}</li>
+							<li v-show="athleteData.coach_former"><strong>Former Coach/s: </strong>{{athleteData.coach_former}}</li>
+						</ul>
+					</v-flex>	
 
 				</v-layout>
 			</v-container>
@@ -166,7 +162,7 @@
 			:timeout="timeout"
 			:top="y === 'top'"
 			:vertical="mode === 'vertical'"
-			color="secondary">
+			color="white--text">
 			{{ text }}
 			<v-btn flat @click="snackbar=false">Close</v-btn>
 		</v-snackbar>
@@ -355,8 +351,8 @@ export default {
 				});
 
 				if( ! this.bestPerformances){
-					//this.snackbar = true;
-					this.alert = true;
+					this.snackbar = true;
+					//this.alert = true;
 				}
 			})
 			.catch((error) => {

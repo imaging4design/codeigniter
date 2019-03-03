@@ -18,7 +18,7 @@
 			<v-toolbar-items class="hidden-sm-and-down">
 
 				<v-btn flat to="/annual-lists" exact>Annual Lists</v-btn>
-				<v-btn flat to="/all-time" exact>All Time</v-btn>
+				<v-btn flat to="/all-time-lists" exact>All Time Lists</v-btn>
 				<v-btn flat to="/nz-records" exact>Records</v-btn>
 				<v-btn flat to="/top-perfs" exact>Top Lists</v-btn>
 				<v-btn flat to="/profiles" exact>Profiles</v-btn>

@@ -12,6 +12,18 @@
 			</div>
 
 			<v-list class="pa-0">
+
+				<v-list-tile @click="" to="/top-perfs" exact>
+					<v-list-tile-action>
+						<v-icon class="secondary--text">bookmark</v-icon>
+					</v-list-tile-action>
+					<v-list-tile-content>
+						<v-list-tile-title>{{new Date().getFullYear()}} LEADERS</v-list-tile-title>
+					</v-list-tile-content>
+				</v-list-tile>
+
+				<v-divider></v-divider>
+				
 				<v-list-tile @click="" to="/annual-lists" exact>
 					<v-list-tile-action>
 						<v-icon class="secondary--text">format_line_spacing</v-icon>
@@ -23,23 +35,12 @@
 
 				<v-divider></v-divider>
 
-				<v-list-tile @click="">
+				<v-list-tile @click="" to="/all-time-lists" exact>
 					<v-list-tile-action>
 						<v-icon class="secondary--text">event_note</v-icon>
 					</v-list-tile-action>
 					<v-list-tile-content>
 						<v-list-tile-title>ALL TIME LISTS</v-list-tile-title>
-					</v-list-tile-content>
-				</v-list-tile>
-
-				<v-divider></v-divider>
-
-				<v-list-tile @click="" to="/top-perfs" exact>
-					<v-list-tile-action>
-						<v-icon class="secondary--text">bookmark</v-icon>
-					</v-list-tile-action>
-					<v-list-tile-content>
-						<v-list-tile-title>{{new Date().getFullYear()}} LEADERS</v-list-tile-title>
 					</v-list-tile-content>
 				</v-list-tile>
 
@@ -81,9 +82,10 @@
 			<v-spacer></v-spacer>
 			<v-toolbar-items class="hidden-sm-and-down">
 
+				<v-btn flat to="/top-perfs" exact>{{new Date().getFullYear()}} Leaders</v-btn>
 				<v-btn flat to="/annual-lists" exact>Annual Lists</v-btn>
+				<v-btn flat to="/all-time-lists" exact>All Time Lists</v-btn>
 				<v-btn flat to="/nz-records" exact>Records</v-btn>
-				<v-btn flat to="/top-perfs" exact>Top Lists</v-btn>
 				<v-btn flat to="/profiles" exact>Profiles</v-btn>
 
 			</v-toolbar-items>

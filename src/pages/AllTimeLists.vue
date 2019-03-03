@@ -1,5 +1,5 @@
 <template>
-	<div id="annual-lists">
+	<div id="all-time-lists">
 
 		<!-- 
 		|*********************************************************
@@ -9,12 +9,11 @@
 		<v-container grid-list-xl fluid pa-0>
 			<v-layout row wrap>
 				<v-flex>
-					<h1 class="display-1 font-weight-light primary--text">Annual Lists</h1>
+					<h1 class="display-1 font-weight-light primary--text">All Time Lists</h1>
 				</v-flex> 
 			</v-layout>
 		</v-container>
 
-		
 		<!-- 
 		|*********************************************************
 		| SEARCH FORM
@@ -25,20 +24,11 @@
 			<v-container grid-list-xl fluid pa-0>
 				
 				<v-layout row wrap>
-					<v-flex xs12 md3 sm3 py-0>
+					<v-flex xs12 md4 sm4 py-0>
 						<list-events v-model="queryParams.eventID"></list-events>
 					</v-flex>
-					<v-flex xs12 md3 sm3 py-0>
-						<list-age-groups-default v-model="queryParams.ageGroup"></list-age-groups-default>
-					</v-flex>
-					<v-flex xs12 md2 sm2 py-0>
-						<list-years v-model="queryParams.year"></list-years>
-					</v-flex>
-					<v-flex xs12 md2 sm2 py-0>
-						<list-type v-model="queryParams.list_type"></list-type>
-					</v-flex>
-					<v-flex xs12 md2 sm2 py-0>
-						<list-depth v-model="queryParams.list_depth"></list-depth>
+					<v-flex xs12 md4 sm4 py-0>
+						<list-age-groups-all-time v-model="queryParams.ageGroup"></list-age-groups-all-time>
 					</v-flex>
 				</v-layout>
 
@@ -54,7 +44,6 @@
 
 		<hr>
 
-
 		<!-- 
 		|*********************************************************
 		| NZ RECORDS 
@@ -64,19 +53,6 @@
 
 			<div class="column">
 				<strong>Token: </strong>{{token}} <br>
-
-				<p>Current NZ Record</p>
-				<ul>
-					<li v-for="record in current_nz_record">
-						<strong>{{record.nameFirst}}</strong>
-						<strong>{{record.nameLast}}</strong> / 
-						{{record.ageGroup}} / 
-						{{record.result}} / 
-						{{record.venue}} / 
-						{{record.date}}
-					</li>
-				</ul>
-
 
 				<!-- 
 				|*********************************************************
@@ -127,14 +103,9 @@
 							<v-card>
 								<v-card-text>
 									<ul class="flex-content">
-									<!-- <li class="flex-item" data-label="Rank">{{item.rank}}</li> -->
-									<!-- <li class="flex-item" data-label="Perf">{{item.time | removeLeadZeros}} {{item.distHeight | removeLeadZeros}} {{item.points | removeLeadZeros}} {{item.record}} {{(item.in_out == 'in') ? '(i)' : ''}}</li> -->
 									<li class="flex-item" data-label="Wind">{{ item.wind }}</li>
-									<!-- <li class="flex-item" data-label="Name">{{ item.nameFirst }} {{item.nameLast }} </li> -->
 									<li class="flex-item" data-label="Centre">{{ item.centreID }}</li>
 									<li class="flex-item" data-label="DOB">{{ item.DOB }}</li>
-									<li class="flex-item" data-label="Place">{{ item.placing }}</li>
-									<li class="flex-item" data-label="Comp">{{ item.competition }}</li>
 									<li class="flex-item" data-label="Venue">{{ item.venue }}</li>
 									<li class="flex-item" data-label="Date">{{ item.date }}</li>
 								</ul>
@@ -145,86 +116,19 @@
 
 				</div>
 
-
-
-
-
-
-
-
-
-
-				<!-- 
-				|*********************************************************
-				| ILLEGAL WIND PERFORMANCES 
-				|*********************************************************
-				-->
-				<h1>Illegal Wind</h1>
-				<div class="table-container" style="display: none;">
-					<table class="table is-striped is-fullwidth is-hoverable is-bordered" v-if="illegal_wind">
-						<thead>
-							<tr>
-								<th>Rank</th>
-								<th>Performance</th>
-								<th>Wind</th>
-								<th>Athlete</th>
-								<th>Centre</th>
-								<th>DOB</th>
-								<th>Place</th>
-								<th>Competition</th>
-								<th>Venue</th>
-								<th>Date</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr v-for="(result, index) in illegal_wind" :key="index">
-								
-								<!-- Rank No. do not show number if previous performances is same (e.g. 10.38 / 10.38) -->
-								<template v-if="illegal_wind[index-1]">
-									<td v-if="result.time == illegal_wind[index-1].time 
-										&& result.distHeight == illegal_wind[index-1].distHeight
-										&& result.points == illegal_wind[index-1].points"><!-- i.e. the previous perf -->
-										&nbsp;
-									</td>
-									<td v-else>
-										{{index + 1}}
-									</td>
-								</template>
-								<template v-else>
-									<td>{{index + 1}}</td>
-								</template>
-
-								<td>{{result.time | removeLeadZeros}} {{result.distHeight | removeLeadZeros}} {{result.points | removeLeadZeros}}</td>
-								<td>{{result.wind}}</td>
-								<td>{{result.nameFirst}} {{result.nameLast}}</td>
-								<td>{{result.centreID}}</td>
-								<td>{{result.DOB}}</td>
-								<td>{{result.placing}}</td>
-								<td>{{result.competition}}</td>
-								<td>{{result.venue}}</td>
-								<td>{{result.date}}</td>
-
-							</tr>
-						</tbody>
-					</table>
-				</div>
-
 			</div><!-- ENDS column -->
 
 		</div><!-- ENDS columns -->
 
-	</div>
+	</div>	
+
 </template>
 
 
 
 <script>
-//import axios from 'axios';
 import ListEvents from '../global_helpers/ListEvents.vue';
-import ListAgeGroupsDefault from '../global_helpers/ListAgeGroupsDefault.vue';
-import ListYears from '../global_helpers/ListYears.vue';
-import ListDepth from '../global_helpers/ListDepth.vue';
-import ListType from '../global_helpers/ListType.vue';
+import ListAgeGroupsAllTime from '../global_helpers/ListAgeGroupsAllTime.vue';
 
 export default {
 	data() {
@@ -233,15 +137,13 @@ export default {
 			isMobile: false,
 			queryParams: {
 				ageGroup: 'MS',
-				list_depth: '250',
+				list_depth: '50',
 				list_type: '0',
 				eventID: '1',
-				year: '2019'
+				year: '1900'
 			},
 			
 			resultsList: [],
-			illegal_wind: [],
-			current_nz_record: [],
 
 			loading: false,
 			expand: false,
@@ -252,8 +154,6 @@ export default {
 				{ text: 'Athlete', value: 'athlete', sortable: false, width: '200px'},
 				{ text: 'Centre', value: 'center', sortable: false},
 				{ text: 'DOB', value: 'center', sortable: false},
-				{ text: 'Place', value: 'placing', sortable: false},
-				{ text: 'Comp', value: 'competition', sortable: false},
 				{ text: 'Venue', value: 'venue', sortable: false},
 				{ text: 'Date', value: 'date', sortable: false}
 			]
@@ -262,10 +162,7 @@ export default {
 
 	components: {
 		'ListEvents': ListEvents,
-		'ListAgeGroupsDefault': ListAgeGroupsDefault,
-		'ListYears': ListYears,
-		'ListDepth': ListDepth,
-		'ListType': ListType
+		'ListAgeGroupsAllTime': ListAgeGroupsAllTime
 	},
 
 	computed: {
@@ -288,6 +185,7 @@ export default {
 	        }
 	        return items;
 	    }
+
 	},
 
 	methods: {
@@ -299,7 +197,7 @@ export default {
             this.isMobile = false;
         },
 
-		fetchQueryStringParams() {
+        fetchQueryStringParams() {
 			this.queryParams = {
 				ageGroup: this.$route.query.ageGroup ? this.$route.query.ageGroup : this.queryParams.ageGroup,
 				list_depth: this.$route.query.list_depth ? this.$route.query.list_depth : this.queryParams.list_depth,
@@ -313,7 +211,7 @@ export default {
 		fetchFormParams() {
 			this.loading = true;
 			this.$router.push({
-				path: '/annual-lists', 
+				path: '/all-time-lists', 
 				query: this.queryParams
 			});
 
@@ -323,8 +221,6 @@ export default {
 			.then((response) => {
 				this.token = response.data.token;
 				this.resultsList = response.data.lists;
-				this.current_nz_record = response.data.current_nz_record;
-				this.illegal_wind = response.data.illegal_wind;
 			})
 			.catch((error) => {
 				console.error('GAVINS ERROR: ' + error);
@@ -336,9 +232,9 @@ export default {
 
 	mounted() {
 		this.fetchQueryStringParams();
-		this.fetchFormParams();
+		// this.fetchFormParams();
 		this.onResize();
-	},	
+	},
 }
 </script>
 
@@ -346,7 +242,7 @@ export default {
 
 <style lang="scss">
 
-	#annual-lists {
+	#all-time-lists {
 
 		
 	}
@@ -355,7 +251,7 @@ export default {
 
 	@media screen and (max-width: 768px) {
 
-		#annual-lists {
+		#all-time-lists {
 
 			.v-expansion-panel__header {
 				padding: 5px 15px;
