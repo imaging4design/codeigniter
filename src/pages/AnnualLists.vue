@@ -89,7 +89,7 @@
 
 					<v-data-table
 						:headers="headers"
-						:items="rankedItems"
+						:items="resultsList"
 						:loading="loading"
 						:expand="expand"
 							:hide-headers="isMobile" 
@@ -98,7 +98,10 @@
 						<v-progress-linear slot="progress" color="secondary" indeterminate></v-progress-linear>
 						<template slot="items" slot-scope="props">
 							<tr>
-								<td>{{props.item.rank}}</td>
+								<td v-if="resultsList[props.index -1] 
+									&& resultsList[props.index -1].time === props.item.time
+									&& resultsList[props.index -1].distHeight === props.item.distHeight">=</td>
+								<td v-else>{{ props.index + 1}}</td>
 								<td>{{props.item.time | removeLeadZeros}} {{props.item.distHeight | removeLeadZeros}} {{props.item.points | removeLeadZeros}} {{props.item.record}} {{(props.item.in_out == 'in') ? '(i)' : ''}}</td>
 								<td class="text-xs-left">{{ props.item.wind }}</td>
 								<td class="text-xs-left">{{ props.item.nameFirst }} {{ props.item.nameLast }} </td>
@@ -118,19 +121,23 @@
 				<div v-else>
 
 					<v-expansion-panel class="elevation-0" :class="{mobile: isMobile}">
-						<v-expansion-panel-content v-for="(item, id) in rankedItems" :key="id" ripple>
+						<v-expansion-panel-content v-for="(item, index) in resultsList" :key="index" ripple>
 							<div slot="header">
-								<strong>{{ item.rank}}</strong><br>
-								{{ item.nameFirst }} {{ item.nameLast }} <br>
-								{{ item.time | removeLeadZeros }} {{ item.distHeight | removeLeadZeros }} {{ item.points | removeLeadZeros }}
+
+								<strong v-if="resultsList[index -1] 
+									&& resultsList[index -1].time === item.time
+									&& resultsList[index -1].distHeight === item.distHeight
+									&& resultsList[index -1].points === item.points">=</strong>
+								<strong v-else>{{ index + 1}}</strong>
+
+								{{ item.time | removeLeadZeros }} {{ item.distHeight | removeLeadZeros }} {{ item.points | removeLeadZeros }} {{item.record}} {{(item.in_out == 'in') ? '(i)' : ''}}<br>
+								{{ item.nameFirst }} {{ item.nameLast }}
+
 							</div>
 							<v-card>
 								<v-card-text>
 									<ul class="flex-content">
-									<!-- <li class="flex-item" data-label="Rank">{{item.rank}}</li> -->
-									<!-- <li class="flex-item" data-label="Perf">{{item.time | removeLeadZeros}} {{item.distHeight | removeLeadZeros}} {{item.points | removeLeadZeros}} {{item.record}} {{(item.in_out == 'in') ? '(i)' : ''}}</li> -->
 									<li class="flex-item" data-label="Wind">{{ item.wind }}</li>
-									<!-- <li class="flex-item" data-label="Name">{{ item.nameFirst }} {{item.nameLast }} </li> -->
 									<li class="flex-item" data-label="Centre">{{ item.centreID }}</li>
 									<li class="flex-item" data-label="DOB">{{ item.DOB }}</li>
 									<li class="flex-item" data-label="Place">{{ item.placing }}</li>
@@ -270,24 +277,24 @@ export default {
 
 	computed: {
 
-		rankedItems() {
-        	const items = [];
-	        if (this.resultsList.length > 0) {
-	            items[0] = this.resultsList[0];
-	            items[0].rank = 1;
-	            for (let index = 1; index < this.resultsList.length; index++) {
-	                items[index] = this.resultsList[index];
-	                if (items[index].time === items[index - 1].time 
-	                	&& items[index].distHeight === items[index - 1].distHeight
-	                	&& items[index].points === items[index - 1].points ) {
-	                    items[index].rank = "";
-	                } else {
-	                    items[index].rank = index + 1;
-	                }
-	            }
-	        }
-	        return items;
-	    }
+		// rankedItems() {
+  //       	const items = [];
+	 //        if (this.resultsList.length > 0) {
+	 //            items[0] = this.resultsList[0];
+	 //            items[0].rank = 1;
+	 //            for (let index = 1; index < this.resultsList.length; index++) {
+	 //                items[index] = this.resultsList[index];
+	 //                if (items[index].time === items[index - 1].time 
+	 //                	&& items[index].distHeight === items[index - 1].distHeight
+	 //                	&& items[index].points === items[index - 1].points ) {
+	 //                    items[index].rank = "";
+	 //                } else {
+	 //                    items[index].rank = index + 1;
+	 //                }
+	 //            }
+	 //        }
+	 //        return items;
+	 //    }
 	},
 
 	methods: {

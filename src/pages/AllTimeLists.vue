@@ -65,7 +65,7 @@
 
 					<v-data-table
 						:headers="headers"
-						:items="rankedItems"
+						:items="resultsList"
 						:loading="loading"
 						:expand="expand"
 							:hide-headers="isMobile" 
@@ -74,7 +74,10 @@
 						<v-progress-linear slot="progress" color="secondary" indeterminate></v-progress-linear>
 						<template slot="items" slot-scope="props">
 							<tr>
-								<td>{{props.item.rank}}</td>
+								<td v-if="resultsList[props.index -1] 
+									&& resultsList[props.index -1].time === props.item.time
+									&& resultsList[props.index -1].distHeight === props.item.distHeight">=</td>
+								<td v-else>{{ props.index + 1}}</td>
 								<td>{{props.item.time | removeLeadZeros}} {{props.item.distHeight | removeLeadZeros}} {{props.item.points | removeLeadZeros}} {{props.item.record}} {{(props.item.in_out == 'in') ? '(i)' : ''}}</td>
 								<td class="text-xs-left">{{ props.item.wind }}</td>
 								<td class="text-xs-left">{{ props.item.nameFirst }} {{ props.item.nameLast }} </td>
@@ -94,11 +97,18 @@
 				<div v-else>
 
 					<v-expansion-panel class="elevation-0" :class="{mobile: isMobile}">
-						<v-expansion-panel-content v-for="(item, id) in rankedItems" :key="id" ripple>
+						<v-expansion-panel-content v-for="(item, index) in resultsList" :key="index" ripple>
 							<div slot="header">
-								<strong>{{ item.rank}}</strong><br>
-								{{ item.nameFirst }} {{ item.nameLast }} <br>
-								{{ item.time | removeLeadZeros }} {{ item.distHeight | removeLeadZeros }} {{ item.points | removeLeadZeros }}
+								
+								<strong v-if="resultsList[index -1] 
+									&& resultsList[index -1].time === item.time
+									&& resultsList[index -1].distHeight === item.distHeight
+									&& resultsList[index -1].points === item.points">=</strong>
+								<strong v-else>{{ index + 1}}</strong>
+
+								{{ item.time | removeLeadZeros }} {{ item.distHeight | removeLeadZeros }} {{ item.points | removeLeadZeros }}<br>
+								{{ item.nameFirst }} {{ item.nameLast }}
+
 							</div>
 							<v-card>
 								<v-card-text>
@@ -140,7 +150,8 @@ export default {
 				list_depth: '50',
 				list_type: '0',
 				eventID: '1',
-				year: '1900'
+				year: 1900,
+				searchType: 'allTime'
 			},
 			
 			resultsList: [],
@@ -154,6 +165,8 @@ export default {
 				{ text: 'Athlete', value: 'athlete', sortable: false, width: '200px'},
 				{ text: 'Centre', value: 'center', sortable: false},
 				{ text: 'DOB', value: 'center', sortable: false},
+				{ text: 'Place', value: 'placing', sortable: false},
+				{ text: 'Comp', value: 'competition', sortable: false},
 				{ text: 'Venue', value: 'venue', sortable: false},
 				{ text: 'Date', value: 'date', sortable: false}
 			]
@@ -167,24 +180,24 @@ export default {
 
 	computed: {
 
-		rankedItems() {
-        	const items = [];
-	        if (this.resultsList.length > 0) {
-	            items[0] = this.resultsList[0];
-	            items[0].rank = 1;
-	            for (let index = 1; index < this.resultsList.length; index++) {
-	                items[index] = this.resultsList[index];
-	                if (items[index].time === items[index - 1].time 
-	                	&& items[index].distHeight === items[index - 1].distHeight
-	                	&& items[index].points === items[index - 1].points ) {
-	                    items[index].rank = '=';
-	                } else {
-	                    items[index].rank = index + 1;
-	                }
-	            }
-	        }
-	        return items;
-	    }
+		// rankedItems() {
+  //       	const items = [];
+	 //        if (this.resultsList.length > 0) {
+	 //            items[0] = this.resultsList[0];
+	 //            items[0].rank = 1;
+	 //            for (let index = 1; index < this.resultsList.length; index++) {
+	 //                items[index] = this.resultsList[index];
+	 //                if (items[index].time === items[index - 1].time 
+	 //                	&& items[index].distHeight === items[index - 1].distHeight
+	 //                	&& items[index].points === items[index - 1].points ) {
+	 //                    items[index].rank = '=';
+	 //                } else {
+	 //                    items[index].rank = index + 1;
+	 //                }
+	 //            }
+	 //        }
+	 //        return items;
+	 //    }
 
 	},
 
@@ -203,7 +216,8 @@ export default {
 				list_depth: this.$route.query.list_depth ? this.$route.query.list_depth : this.queryParams.list_depth,
 				list_type: this.$route.query.list_type ? this.$route.query.list_type : this.queryParams.list_type,
 				eventID: this.$route.query.eventID ? this.$route.query.eventID : this.queryParams.eventID,
-				year: this.$route.query.year ? this.$route.query.year : this.queryParams.year
+				year: this.$route.query.year ? this.$route.query.year : this.queryParams.year,
+				searchType: this.$route.query.searchType ? this.$route.query.searchType : this.queryParams.searchType
 			}
 			this.fetchFormParams();
 		},
@@ -221,6 +235,7 @@ export default {
 			.then((response) => {
 				this.token = response.data.token;
 				this.resultsList = response.data.lists;
+				console.log(this.resultsList)
 			})
 			.catch((error) => {
 				console.error('GAVINS ERROR: ' + error);
