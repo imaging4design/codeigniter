@@ -54,7 +54,7 @@ class Multis_Model extends CI_Model
 		// Work out YEAR posted.
 		// 0 = ALL years
 		/*************************************************************************/
-		if($this->input->post('year') == 1900)
+		if($this->input->get('year') == 1900)
 		{
 			$this->year = "YEAR(resMulti.date) >=  1900";
 		}
@@ -176,7 +176,7 @@ class Multis_Model extends CI_Model
 			AND " . $this->year . " 
 			AND resMulti.ageGroup IN (" . $this->ageGroup . ")
 			ORDER BY resMulti.points DESC, resMulti.date ASC, resMulti.resultID ASC) AS resMulti
-		INNER JOIN athletes AS athletes USING (athleteID)  
+		LEFT JOIN athletes AS athletes ON (athletes.athleteID = resMulti.athleteID)
 		GROUP BY " . $this->group_by . "  
 		ORDER BY resMulti.points DESC, resMulti.date ASC, resMulti.resultID asc 
 		LIMIT " . $this->limit_by . "");

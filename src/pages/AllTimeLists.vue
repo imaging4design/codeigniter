@@ -76,7 +76,8 @@
 							<tr>
 								<td v-if="resultsList[props.index -1] 
 									&& resultsList[props.index -1].time === props.item.time
-									&& resultsList[props.index -1].distHeight === props.item.distHeight">=</td>
+									&& resultsList[props.index -1].distHeight === props.item.distHeight
+									&& resultsList[props.index -1].points === props.item.points">=</td>
 								<td v-else>{{ props.index + 1}}</td>
 								<td>{{props.item.time | removeLeadZeros}} {{props.item.distHeight | removeLeadZeros}} {{props.item.points | removeLeadZeros}} {{props.item.record}} {{(props.item.in_out == 'in') ? '(i)' : ''}}</td>
 								<td class="text-xs-left">{{ props.item.wind }}</td>

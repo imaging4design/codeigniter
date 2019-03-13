@@ -330,7 +330,7 @@ class Results_Model extends CI_Model
 			AND results.wind NOT IN ('nwr')
 			AND results.record NOT IN ('ht')
 			ORDER BY " . $this->order_by . ", results.date ASC, results.resultID ASC) AS results
-		INNER JOIN athletes AS athletes USING (athleteID)  
+		LEFT JOIN athletes AS athletes ON (athletes.athleteID = results.athleteID)  
 		GROUP BY " . $this->group_by . "  
 		ORDER BY " . $this->order_by . ", results.date ASC, results.resultID asc 
 		LIMIT " . $this->limit_by . "");
@@ -362,7 +362,7 @@ class Results_Model extends CI_Model
 			AND results.wind > 2.0
 			AND results.record NOT IN ('ht')
 			ORDER BY " . $this->order_by . ", results.date ASC, results.resultID ASC) AS results
-		INNER JOIN athletes AS athletes USING (athleteID)  
+		LEFT JOIN athletes AS athletes ON (athletes.athleteID = results.athleteID) 
 		GROUP BY " . $this->group_by . "  
 		ORDER BY " . $this->order_by . ", results.date ASC, results.resultID asc 
 		LIMIT 10");
@@ -396,7 +396,7 @@ class Results_Model extends CI_Model
 			AND results.wind NOT IN (" . $this->wind . ")
 			AND results.record = 'ht'
 			ORDER BY " . $this->order_by . ", results.date ASC, results.resultID ASC) AS results
-		INNER JOIN athletes AS athletes USING (athleteID)  
+		LEFT JOIN athletes AS athletes ON (athletes.athleteID = results.athleteID)  
 		GROUP BY " . $this->group_by . "  
 		ORDER BY " . $this->order_by . ", results.date ASC, results.resultID asc 
 		LIMIT 10");
