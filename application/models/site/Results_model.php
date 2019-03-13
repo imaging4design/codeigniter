@@ -296,7 +296,7 @@ class Results_Model extends CI_Model
 			AND results.ageGroup IN (" .$this->ageGroup . ")
 			AND results.record NOT IN ('ht')
 			ORDER BY " . $this->order_by . ", results.date ASC, results.resultID ASC) AS results
-		INNER JOIN athletes AS athletes USING (athleteID)  
+		LEFT JOIN athletes AS athletes ON (athletes.athleteID = results.athleteID)
 		GROUP BY " . $this->group_by . "  
 		ORDER BY " . $this->order_by . ", results.date ASC, results.resultID asc 
 		LIMIT " . $this->limit_by . "");
