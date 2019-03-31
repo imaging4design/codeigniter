@@ -2,10 +2,7 @@ import Vue from 'vue'
 import axios from 'axios'
 import VueRouter from 'vue-router'
 import {routes} from './routes'
-//import Typeahead from 'vue-typeahead'
 import VueMoment from 'vue-moment'
-//import Buefy from 'buefy'
-//import 'buefy/dist/buefy.css'
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css' // Ensure you are using css-loader
 import App from './App.vue'
@@ -24,7 +21,7 @@ import colors from 'vuetify/es5/util/colors'
 Vue.use(Vuetify, {
   theme: {
     primary: colors.grey.darken3, // #E53935
-    secondary: colors.cyan, // #FFCDD2
+    secondary: colors.pink, // #FFCDD2
     accent: colors.orange // #3F51B5
   }
 })

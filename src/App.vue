@@ -15,7 +15,7 @@
 
 				<v-list-tile @click="" to="/top-perfs" exact>
 					<v-list-tile-action>
-						<v-icon class="secondary--text">bookmark</v-icon>
+						<v-icon class="secondary--text">trending_up</v-icon>
 					</v-list-tile-action>
 					<v-list-tile-content>
 						<v-list-tile-title>{{new Date().getFullYear()}} LEADERS</v-list-tile-title>

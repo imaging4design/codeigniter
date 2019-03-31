@@ -354,13 +354,6 @@ export default {
 
 <style lang="scss">
 
-	#annual-lists {
-
-		
-	}
-
-		
-
 	@media screen and (max-width: 768px) {
 
 		#annual-lists {
