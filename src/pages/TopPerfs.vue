@@ -4,23 +4,32 @@
 
 		<v-container grid-list-xl fluid pa-0>
 			<v-layout row wrap>
-				<v-flex>
+				<v-flex xs12 md3>
 					<h1 class="display-1 font-weight-light primary--text">{{new Date().getFullYear()}} Leaders</h1>
-				</v-flex> 
+				</v-flex>
 			</v-layout>
 		</v-container>
+
+
+					
 
 		
 	  	<!-- 
 		| WHAT: Top Performances listing
 		| DESCRIPTION: A listing of the top performances of teh current year
-		| POINTS TO NOTE: Loops through the 'athletes' array (of objects) and display data  
+		| POINTS TO NOTE: Loops through the 'individuals' array (of objects) and display data  
 		-->
 		<form v-on:submit.prevent>
 			<v-container grid-list-xl fluid pa-0>
 				<v-layout row wrap>
 					<v-flex xs12 md3>
 						<list-age-groups-default v-model="queryParams.ageGroup" @input="showTopPerformers"></list-age-groups-default>
+					</v-flex>
+					<v-flex xs12 md3>
+						<modal>
+							<span slot="header">Recent Results</span>
+							<span slot="body">Recent Results display the latest performances by men and women over a specified number of days. Performances are grouped by event and are in descending order of result achieved.</span>
+						</modal>
 					</v-flex>
 				</v-layout>
 			</v-container>
@@ -30,7 +39,7 @@
 
 		<v-data-table
 			:headers="headers"
-			:items="athletes"
+			:items="individualsNew"
 			:loading="loading"
 			:expand="expand"
 			item-key="eventName"
@@ -41,7 +50,7 @@
 			<template slot="items" slot-scope="props">
 				<tr @click="props.expanded = !props.expanded">
 				<td>{{ props.item.eventName }}</td>
-				<td class="text-xs-left">{{ props.item.distHeight | removeLeadZeros}} {{ props.item.time | removeLeadZeros}}</td>
+				<td class="text-xs-left">{{ props.item.distHeight | removeLeadZeros}} {{ props.item.time | removeLeadZeros}} {{ props.item.points | removeLeadZeros}}</td>
 				<td class="text-xs-left">{{ props.item.nameFirst }} {{ props.item.nameLast }}</td>
 				<td class="text-xs-left">{{ props.item.competition }}</td>
 				<td class="text-xs-left">{{ props.item.date }}</td>
@@ -55,31 +64,57 @@
 
 		</v-data-table>
 
-		<modal>
-			<span slot="header">Recent Results</span>
-			<span slot="body">Recent Results display the latest performances by men and women over a specified number of days. Performances are grouped by event and are in descending order of result achieved.</span>
-		</modal>
+		
 
 
-		<hr>
+		
 
-		<button class="button is-danger" @click="showTopMultis">Show Multis</button>
+		<!-- <button class="button is-danger" @click="showTopMultis">Show Multis</button>
 		<ul>
 			<li v-if="multi">
 				<strong>{{multi.eventName}}</strong> {{multi.nameFirst}} {{multi.nameLast}} {{multi.points}}
 			</li>
 		</ul>
 
-		<p v-if="!multi">No multis listings at this time</p>
+		<p v-if="!multi">No multis listings at this time</p> -->
 
-		<hr>
+		
 
-		<button class="button is-danger" @click="showTopRelays">Show Relays</button>
-		<ul>
+		<!-- <button class="button is-danger" @click="showTopRelays">Show Relays</button> -->
+		<h2 class="display-1 font-weight-light primary--text">Relays</h2>
+
+		<v-data-table
+			:headers="headers"
+			:items="relays"
+			:loading="loading"
+			:expand="expand"
+			item-key="eventName"
+		>
+
+			<!-- <v-progress-linear slot="progress" color="secondary" indeterminate></v-progress-linear> -->
+
+			<template slot="items" slot-scope="props">
+				<tr @click="props.expanded = !props.expanded">
+				<td>{{ props.item.eventName }}</td>
+				<td class="text-xs-left">{{ props.item.distHeight | removeLeadZeros}} {{ props.item.time | removeLeadZeros}} {{ props.item.points | removeLeadZeros}}</td>
+				<td class="text-xs-left">{{ props.item.athlete01 }}, {{ props.item.athlete02 }}, {{ props.item.athlete03 }}, {{ props.item.athlete04 }}</td>
+				<td class="text-xs-left">{{ props.item.competition }}</td>
+				<td class="text-xs-left">{{ props.item.date }}</td>
+				</tr>
+			</template>
+			<template slot="expand" slot-scope="props">
+				<v-card flat>
+					<v-card-text>IAAF Standard 10.12 | IAAF Standard 10.12</v-card-text>
+				</v-card>
+			</template>
+
+		</v-data-table>
+
+		<!-- <ul>
 			<li v-if="relays" v-for="relay in relays">
 				<strong>{{relay.eventName}}</strong> {{relay.nameFirst}} {{relay.nameLast}} {{relay.distHeight}} {{relay.time}} {{relay.athlete01}}, {{relay.athlete02}}, {{relay.athlete03}}, {{relay.athlete04}}
 			</li>
-		</ul>
+		</ul> -->
 
 		<p v-if="!relays">No relays listings at this time</p>
 
@@ -100,9 +135,11 @@ export default {
 			queryParams: {
 				ageGroup: 'WS'
 			},
-			athletes: [],
+			individuals: [],
 			multi: [],
 			relays: [],
+
+			individualsMultis: [],
 
 			loading: false,
 			expand: false,
@@ -112,7 +149,7 @@ export default {
 					sortable: false,
 					value: 'eventName'},
 				{ text: 'Performance', value: 'performance', sortable: false},
-				{ text: 'Athlete', value: 'nameFirst', sortable: false},
+				{ text: 'Athlete(s)', value: 'nameFirst', sortable: false},
 				{ text: 'Competition', value: 'competition', sortable: false},
 				{ text: 'Date', value: 'date', sortable: false}
 			]
@@ -128,6 +165,13 @@ export default {
 		//this.ageGroupOptions();
 	},
 
+	computed: {
+		// Combine both the individual and multi results
+		individualsNew(){
+			return this.individualsMultis = this.individuals.concat(this.multi);
+		}
+	},
+
 	methods: {
 		showTopPerformers(ageGroup) {
 			this.loading = true;
@@ -137,17 +181,20 @@ export default {
 				}
 			})
 			.then((response) => {
-				this.athletes = response.data.topPerformers;
+				this.individuals = response.data.topPerformers;
 			})
 			.catch((error) => {
 				console.error('GAVINS ERROR: ' + error);
 			})
 			.finally(() => this.loading = false);
+
+			this.showTopMultis(ageGroup);
+			this.showTopRelays(ageGroup);
 		},
-		showTopMultis() {
+		showTopMultis(ageGroup) {
 			this.$http.get('site/Home_con/showTopMultis', {
 				params: {
-					ageGroup: this.ageGroup,
+					ageGroup: ageGroup,
 				}
 			})
 			.then((response) => {
@@ -157,19 +204,20 @@ export default {
 				console.error('GAVINS ERROR: ' + error);
 			})
 		},
-		showTopRelays() {
+		showTopRelays(ageGroup) {
 			this.$http.get('site/Home_con/showTopRelays', {
 				params: {
-					ageGroup: this.ageGroup,
+					ageGroup: ageGroup,
 				}
 			})
 			.then((response) => {
 				this.relays = response.data.topPerformers_Relays;
+				console.log(this.relays)
 			})
 		}
 	},
 	mounted() {
-		this.showTopPerformers(); 
+		this.showTopPerformers();
 	}
 	
 };

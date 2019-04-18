@@ -200,16 +200,16 @@ export default {
 	 //        return items;
 	 //    }
 
-	},
+	}, 
 
 	methods: {
 
 		onResize() {
-          if (window.innerWidth < 769)
-            this.isMobile = true;
-          else
-            this.isMobile = false;
-        },
+		if (window.innerWidth < 769)
+			this.isMobile = true;
+		else
+			this.isMobile = false;
+		},
 
         fetchQueryStringParams() {
 			this.queryParams = {
@@ -220,9 +220,9 @@ export default {
 				year: this.$route.query.year ? this.$route.query.year : this.queryParams.year,
 				searchType: this.$route.query.searchType ? this.$route.query.searchType : this.queryParams.searchType
 			}
-			this.fetchFormParams();
+			this.fetchFormParams(); 
 		},
-
+ 
 		fetchFormParams() {
 			this.loading = true;
 			this.$router.push({
@@ -236,7 +236,14 @@ export default {
 			.then((response) => {
 				this.token = response.data.token;
 				this.resultsList = response.data.lists;
-				console.log(this.resultsList)
+
+				console.log('data: ', response.data);
+				console.log('status: ', response.status);
+				console.log('statusText: ', response.statusText);
+				console.log('headers: ', response.headers);
+				console.log('config: ', response.config);
+
+				//console.log(this.resultsList)
 			})
 			.catch((error) => {
 				console.error('GAVINS ERROR: ' + error);
@@ -260,10 +267,8 @@ export default {
 
 	#all-time-lists {
 
-		
 	}
 
-		
 
 	@media screen and (max-width: 768px) {
 
@@ -273,7 +278,7 @@ export default {
 				padding: 5px 15px;
 			}
 			.mobile.v-expansion-panel .v-expansion-panel__container:nth-child(even)  {
-				border-left: 6px solid #FF9800;
+				border-left: 6px solid #FF9800; 
 			}
 			.mobile.v-expansion-panel .v-expansion-panel__container:nth-child(odd)  {
 				border-left: 6px solid #00bcd4;

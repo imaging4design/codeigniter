@@ -21,7 +21,7 @@ import colors from 'vuetify/es5/util/colors'
 Vue.use(Vuetify, {
   theme: {
     primary: colors.grey.darken3, // #E53935
-    secondary: colors.pink, // #FFCDD2
+    secondary: colors.red.accent3, // #FFCDD2
     accent: colors.orange // #3F51B5
   }
 })
@@ -54,8 +54,8 @@ Vue.config.devtools = true;
 // Initialise router
 Vue.use(VueRouter);
 const router = new VueRouter({
-	// hashbang:false,
-	// mode: 'history',
+	hashbang:false,
+ 	mode: 'history',
 	routes: routes
 });
 

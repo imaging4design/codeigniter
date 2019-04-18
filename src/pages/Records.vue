@@ -60,7 +60,7 @@
 			item-key="recordID"
 		>
 
-			<v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>
+		<v-progress-linear slot="progress" color="secondary" indeterminate></v-progress-linear>
 
 			<template slot="items" slot-scope="props">
 				<tr @click="props.expanded = !props.expanded">
@@ -137,6 +137,7 @@ export default {
 		},
 
 		fetchFormParams() {
+			this.loading = true;
 			this.$router.push({
 				path: '/nz-records', 
 				query: this.queryParams
@@ -153,6 +154,7 @@ export default {
 			.catch((error) => {
 				console.error('GAVINS ERROR: ' + error);
 			})
+			.finally(() => this.loading = false);
 
 			console.log(this.queryParams.in_out)
 		}
