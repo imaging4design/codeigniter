@@ -79,12 +79,74 @@
 
 		<!-- 
 		|*********************************************************
+		| TABS FOR ATHLETE DATA (On page load)
+		|*********************************************************
+		-->
+		<div>
+			<v-tabs v-model="active" color="primary" dark slider-color="secondary">
+
+				<v-tab ripple >
+					NZ Championships
+				</v-tab>
+
+				<v-tab-item>
+					<v-card flat>
+						<v-card-text>
+							<ul>
+								<li v-for="data in nzChampsData">{{data.year}} {{data.ageGroup}} {{data.eventName}} {{data.performance}} {{data.position | medal}}</li>
+							</ul>
+						</v-card-text>
+					</v-card>
+				</v-tab-item>
+
+				<v-tab ripple >
+					NZ Representation
+				</v-tab>
+
+				<v-tab-item>
+					<v-card flat>
+						<v-card-text>{{ text }}</v-card-text>
+					</v-card>
+				</v-tab-item>
+
+				<v-tab ripple >
+					Best Performances
+				</v-tab>
+
+				<v-tab-item>
+					<v-card flat>
+						<v-card-text>{{ text }}</v-card-text>
+					</v-card>
+				</v-tab-item>
+
+				<v-tab ripple >
+					Progressions
+				</v-tab>
+
+				<v-tab-item>
+					<v-card flat>
+						<v-card-text>
+							<ul>
+								<li v-for="data in nzChampsData">{{data.year}} {{data.ageGroup}} {{data.eventName}} {{data.performance}} {{data.position | medal}}</li>
+							</ul>
+						</v-card-text>
+					</v-card>
+				</v-tab-item>
+
+			</v-tabs>
+
+			
+		</div>
+
+
+		<!-- 
+		|*********************************************************
 		| NZ CHAMPS DATA
 		|*********************************************************
 		-->
 		<v-container grid-list-xl px-0>
 			<v-layout row wrap>
-				<v-flex xs12 md6>
+				<v-flex xs12 md12>
 
 					
 
@@ -186,6 +248,9 @@ import moment from 'moment';
 export default {
 	data() {
 		return {
+			// Tabs
+			active: null,
+
 			// Snackbar
 			snackbar: false,
 			y: 'top',
@@ -274,9 +339,9 @@ export default {
 		convertAge(val) {
 			this.duration = moment.duration(moment().diff(val))
 			if(val) {
-				return this.duration.years() + ' years, ' 
-			    	+ this.duration.months() + ' months, ' 
-			    	+ this.duration.days() + ' days';
+				return this.duration.years() + ' year(s), ' 
+			    	+ this.duration.months() + ' month(s), ' 
+			    	+ this.duration.days() + ' day(s)';
 			}
 		},
 

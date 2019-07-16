@@ -54,8 +54,8 @@ Vue.config.devtools = true;
 // Initialise router
 Vue.use(VueRouter);
 const router = new VueRouter({
-	hashbang:false,
- 	mode: 'history',
+	// hashbang: false,
+ // 	mode: 'history',
 	routes: routes
 });
 

@@ -181,7 +181,7 @@ class Results_con extends CI_Controller {
 				if($query = $this->results_model->results_legal_wind())
 				{
 					//$data['legal_wind'] = $query;
-					$result['token'] = $this->auth->token();
+					//$result['token'] = $this->auth->token();
 					$result['lists'] = $query;
 					//echo json_encode($result);
 				}
@@ -190,7 +190,7 @@ class Results_con extends CI_Controller {
 				if($query = $this->results_model->results_illegal_wind())
 				{
 					//$data['illegal_wind'] = $query;
-					$result['token'] = $this->auth->token();
+					//$result['token'] = $this->auth->token();
 					$result['illegal_wind'] = $query;
 					//echo json_encode($result);
 				}
@@ -199,7 +199,7 @@ class Results_con extends CI_Controller {
 				if($query = $this->records_model->current_nz_record())
 				{
 					//$data['current_nz_record'] = $query;
-					$result['token'] = $this->auth->token();
+					//$result['token'] = $this->auth->token();
 					$result['current_nz_record'] = $query;
 					//echo json_encode($result);
 				}
@@ -223,7 +223,7 @@ class Results_con extends CI_Controller {
 				if($query = $this->results_model->results())
 				{
 					//$data['results'] = $query;
-					$result['token'] = $this->auth->token();
+					//$result['token'] = $this->auth->token();
 					$result['lists'] = $query;
 					// echo json_encode($result);
 				}
@@ -232,7 +232,7 @@ class Results_con extends CI_Controller {
 				if($query = $this->records_model->current_nz_record())
 				{
 					//$data['current_nz_record'] = $query;
-					$result['token'] = $this->auth->token();
+					//$result['token'] = $this->auth->token();
 					$result['current_nz_record'] = $query;
 					// echo json_encode($result);
 				}
@@ -288,7 +288,7 @@ class Results_con extends CI_Controller {
 			} // ENDS OUTPUT LIST MULTIS
 			
 			
-			$data['token'] = $this->auth->token();
+			//$data['token'] = $this->auth->token();
 			$data['event_info'] = getEvents('rankings_dropdown'); // global_helper
 			//$data['main_content'] = 'site/results';
 			//$this->load->view('site/includes/template', $data);
@@ -299,7 +299,7 @@ class Results_con extends CI_Controller {
 			//$this->error_message = validation_errors('<div class="message_error">', '</div>') . '<br />';
 			$this->error_message = validation_errors('<div class="alert alert-danger"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> <button type="button" class="close" data-dismiss="alert">&times;</button>', '</div>');
 
-			$data['token'] = $this->auth->token();
+			//$data['token'] = $this->auth->token();
 			//$data['main_content'] = 'site/results';
 			//$this->load->view('site/includes/template', $data);
 		}

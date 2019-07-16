@@ -25,7 +25,7 @@ class Records_con extends CI_Controller {
 		// Get records data from database
 		if($query = $this->records_model->get_outdoor_records())
 		{
-			$result['token'] = $this->auth->token();
+			//$result['token'] = $this->auth->token();
 			$result['get_records'] = $query;
 			echo json_encode($result);
 		}
@@ -60,7 +60,7 @@ class Records_con extends CI_Controller {
 			 $this->error_message = validation_errors('<div class="message_error">', '</div>') . '<br />';
 		}
 		
-		$data['token'] = $this->auth->token();
+		//$data['token'] = $this->auth->token();
 		$data['main_content'] = 'site/records';
 		$this->load->view('site/includes/template', $data);
 	
@@ -74,7 +74,7 @@ class Records_con extends CI_Controller {
 	/*************************************************************************************/
 	public function forms()
 	{
-		$data['token'] = $this->auth->token();
+		//$data['token'] = $this->auth->token();
 		
 		$data['main_content'] = 'site/recordForms';
 		$this->load->view('site/includes/template', $data);
